@@ -17,7 +17,7 @@ const User = require("../../models/User");
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
 // @route   GET api/users/register
-// @desc    Register user
+// @desc    Register user, return token
 // @access  Public
 // @req     name, email, password, password2
 router.post("/register", (req, res) => {
@@ -48,7 +48,27 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json(user))
+            .then((user) => {
+              const payload = {
+                id: user.id,
+                name: user.name,
+                avatar: user.avatar,
+              };
+
+              jwt.sign(
+                payload,
+                process.env.SECRET || require("../../config/keys").secret,
+                {
+                  expiresIn: 3600, // TODO: refresh
+                },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token,
+                  });
+                }
+              );
+            })
             .catch((err) => console.log(err));
         });
       });

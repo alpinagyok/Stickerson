@@ -12,6 +12,8 @@ import PrivateRoute from "./components/common/PrivateRoute";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Navbar from "./components/layout/Navbar";
+import Landing from "./components/layout/Landing";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -39,8 +41,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          {/* Nav */}
-          {/* <Route exact path="/" component={Landing} /> */}
+          <Navbar />
+          <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />

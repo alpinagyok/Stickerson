@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import "./App.css"; // TODO: delete App.css or change
+import "./App.css"; // TODO: delete App.css or change
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -14,6 +14,8 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
+import Test from "./components/common/Test";
+import Footer from "./components/layout/Footer";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -42,11 +44,13 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Navbar />
+          {/* <Test /> */}
           <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
           </div>
+          <Footer />
         </Router>
       </Provider>
     );

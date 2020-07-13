@@ -21,6 +21,7 @@
     "mongoose": "^5.9.22",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "react-card-flip": "^1.0.10",
     "validator": "^13.1.1"
   },
   "devDependencies": {

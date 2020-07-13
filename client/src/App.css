@@ -2,14 +2,52 @@ img {
   width: 100%;
 }
 
+.landing-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .landing {
-  position: relative;
-  background: url("./img/showcase.jpg") no-repeat;
+  background: url("./img/showcase2.jpg") no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
+  position: relative;
+  text-align: center;
+}
+
+/* xs */
+.landing {
+  /* width: auto; */
+  height: 30vh;
+}
+/* sm */
+@media (min-width: 768px) {
+  .landing {
+    height: 30vh;
+  }
+  .landing h1 {
+    font-size: 3.5rem;
+  }
+}
+/* md */
+@media (min-width: 992px) {
+  .landing {
+    height: 30vh;
+  }
+  .landing h1 {
+    font-size: 4.5rem;
+  }
+}
+/* lg */
+@media (min-width: 1200px) {
+  .landing {
+    height: 40vh;
+  }
+  .landing h1 {
+    font-size: 5.5rem;
+  }
 }
 
 .landing-inner {
@@ -36,4 +74,21 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 70px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 70px;
+  background-color: #f5f5f5;
 }

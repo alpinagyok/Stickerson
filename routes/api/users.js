@@ -16,7 +16,7 @@ const User = require("../../models/User");
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
-// @route   GET api/users/register
+// @route   POST api/users/register
 // @desc    Register user, return token
 // @access  Public
 // @req     name, email, password, password2
@@ -76,7 +76,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
 // @req     email, password
@@ -128,5 +128,18 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+// @route   DELETE api/users
+// @desc    Delete current User
+// @access  Private
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOneAndRemove({ _id: req.user.id }).then(() =>
+      res.json({ success: true })
+    );
+  }
+);
 
 module.exports = router;

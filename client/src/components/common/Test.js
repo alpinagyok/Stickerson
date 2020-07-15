@@ -14,17 +14,17 @@ class Test extends Component {
     });
   };
 
-  onClickHandler = () => {
-    const data = new FormData();
-    data.append("file", this.state.selectedFile);
-    console.log(data);
-    axios.post("/api/images", data).then((res) => {
-      // then print response status
-      console.log(res.statusText);
-    });
-  };
+  // onClickHandler = () => {
+  //   const data = new FormData();
+  //   data.append("file", this.state.selectedFile);
+  //   console.log(data);
+  //   axios.post("/api/images", data).then((res) => {
+  //     // then print response status
+  //     console.log(res);
+  //   });
+  // };
 
-  onSubmit = async () => {
+  onSubmit = () => {
     const formData = new FormData();
     formData.append("image", this.state.selectedFile);
     // formData.append("upload_preset", preset);

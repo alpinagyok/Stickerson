@@ -16,8 +16,14 @@ const UserSchema = new Schema({
     required: true,
   },
   avatar: {
-    data: Buffer,
-    contentType: String,
+    public_id: {
+      type: String,
+      // required: true,
+    },
+    url: {
+      type: String,
+      // required: true,
+    },
   },
   date: {
     type: Date,

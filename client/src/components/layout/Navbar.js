@@ -14,11 +14,16 @@ class Navbar extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
+    // console.log(user);             // {}
+    // console.log(user.avatar);      // undefined
+    // console.log(user.avatar.url);  // error
     let avatar;
-    if (user.avatar === null) {
-      avatar = default_avatar;
-    } else {
-      avatar = user.avatar;
+    if (user.avatar) {
+      if (user.avatar.url === null) {
+        avatar = default_avatar;
+      } else {
+        avatar = user.avatar.url;
+      }
     }
 
     const authLinks = (

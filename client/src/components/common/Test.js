@@ -28,7 +28,9 @@ class Test extends Component {
     const formData = new FormData();
     formData.append("image", this.state.selectedFile);
     // formData.append("upload_preset", preset);
-    axios.post("api/images", formData).then((res) => console.log(res));
+    axios
+      .put("api/images/user_avatar", formData)
+      .then((res) => console.log(res));
   };
 
   // handleClick = (e) => {

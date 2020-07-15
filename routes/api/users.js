@@ -34,7 +34,10 @@ router.post("/register", (req, res) => {
       errors.email = "Email already exists";
       return res.status(400).json(errors);
     } else {
-      const avatar = null;
+      const avatar = {
+        public_id: null,
+        url: null,
+      };
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -139,6 +142,19 @@ router.delete(
     User.findOneAndRemove({ _id: req.user.id }).then(() =>
       res.json({ success: true })
     );
+  }
+);
+
+// Probably won't be needed
+router.put(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOneAndUpdate(
+      { _id: req.user.id },
+      { name: req.body.name },
+      { new: true } // by default returns old object
+    ).then((user) => res.json(user));
   }
 );
 

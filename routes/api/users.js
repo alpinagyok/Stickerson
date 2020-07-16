@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
+const { multerUploads, cloudinary } = require("../../config/imageUpload");
+
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -132,29 +134,75 @@ router.post("/login", (req, res) => {
   });
 });
 
+// TODO: store, products, etc.
+// Opt. TODO: cloudinary task can be done asyncly and doens't depend on anything else
+
 // @route   DELETE api/users
-// @desc    Delete current User
+// @desc    Delete current User + avatar
 // @access  Private
 router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOneAndRemove({ _id: req.user.id }).then(() =>
-      res.json({ success: true })
-    );
+    const avatar = req.user.avatar.public_id;
+
+    User.findOneAndRemove({ _id: req.user.id }).then(() => {
+      if (avatar !== null) {
+        cloudinary.uploader.destroy(avatar, (err, result) => {
+          if (err) return res.send(err);
+          return res.json({ sucess: true });
+        });
+      } else res.json({ sucess: true });
+    });
   }
 );
 
-// Probably won't be needed
-router.put(
-  "/",
+// @route   POST api/users/avatar
+// @desc    Change user's avatar.
+// @access  Private
+router.post(
+  "/avatar",
   passport.authenticate("jwt", { session: false }),
+  multerUploads,
   (req, res) => {
-    User.findOneAndUpdate(
-      { _id: req.user.id },
-      { name: req.body.name },
-      { new: true } // by default returns old object
-    ).then((user) => res.json(user));
+    if (req.file) {
+      const buf = req.file.buffer.toString("base64");
+      cloudinary.uploader.upload(
+        "data:image/png;base64," + buf,
+        {
+          width: 100,
+          height: 100,
+          crop: "fill",
+          gravity: "auto",
+        },
+        (err, image) => {
+          if (err) return res.send(err);
+          const avatar = {
+            public_id: image.public_id,
+            url: image.url,
+          };
+
+          const oldAvatar = req.user.avatar.public_id;
+
+          User.findOneAndUpdate(
+            { _id: req.user.id },
+            { avatar },
+            { new: true } // by default returns old object
+            // { useFindAndModify: false } // gives an error for some reason
+          ).then((user) => {
+            // If user has an avatar, delete it from cloudinary
+            if (oldAvatar !== null) {
+              cloudinary.uploader.destroy(oldAvatar, (err, result) => {
+                if (err) return res.send(err);
+                return res.json(user);
+              });
+            } else res.json(user); // maybe return just the avatar???
+          });
+        }
+      );
+    } else {
+      res.status(400).json({ error: "no image" });
+    }
   }
 );
 

@@ -57,6 +57,12 @@ class Test extends Component {
             upload
           </button>
         </div>
+
+        <div className="center">
+          <button onClick={this.onMagic} className="btn center">
+            magic
+          </button>
+        </div>
       </div>
     );
   }

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const MarketplaceSchema = new Schema({
+const StoreSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId, // owner
     ref: "users",
@@ -34,4 +34,4 @@ const MarketplaceSchema = new Schema({
   },
 });
 
-module.exports = Marketplace = mongoose.model("marketplace", MarketplaceSchema);
+module.exports = Store = mongoose.model("stores", StoreSchema);

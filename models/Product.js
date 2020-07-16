@@ -5,18 +5,47 @@ const Schema = mongoose.Schema;
 const ProductSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId, // owner
-    ref: users,
+    ref: "users",
   },
   price: {
-    type: Float32Array,
+    type: Number, // centcs
     required: true,
   },
   name: {
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
+
+  // Not sure which is the best way yet
+  images: [
+    {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+  ],
   // image: {
-  //   // TODO
+  //   public_id: {
+  //     type: String,
+  //   },
+  //   url: {
+  //     type: String,
+  //   },
+  // },
+  // image_print: {
+  //   public_id: {
+  //     type: String,
+  //   },
+  //   url: {
+  //     type: String,
+  //   },
   // },
   date: {
     type: Date,
@@ -24,16 +53,25 @@ const ProductSchema = new Schema({
   },
   reviews: [
     {
+      // will display "deleted" if no user found
+      // or leave avatar url and name???
       user: {
         type: Schema.Types.ObjectId, // so that the user can delete
-        ref: users,
+        ref: "users",
       },
-      name: {
-        type: String,
-        required: true,
-      },
-      // avatar: {
+      // name: {
       //   type: String,
+      //   required: true,
+      // },
+      // avatar: {
+      //   public_id: {
+      //     type: String,
+      //     // required: true,
+      //   },
+      //   url: {
+      //     type: String,
+      //     // required: true,
+      //   },
       // },
       date: {
         type: Date,
@@ -44,17 +82,18 @@ const ProductSchema = new Schema({
         required: true,
       },
       stars: {
-        type: Int8Array,
+        type: Number,
         required: true,
       },
-      likes: [
-        {
-          user: {
-            type: Schema.Types.ObjectId,
-            ref: "users",
-          },
-        },
-      ],
+      // For later maybe
+      // likes: [
+      //   {
+      //     user: {
+      //       type: Schema.Types.ObjectId,
+      //       ref: "users",
+      //     },
+      //   },
+      // ],
     },
   ],
 });

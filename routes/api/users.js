@@ -170,7 +170,7 @@ router.post(
       cloudinary.uploader.upload(
         "data:image/png;base64," + buf,
         {
-          width: 100,
+          width: 100, // MIGHT CHANGE
           height: 100,
           crop: "fill",
           gravity: "auto",
@@ -205,5 +205,7 @@ router.post(
     }
   }
 );
+
+// TODO: get all users? or stores?
 
 module.exports = router;

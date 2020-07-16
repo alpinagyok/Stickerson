@@ -14,7 +14,7 @@ const OrderSchema = new Schema({
       //   ref: "products",
       // },
       price: {
-        type: Float32Array,
+        type: Number, // centcs
         required: true,
       },
       name: {
@@ -45,7 +45,7 @@ const OrderSchema = new Schema({
     required: true,
   },
   deliveryPrice: {
-    type: Float32Array,
+    type: Number, // cents
     required: true,
   },
   date: {

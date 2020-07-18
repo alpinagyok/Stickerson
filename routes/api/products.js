@@ -17,7 +17,7 @@ const Product = require("../../models/Product");
 // @route   GET api/products/test
 // @desc    Tests post route
 // @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Products Works" }));
+router.get("/test/:id", (req, res) => res.json(req.params.id));
 
 // // @route   GET api/products
 // // @desc    Get products
@@ -67,49 +67,63 @@ router.get("/test", (req, res) => res.json({ msg: "Products Works" }));
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
-  multerUploads,
   (req, res) => {
-    let { errors, isValid } = validateProductInput(req.body);
-    if (!req.file) {
-      errors.image = "No image was given";
-      isValid = false;
-    }
-
-    // Check Validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const buf = req.file.buffer.toString("base64");
-    cloudinary.uploader.upload(
-      "data:image/png;base64," + buf,
-      {
-        width: 500, // MIGHT CHANGE
-        height: 500,
-        crop: "fill",
-        gravity: "auto",
-      },
-      (err, image) => {
-        if (err) return res.send(err);
-        const newImage = {
-          public_id: image.public_id,
-          url: image.url,
-        };
-
-        const newProduct = Product({
-          user: req.user._id,
-          name: req.body.name,
-          description: req.body.description,
-          price: req.body.price,
-          images: [newImage],
-        });
-
-        newProduct.save().then((product) => res.json(product));
+    multerUploads(req, res, (err) => {
+      let { errors, isValid } = validateProductInput(req.body);
+      if (!req.file) {
+        errors.image = "No image was given";
+        isValid = false;
       }
-    );
+      if (err) {
+        // errors.image = "Image error";
+        // isValid = false;
+        // TODO: can't combine errors with this. + no handling from imageUpload
+        return res.status(400).json({ image: "Please upload correct image" });
+      } else {
+        // Check Validation
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+
+        const buf = req.file.buffer.toString("base64");
+        cloudinary.uploader.upload(
+          "data:image/png;base64," + buf,
+          {
+            width: 500, // MIGHT CHANGE
+            height: 500,
+            crop: "fill",
+            gravity: "auto",
+          },
+          (err, image) => {
+            if (err) return res.status(400).json({ image: "No image found" });
+            const newImage = {
+              public_id: image.public_id,
+              url: image.url,
+            };
+
+            const newProduct = Product({
+              user: req.user._id,
+              name: req.body.name,
+              description: req.body.description,
+              price: req.body.price,
+              images: [newImage],
+            });
+
+            newProduct.save().then((product) => res.json(product));
+          }
+        );
+      }
+    });
   }
 );
 
+const printHeaders = {
+  Authorization: `Basic ${
+    process.env.PRINTFUL_API_KEY || require("../../config/keys").printful_key
+  }`,
+};
+
+// send image url, receive task_key
 router.post(
   "/print_task",
   passport.authenticate("jwt", { session: false }),
@@ -133,97 +147,100 @@ router.post(
       ],
     };
 
-    console.log();
-    console.log(222);
-
-    let temp = true;
     axios
       .post(
         "https://api.printful.com/mockup-generator/create-task/358",
         createdTaskObject,
         {
-          headers: {
-            Authorization: `Basic ${
-              process.env.PRINTFUL_API_KEY ||
-              require("../../config/keys").printful_key
-            }`,
-          },
+          headers: printHeaders,
         }
       )
       .then((result) => {
-        temp = false;
-        console.log(result.data);
-
-        console.log(result.data.result.task_key);
-
-        // axios
-        //   .get(
-        //     `https://api.printful.com/mockup-generator/task?&task_key=${result.data.result.task_key}`,
-        //     {
-        //       headers: {
-        //         Authorization: `Basic ${
-        //           process.env.PRINTFUL_API_KEY ||
-        //           require("../../config/keys").printful_key
-        //         }`,
-        //       },
-        //     }
-        //   )
-        //   .then((task_result) => {
-        //     console.log(task_result.data);
-        //     res.json(task_result.data);
-        //   });
-
-        // console.log(Object.keys(result).length);
-        // console.log(1111);
-        // if (Object.keys(result).length === 0)
-        //   return res.status(429).json({ error: "too many requests" });
-        // else res.json(result.data);
-        res.json(result.data);
+        getPrints(result.data.result.task_key, res);
       })
       .catch((err) => {
-        console.log("error");
-        res.status(429).json({ error: "Too many request. Wait a little" });
+        res.status(429).json({ error: "Too many request. Wait a minute" });
       });
-    // if (temp) return res.status(404).json({ error: "some error" });
   }
 );
 
-router.get("/aa", (req, res) => {
-  const createdTaskObject = {
-    variant_ids: [10165],
-    format: "jpg",
-    files: [
-      {
-        placement: "default",
-        image_url:
-          "http://res.cloudinary.com/dwwoxasih/image/upload/v1594899834/bk4orrv3sqtscmbxlw7v.jpg",
-        position: {
-          area_width: 1800,
-          area_height: 1800,
-          width: 1800,
-          height: 1800,
-          top: 0,
-          left: 0,
-        },
-      },
-    ],
-  };
-
+const getPrints = (task_key, res) => {
+  console.log(res);
   axios
-    .post(
-      "https://api.printful.com/mockup-generator/create-task/358",
-      createdTaskObject,
+    .get(
+      `https://api.printful.com/mockup-generator/task?&task_key=${task_key}`,
       {
-        headers: {
-          Authorization: `Basic ${
-            process.env.PRINTFUL_API_KEY ||
-            require("../../config/keys").printful_key
-          }`,
-        },
+        headers: printHeaders,
       }
     )
-    .then((result) => console.log(result.data))
-    .catch((err) => console.log(err.data));
-});
+    .then((task_result) => {
+      if (task_result.data.result.status !== "completed") {
+        getPrints(task_key, res);
+      } else return res.json(task_result.data.result.mockups[0]);
+    })
+    .catch((err) => {
+      res.status(429).json({ error: "Too many request. Please wait a minute" });
+    });
+};
+
+// TODO: COMMENTS!!! and CATCH
+router.post(
+  "/print_to_cloud/:prod_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    if (req.body.url) {
+      cloudinary.uploader.upload(
+        req.body.url,
+        {
+          width: 600, // MIGHT CHANGE
+          height: 600,
+          crop: "fill", // MIGTH CHABGE
+          gravity: "auto",
+        },
+        (err, image) => {
+          if (err) return res.status(400).json({ image: "No image found" });
+          const newImage = {
+            public_id: image.public_id,
+            url: image.url,
+          };
+          Product.findOneAndUpdate(
+            { _id: req.params.prod_id },
+            { $push: { images: newImage } },
+            { new: true }
+          ).then((product) => {
+            return res.json(product.images[1]);
+          });
+          // res.json(image);
+        }
+      );
+    } else {
+      res.status(400).json({ image: "Please attach image" });
+    }
+  }
+);
+
+//
+
+// TODO: what if result is not completed?? while loop?
+router.get(
+  "/print_img/:task_key",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    axios
+      .get(
+        `https://api.printful.com/mockup-generator/task?&task_key=${req.params.task_key}`,
+        {
+          headers: printHeaders,
+        }
+      )
+      .then((task_result) => {
+        // console.log(task_result.data);
+        res.json(task_result.data);
+      })
+      .catch((err) => {
+        res.status(429).json({ error: "Too many request. Wait a minute" });
+      });
+  }
+);
 
 module.exports = router;

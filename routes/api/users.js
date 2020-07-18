@@ -163,46 +163,56 @@ router.delete(
 router.post(
   "/avatar",
   passport.authenticate("jwt", { session: false }),
-  multerUploads,
+  // multerUploads,
   (req, res) => {
-    if (req.file) {
-      const buf = req.file.buffer.toString("base64");
-      cloudinary.uploader.upload(
-        "data:image/png;base64," + buf,
-        {
-          width: 100, // MIGHT CHANGE
-          height: 100,
-          crop: "fill",
-          gravity: "auto",
-        },
-        (err, image) => {
-          if (err) return res.send(err);
-          const avatar = {
-            public_id: image.public_id,
-            url: image.url,
-          };
+    multerUploads(req, res, (err) => {
+      // checks if the image is wrong size / wrong file type / wrong form-data name
+      if (err) {
+        return res.status(400).json({
+          image:
+            "Please upload correct image (png/jpg/jpeg, max size: 2000 * 2000)",
+        });
+      } else {
+        if (req.file) {
+          const buf = req.file.buffer.toString("base64");
+          cloudinary.uploader.upload(
+            "data:image/png;base64," + buf,
+            {
+              width: 100, // MIGHT CHANGE
+              height: 100,
+              crop: "fill",
+              gravity: "auto",
+            },
+            (err, image) => {
+              if (err) return res.status(400).json({ image: "No image found" });
+              const avatar = {
+                public_id: image.public_id,
+                url: image.url,
+              };
 
-          const oldAvatar = req.user.avatar.public_id;
+              const oldAvatar = req.user.avatar.public_id;
 
-          User.findOneAndUpdate(
-            { _id: req.user.id },
-            { avatar },
-            { new: true } // by default returns old object
-            // { useFindAndModify: false } // gives an error for some reason
-          ).then((user) => {
-            // If user has an avatar, delete it from cloudinary
-            if (oldAvatar !== null) {
-              cloudinary.uploader.destroy(oldAvatar, (err, result) => {
-                if (err) return res.send(err);
-                return res.json(user);
+              User.findOneAndUpdate(
+                { _id: req.user.id },
+                { avatar },
+                { new: true } // by default returns old object
+                // { useFindAndModify: false } // gives an error for some reason
+              ).then((user) => {
+                // If user has an avatar, delete it from cloudinary
+                if (oldAvatar !== null) {
+                  cloudinary.uploader.destroy(oldAvatar, (err, result) => {
+                    if (err) return res.send(err);
+                    return res.json(user);
+                  });
+                } else res.json(user); // maybe return just the avatar???
               });
-            } else res.json(user); // maybe return just the avatar???
-          });
+            }
+          );
+        } else {
+          res.status(400).json({ image: "No image was given" });
         }
-      );
-    } else {
-      res.status(400).json({ error: "no image" });
-    }
+      }
+    });
   }
 );
 

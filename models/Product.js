@@ -7,6 +7,15 @@ const ProductSchema = new Schema({
     type: Schema.Types.ObjectId, // owner
     ref: "users",
   },
+  bought: [
+    // which users bought the product
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    },
+  ],
   price: {
     type: Number, // centcs
     required: true,
@@ -76,6 +85,10 @@ const ProductSchema = new Schema({
       date: {
         type: Date,
         default: Date.now,
+      },
+      heading: {
+        type: String,
+        required: true,
       },
       text: {
         type: String,

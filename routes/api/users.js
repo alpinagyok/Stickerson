@@ -13,11 +13,6 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
-
 // @route   POST api/users/register
 // @desc    Register user, return token
 // @access  Public
@@ -134,8 +129,9 @@ router.post("/login", (req, res) => {
   });
 });
 
-// TODO: store, products, etc.
 // Opt. TODO: cloudinary task can be done asyncly and doens't depend on anything else
+
+// TODO: Delete Store and Products
 
 // @route   DELETE api/users
 // @desc    Delete current User + avatar

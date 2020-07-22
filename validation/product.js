@@ -36,8 +36,6 @@ module.exports = validateProductInput = (data) => {
     errors.price = "Price field is required";
   }
 
-  // TODO: image?
-
   return {
     errors,
     isValid: isEmpty(errors),

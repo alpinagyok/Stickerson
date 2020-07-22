@@ -16,11 +16,6 @@ const validateProductInput = require("../../validation/product");
 // Product Model
 const Product = require("../../models/Product");
 
-// @route   GET api/products/test
-// @desc    Tests post route
-// @access  Public
-router.get("/test/:id", (req, res) => res.json(req.params.id));
-
 // // @route   GET api/products
 // // @desc    Get all products
 // // @access  Public
@@ -135,8 +130,6 @@ router.post(
         if (!isValid) {
           return res.status(400).json(errors);
         }
-
-        // TODO: check if second image already got uploaded, if so return it
 
         // Upload to Cloudinary
         const buf = req.file.buffer.toString("base64");
@@ -281,7 +274,7 @@ const getPrints = (task_key, res) => {
 };
 
 // @route   DELETE api/products/:id
-// @desc    Delete priduct by id
+// @desc    Delete product by id
 // @access  Private
 router.delete(
   "/:id",
@@ -304,7 +297,7 @@ router.delete(
   }
 );
 
-// TODO: redo properly. currently the same id will be there many times
+// TODO: Create order
 
 // @route   POST api/products/buy/:id
 // @desc    Buy a product
@@ -316,19 +309,27 @@ router.post(
   (req, res) => {
     Product.findById(req.params.id)
       .then((product) => {
-        // if (
-        //   product.bought.filter((buyer) => buyer.user.toString() === req.user.id)
-        //     .length > 0
-        // ) {
-        //   return res
-        //     .status(400)
-        //     .json({ alreadybought: "User already bought this product" });
-        // }
+        const { bought } = product;
+        let purchaseIndex = -1;
 
-        // Add user id to likes array
-        product.bought.unshift({ user: req.user.id });
+        // Check if user already bought this product once
+        for (i = 0; i < bought.length; i++) {
+          if (bought[i].user.toString() === req.user.id) purchaseIndex = i;
+        }
+        if (purchaseIndex > -1) {
+          const { times } = bought[purchaseIndex];
 
-        product.save().then((product) => res.json(product));
+          // Increment the number of bought times
+          bought.splice(purchaseIndex, 1, {
+            user: req.user.id,
+            times: times + 1,
+          });
+          product.save().then((product) => res.json(product));
+        } else {
+          // Add user id to bought array
+          product.bought.unshift({ user: req.user.id });
+          product.save().then((product) => res.json(product));
+        }
       })
       .catch((err) =>
         res.status(404).json({ productnotfound: "No product found" })

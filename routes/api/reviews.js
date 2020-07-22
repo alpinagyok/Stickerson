@@ -1,21 +1,22 @@
+// TODO GLOBAL: don't return "bought"
+
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const axios = require("axios");
 
-// TODO: Load Input Validation
+// Load Input Validation
 const validateReviewInput = require("../../validation/review");
 
 // Product Model
 const Product = require("../../models/Product");
 
-// TODO: res product?
-// TODO: made review validation
+// TODO: res product? maybe review?
 
 // @route   POST api/reviews/:prod_id
-// @desc    Add a new product
+// @desc    Add a new review / Edit review
 // @access  Private
-// @req     image, name, description, price
+// @req     heading, text, stars
 // @res     {product}
 router.post(
   "/:prod_id",
@@ -31,22 +32,34 @@ router.post(
     // Check if the user bought the product
     Product.findById(req.params.prod_id)
       .then((product) => {
-        // if (product.bought.indexOf(req.user._id) >= 0) {
-
-        // product.bought.map((buyer) => console.log(buyer.user));
         if (
           product.bought.filter(
             (buyer) => buyer.user.toString() === req.user.id // once there was no user, check buy method
           ).length > 0
         ) {
-          // TODO: validate that this isn't 2nd review
           const newReview = {
+            user: req.user._id,
             heading: req.body.heading,
             text: req.body.text,
             stars: req.body.stars,
           };
 
-          product.reviews.unshift(newReview);
+          // validate that this isn't 2nd review
+          let isFirstRev = true;
+          let reviewerIndex;
+
+          const { reviews } = product;
+
+          for (i = 0; i < reviews.length; i++) {
+            if (reviews[i].user.toString() === req.user.id) {
+              isFirstRev = false;
+              reviewerIndex = i;
+            }
+          }
+
+          // If first review create, if second update
+          if (!isFirstRev) reviews.splice(reviewerIndex, 1, newReview);
+          else reviews.unshift(newReview);
 
           product.save().then((newProduct) => res.json(newProduct));
         } else
@@ -63,61 +76,32 @@ router.post(
   }
 );
 
-// @route   PUT api/products/:id
-// @desc    Edit a product
-// @access  Private
-// @req     name, description, price
-// @res     {product}
-router.put(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    let { errors, isValid } = validateProductInput(req.body);
-    // Check Validation
-    if (!isValid) {
-      // Return any errors
-      return res.status(400).json(errors);
-    }
-
-    // TODO: probably rewrite
-    Product.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id },
-      {
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-      },
-      { new: true }
-    )
-      .then((product) => res.json(product))
-      .catch((err) =>
-        res
-          .status(404)
-          .json({ noproductfound: "No product found with this id" })
-      );
-  }
-);
-
-// @route   DELETE api/products/:id
-// @desc    Delete priduct by id
+// @route   DELETE api/reviews/:prod_id
+// @desc    Delete review by product id
 // @access  Private
 router.delete(
-  "/:id",
+  "/:prod_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Product.findById(req.params.id)
+    Product.findById(req.params.prod_id)
       .then((product) => {
-        // ._id doesn't work here ???
-        if (req.user.id === product.user.toString()) {
-          product.remove().then(() => {
-            res.json({ sucess: true });
-          });
+        const { reviews } = product;
+
+        // Get remove index
+        let reviewerIndex = -1;
+        for (i = 0; i < reviews.length; i++) {
+          if (reviews[i].user.toString() === req.user.id) reviewerIndex = i;
+        }
+        if (reviewerIndex > -1) {
+          // Splice out of array
+          reviews.splice(reviewerIndex, 1);
+          product.save().then((product) => res.json(product));
         } else {
-          res.status(401).json({ notauthorized: "User not authorized" });
+          res.status(404).json({ noreviewfound: "No review foundddd" });
         }
       })
       .catch((err) =>
-        res.status(404).json({ noproductfound: "No product found" })
+        res.status(404).json({ noreviewfound: "No review found" })
       );
   }
 );

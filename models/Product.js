@@ -14,6 +14,10 @@ const ProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "users",
       },
+      times: {
+        type: Number,
+        default: 1,
+      },
     },
   ],
   price: {

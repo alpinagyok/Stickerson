@@ -26,7 +26,12 @@ const StoreSchema = new Schema({
     type: String,
   },
   backgroundImg: {
-    // TODO
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
   },
   date: {
     type: Date,

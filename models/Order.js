@@ -9,10 +9,12 @@ const OrderSchema = new Schema({
   },
   products: [
     {
-      // product: {
-      //   type: Schema.Types.ObjectId,
-      //   ref: "products",
-      // },
+      // To click and view
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "products",
+      },
+      // In case the product is already deleted
       price: {
         type: Number, // centcs
         required: true,
@@ -21,9 +23,14 @@ const OrderSchema = new Schema({
         type: String,
         required: true,
       },
-      // image: {
-      //   // TODO:
-      // },
+      image: {
+        public_id: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
+      },
     },
   ],
   address: {

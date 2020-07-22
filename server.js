@@ -4,9 +4,10 @@ const passport = require("passport");
 const path = require("path");
 
 const users = require("./routes/api/users");
-// const stores = require("./routes/api/stores");
+const stores = require("./routes/api/stores");
 const products = require("./routes/api/products");
 const reviews = require("./routes/api/reviews");
+const orders = require("./routes/api/orders");
 
 const app = express();
 
@@ -36,9 +37,10 @@ require("./config/passport")(passport); // passing passport as param
 
 // Use Routes
 app.use("/api/users", users);
-// app.use("/api/stores", stores);
+app.use("/api/stores", stores);
 app.use("/api/products", products);
 app.use("/api/reviews", reviews);
+app.use("/api/orders", orders);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

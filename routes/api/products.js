@@ -13,8 +13,9 @@ const printHeaders = {
 // Load Input Validation
 const validateProductInput = require("../../validation/product");
 
-// Product Model
+// Models
 const Product = require("../../models/Product");
+const Store = require("../../models/Store");
 
 // // @route   GET api/products
 // // @desc    Get all products
@@ -116,51 +117,63 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     multerUploads(req, res, (err) => {
-      // Validate input
-      let { errors, isValid } = validateProductInput(req.body);
-      if (!req.file) {
-        errors.image = "No image was given";
-        isValid = false;
-      }
-      if (err) {
-        // TODO: can't combine errors with this. + no handling from imageUpload
-        return res.status(400).json({ image: "Please upload correct image" });
-      } else {
-        // Check Validation
-        if (!isValid) {
-          return res.status(400).json(errors);
-        }
-
-        // Upload to Cloudinary
-        const buf = req.file.buffer.toString("base64");
-        cloudinary.uploader.upload(
-          "data:image/png;base64," + buf,
-          {
-            width: 500, // MIGHT CHANGE
-            height: 500,
-            crop: "fill",
-            gravity: "auto",
-          },
-          (err, image) => {
-            if (err) return res.status(400).json({ image: "No image found" });
-            const newImage = {
-              public_id: image.public_id,
-              url: image.url,
-            };
-
-            // Add to DB
-            const newProduct = Product({
-              user: req.user._id,
-              name: req.body.name,
-              description: req.body.description,
-              price: req.body.price,
-              images: [newImage],
-            });
-
-            newProduct.save().then((product) => res.json(product));
+      // Check that the user has a store
+      Store.findOne({ user: req.user.id }).then((store) => {
+        if (store) {
+          // Validate input
+          let { errors, isValid } = validateProductInput(req.body);
+          if (!req.file) {
+            errors.image = "No image was given";
+            isValid = false;
           }
-        );
-      }
+          if (err) {
+            // TODO: can't combine errors with this. + no handling from imageUpload
+            return res
+              .status(400)
+              .json({ image: "Please upload correct image" });
+          } else {
+            // Check Validation
+            if (!isValid) {
+              return res.status(400).json(errors);
+            }
+
+            // Upload to Cloudinary
+            const buf = req.file.buffer.toString("base64");
+            cloudinary.uploader.upload(
+              "data:image/png;base64," + buf,
+              {
+                width: 500, // MIGHT CHANGE
+                height: 500,
+                crop: "fill",
+                gravity: "auto",
+              },
+              (err, image) => {
+                if (err)
+                  return res.status(400).json({ image: "No image found" });
+                const newImage = {
+                  public_id: image.public_id,
+                  url: image.url,
+                };
+
+                // Add to DB
+                const newProduct = Product({
+                  user: req.user._id,
+                  name: req.body.name,
+                  description: req.body.description,
+                  price: req.body.price,
+                  images: [newImage],
+                });
+
+                newProduct.save().then((product) => res.json(product));
+              }
+            );
+          }
+        } else {
+          res
+            .status(400)
+            .json({ nostore: "Please create a store before posting products" });
+        }
+      });
     });
   }
 );
@@ -297,7 +310,7 @@ router.delete(
   }
 );
 
-// TODO: Create order
+// Only used for statistics, orders will be created separately
 
 // @route   POST api/products/buy/:id
 // @desc    Buy a product

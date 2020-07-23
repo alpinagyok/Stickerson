@@ -3,36 +3,36 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { changeAvatar } from "../../actions/authActions";
+import classnames from "classnames";
 
 import loading from "./loading.gif";
 
 class UserSettings extends Component {
   state = {
-    selectedFile: null,
     avatarSending: false,
+    errors: {},
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.user) {
       this.setState({ avatarSending: false });
     }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChangeFile = (e) => {
-    this.setState({
-      selectedFile: e.target.files[0],
-    });
-  };
-
-  onSubmit = () => {
     this.setState({ avatarSending: true });
     const formData = new FormData();
-    formData.append("image", this.state.selectedFile);
+    formData.append("image", e.target.files[0]);
     this.props.changeAvatar(formData);
   };
 
   render() {
     const { user } = this.props.auth;
+    const { errors } = this.state;
     return (
       <div className="container">
         <img
@@ -42,23 +42,11 @@ class UserSettings extends Component {
           style={{ width: "200px", marginRight: "5px" }}
           title="AAAAA"
         />
-
-        <h1 className="center red-text">React Image Upload</h1>
-        <div className="file-field input-field">
-          <div className="btn">
-            <span>Browse</span>
-            <input type="file" name="image" onChange={this.onChangeFile} />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
-
-        <div className="center">
-          <button onClick={this.onSubmit} className="btn center">
-            Change Avatar
-          </button>
-        </div>
+        <label className="btn btn-primary btn-lg">
+          Change Avatar
+          <input type="file" name="image" onChange={this.onChangeFile} hidden />
+        </label>
+        {errors.image ? <span>{errors.image}</span> : null}
       </div>
     );
   }

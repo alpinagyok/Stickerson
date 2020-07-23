@@ -61,6 +61,7 @@ export const loginUser = (userData) => (dispatch) => {
 
 // Set logged in user
 export const setCurrentUser = (decoded) => {
+  // localStorage.setItem("userAvatar", decoded.avatar);
   return {
     type: SET_CURRENT_USER,
     payload: decoded,
@@ -81,10 +82,16 @@ export const changeAvatar = (formData) => (dispatch) => {
   axios
     .post("api/users/avatar", formData)
     .then((res) => {
-      dispatch({
-        type: SET_CURRENT_USER,
-        payload: res.data,
-      });
+      // Save to localStorage
+      const { token } = res.data;
+      // Set token to ls (ls only stores strings)
+      localStorage.setItem("jwtToken", token);
+      // Set token to Auth header
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
+      // Set current user
+      dispatch(setCurrentUser(decoded));
     })
     .catch((err) =>
       dispatch({

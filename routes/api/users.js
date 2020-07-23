@@ -106,6 +106,7 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // User Matched
 
+        // TODO: refactor into func
         // Create JWT Payload
         const payload = { id: user.id, name: user.name, avatar: user.avatar };
 
@@ -200,13 +201,37 @@ router.post(
                 { new: true } // by default returns old object
                 // { useFindAndModify: false } // gives an error for some reason
               ).then((user) => {
-                // If user has an avatar, delete it from cloudinary
-                if (oldAvatar !== null) {
-                  cloudinary.uploader.destroy(oldAvatar, (err, result) => {
-                    if (err) return res.send(err);
-                    return res.json(user);
-                  });
-                } else res.json(user); // maybe return just the avatar???
+                // Create JWT Payload
+                const payload = {
+                  id: user.id,
+                  name: user.name,
+                  avatar: user.avatar,
+                };
+
+                // Sign Token (so the avatar changes in localStorage)
+                jwt.sign(
+                  payload,
+                  process.env.SECRET || require("../../config/keys").secret,
+                  {
+                    expiresIn: 3600, // TODO: refresh
+                  },
+                  (err, token) => {
+                    // If user has an avatar, delete it from cloudinary
+                    if (oldAvatar !== null) {
+                      cloudinary.uploader.destroy(oldAvatar, (err, result) => {
+                        if (err) return res.send(err);
+                        return res.json({
+                          success: true,
+                          token: "Bearer " + token,
+                        });
+                      });
+                    } else
+                      res.json({
+                        success: true,
+                        token: "Bearer " + token,
+                      });
+                  }
+                );
               });
             }
           );

@@ -12,9 +12,32 @@ const validateStoreInput = require("../../validation/store");
 // Models
 const Store = require("../../models/Store");
 
+// @route   GET api/stores
+// @desc    Get all stores
+// @access  Public
+router.get("/", (req, res) => {
+  Store.find()
+    .sort({ date: -1 })
+    .populate("user", ["name", "avatar"])
+    .then((stores) => res.json(stores))
+    .catch((err) => res.status(404).json({ nostorefound: "No store found" }));
+});
+
+// @route   GET api/stores/:id
+// @desc    Get store by id
+// @access  Public
+router.get("/:id", (req, res) => {
+  Store.findById(req.params.id)
+    .populate("user", ["name", "avatar"])
+    .then((store) => res.json(store))
+    .catch((err) =>
+      res.status(404).json({ nostorefound: "No store found with that id" })
+    );
+});
+
 // Maybe TODO: add ability to edit handle
 
-// @route   POST api/store
+// @route   POST api/stores
 // @desc    Create or Edit user store (doesn't include image)
 // @access  Private
 router.post(
@@ -67,7 +90,7 @@ router.post(
   }
 );
 
-// @route   POST api/store/background
+// @route   POST api/stores/background
 // @desc    Change store's background.
 // @access  Private
 router.post(

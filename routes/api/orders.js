@@ -97,7 +97,7 @@ router.post(
           // Prepare product object for order
           productsForOrder.push({
             // TODO: change to _id??
-            prod_id: allProducts[i]._id,
+            product: allProducts[i]._id,
             name: allProducts[i].name,
             price: allProducts[i].price,
             image: allProducts[i].images[0].url,

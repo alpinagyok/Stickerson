@@ -17,9 +17,9 @@ const validateProductInput = require("../../validation/product");
 const Product = require("../../models/Product");
 const Store = require("../../models/Store");
 
-// // @route   GET api/products
-// // @desc    Get all products
-// // @access  Public
+// @route   GET api/products
+// @desc    Get all products
+// @access  Public
 router.get("/", (req, res) => {
   Product.find()
     .sort({ date: -1 })
@@ -31,9 +31,9 @@ router.get("/", (req, res) => {
 
 // Not needed?
 
-// // @route   GET api/products/my
-// // @desc    Get current user's products
-// // @access  Public
+// @route   GET api/products/my
+// @desc    Get current user's products
+// @access  Public
 router.get(
   "/my",
   passport.authenticate("jwt", { session: false }),
@@ -47,9 +47,9 @@ router.get(
   }
 );
 
-// // @route   GET api/products/user/:id
-// // @desc    Get specific users products
-// // @access  Public
+// @route   GET api/products/user/:id
+// @desc    Get specific users products
+// @access  Public
 router.get("/user/:id", (req, res) => {
   Product.find({ user: req.params.id })
     .sort({ date: -1 })
@@ -59,9 +59,9 @@ router.get("/user/:id", (req, res) => {
     );
 });
 
-// // @route   GET api/products/:id
-// // @desc    Get product by id
-// // @access  Public
+// @route   GET api/products/:id
+// @desc    Get product by id
+// @access  Public
 router.get("/:id", (req, res) => {
   Product.findById(req.params.id)
     .then((product) => res.json(product))

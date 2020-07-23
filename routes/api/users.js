@@ -12,6 +12,8 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+const Product = require("../../models/Product");
+const Store = require("../../models/Store");
 
 // @route   POST api/users/register
 // @desc    Register user, return token
@@ -131,10 +133,10 @@ router.post("/login", (req, res) => {
 
 // Opt. TODO: cloudinary task can be done asyncly and doens't depend on anything else
 
-// TODO: Delete Store and Products
+// TODO: Delete Store's background image from cloudinary
 
 // @route   DELETE api/users
-// @desc    Delete current User + avatar
+// @desc    Delete current User + avatar + user's products and store
 // @access  Private
 router.delete(
   "/",
@@ -142,13 +144,17 @@ router.delete(
   (req, res) => {
     const avatar = req.user.avatar.public_id;
 
-    User.findOneAndRemove({ _id: req.user.id }).then(() => {
-      if (avatar !== null) {
-        cloudinary.uploader.destroy(avatar, (err, result) => {
-          if (err) return res.send(err);
-          return res.json({ sucess: true });
+    Product.deleteMany({ user: req.user.id }).then(() => {
+      Store.findOneAndRemove({ user: req.user.id }).then(() => {
+        User.findOneAndRemove({ _id: req.user.id }).then(() => {
+          if (avatar !== null) {
+            cloudinary.uploader.destroy(avatar, (err, result) => {
+              if (err) return res.send(err);
+              return res.json({ sucess: true });
+            });
+          } else res.json({ sucess: true });
         });
-      } else res.json({ sucess: true });
+      });
     });
   }
 );
@@ -211,7 +217,5 @@ router.post(
     });
   }
 );
-
-// TODO: get all users? or stores?
 
 module.exports = router;

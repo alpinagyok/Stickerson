@@ -23,14 +23,23 @@ const OrderSchema = new Schema({
         type: String,
         required: true,
       },
+      // no need for id, because it won't be deleted from here.
       image: {
-        public_id: {
-          type: String,
-        },
-        url: {
-          type: String,
-        },
+        type: String,
+        required: true,
       },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+      // image: {
+      //   public_id: {
+      //     type: String,
+      //   },
+      //   url: {
+      //     type: String,
+      //   },
+      // },
     },
   ],
   address: {

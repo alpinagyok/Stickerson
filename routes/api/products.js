@@ -330,12 +330,12 @@ router.post(
           if (bought[i].user.toString() === req.user.id) purchaseIndex = i;
         }
         if (purchaseIndex > -1) {
-          const { times } = bought[purchaseIndex];
+          const { quantity } = bought[purchaseIndex];
 
-          // Increment the number of bought times
+          // Increment the number of bought quantity
           bought.splice(purchaseIndex, 1, {
             user: req.user.id,
-            times: times + 1,
+            quantity: quantity + 1,
           });
           product.save().then((product) => res.json(product));
         } else {

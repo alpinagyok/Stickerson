@@ -8,6 +8,7 @@ const validateOrderInput = require("../../validation/order");
 // Models
 const Product = require("../../models/Product");
 const Order = require("../../models/Order");
+const product = require("../../validation/product");
 
 // // @route   GET api/orders
 // // @desc    Get orders by current user
@@ -39,7 +40,7 @@ router.get("/:id", (req, res) => {
 // @route   POST api/orders
 // @desc    Buy a order
 // @access  Private
-// @req     [product (id), price, name, image (public_id, url), user, address, phone, delivery-price ]
+// @req     [product (id), quantity], user, address, phone
 // @res     {order}
 router.post(
   "/",
@@ -57,56 +58,79 @@ router.post(
     Product.find({ _id: { $in: ids } })
       .then((allProducts) => {
         let promises = [];
+        let productsForOrder = [];
+
+        // TODO LATER: return those products
+        if (allProducts.length !== ids.length)
+          return res
+            .status(404)
+            .json({ productsnotfound: "Some of the products are not found" });
 
         for (i = 0; i < allProducts.length; i++) {
-          // console.log(allProducts[i]);
           const { bought } = allProducts[i];
-          console.log(bought);
           let purchaseIndex = -1;
 
-          console.log(bought[0].user);
-          // Check if user already bought this product once
+          // How many of the same product are in an order
+          const quantityInCart = req.body.products.filter(
+            (prod) => prod._id === allProducts[i]._id.toString()
+          )[0].quantity;
 
-          // wtf happens here????
-          for (i = 0; i < bought.length; i++) {
-            // console.log(1);
-            // if (bought[i].user.toString() === req.user.id) purchaseIndex = i;
+          // Check if user already bought this product once
+          for (j = 0; j < bought.length; j++) {
+            if (bought[j].user.toString() === req.user.id) purchaseIndex = j;
           }
           if (purchaseIndex > -1) {
-            const { times } = bought[purchaseIndex];
+            const { quantity } = bought[purchaseIndex];
 
-            // Increment the number of bought times
+            // Increment the number of bought quantity
             bought.splice(purchaseIndex, 1, {
               user: req.user.id,
-              times: times + 1,
+              quantity: quantity + quantityInCart,
             });
           } else {
             // Add user id to bought array
-            bought.unshift({ user: req.user.id });
+            bought.unshift({ user: req.user.id, quantity: quantityInCart });
           }
-          // // Save
-          // // console.log(allProducts[i]);
+          // Save
           promises.push(allProducts[i].save());
+
+          // Prepare product object for order
+          productsForOrder.push({
+            // TODO: change to _id??
+            prod_id: allProducts[i]._id,
+            name: allProducts[i].name,
+            price: allProducts[i].price,
+            image: allProducts[i].images[0].url,
+            quantity: quantityInCart,
+          });
         }
 
-        return Promise.all(promises);
-      })
-      .then((resp, err) => {
-        if (!err) res.json(11);
-        else res.json(err);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json("err");
-        // reject({ productnotfound: "No product found" })
-        // new Error({ productnotfound: "No product found" })
-      });
+        // After every product is "bought", create order
+        Promise.all(promises).then(() => {
+          const newOrder = Order({
+            products: productsForOrder,
+            user: req.user.id,
+            address: req.body.address,
+            phone: req.body.phone,
+            deliveryPrice: calculateDelivery(
+              productsForOrder,
+              req.body.address
+            ),
+          });
 
-    // console.log(promises);
-    // Promise.all(promises)
-    //   .then(res.json(111))
-    //   .catch((err) => res.json(err));
+          newOrder.save().then((order) => res.json(order));
+        });
+      })
+      // doesn't really seem to be needed
+      .catch(() => {
+        res.status(404).json({ products: "Not found" });
+      });
   }
 );
+
+// MAYBE TODO: normal calculation
+const calculateDelivery = (products, address) => {
+  return 200 * products.length;
+};
 
 module.exports = router;

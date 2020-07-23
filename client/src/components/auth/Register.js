@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { registerUser, clearErrors } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { CLEAR_ERRORS } from "../../actions/types";
 
 class Register extends Component {
   state = {
@@ -11,6 +12,7 @@ class Register extends Component {
     email: "",
     password: "",
     password2: "",
+    errors: {},
   };
 
   onChange = (e) => {
@@ -20,6 +22,17 @@ class Register extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+
+    // No need to clear errors, errors will show only after request
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
 
@@ -33,11 +46,11 @@ class Register extends Component {
       password2: this.state.password2,
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUser);
   };
 
   render() {
-    const { errors } = this.props;
+    const { errors } = this.state;
 
     return (
       <div className="register">
@@ -90,6 +103,7 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
@@ -100,4 +114,6 @@ const mapStateToProps = (state) => ({
 });
 
 // withRouter is for redirecting
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(mapStateToProps, { registerUser, clearErrors })(
+  withRouter(Register)
+);

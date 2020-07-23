@@ -2,10 +2,15 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  CHANGE_AVATAR,
+  CLEAR_ERRORS,
+} from "./types";
 
 // Register User                        // better way that putting dispatch (thunk) function inside dispatch
-export const registerUser = (userData, history) => (dispatch) => {
+export const registerUser = (userData) => (dispatch) => {
   // we are dealing with async data
   axios
     .post("/api/users/register", userData)
@@ -70,4 +75,28 @@ export const logoutUser = () => (dispatch) => {
   setAuthToken(false);
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+};
+
+export const changeAvatar = (formData) => (dispatch) => {
+  axios
+    .post("api/users/avatar", formData)
+    .then((res) => {
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// TODO maybe: make errorActions for this?
+export const clearErrors = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };

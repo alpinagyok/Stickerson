@@ -22,6 +22,7 @@ class Login extends Component {
       this.props.history.push("/");
     }
 
+    // No need to clear errors, errors will show only after request
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -52,7 +53,7 @@ class Login extends Component {
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
               <p className="lead text-center">
-                Sign in to your DevConnector account
+                Sign in to your StickerSon account
               </p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup

@@ -23,10 +23,10 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(404).json({ nostorefound: "No store found" }));
 });
 
-// @route   GET api/stores/:id
+// @route   GET api/stores/find/:id
 // @desc    Get store by id
 // @access  Public
-router.get("/:id", (req, res) => {
+router.get("/find/:id", (req, res) => {
   Store.findOne({ _id: req.params.id })
     .populate("user", ["name", "avatar"])
     .then((store) => res.json(store))
@@ -34,6 +34,25 @@ router.get("/:id", (req, res) => {
       res.status(404).json({ nostorefound: "No store found with that id" })
     );
 });
+
+// need this?
+
+// @route   GET api/stores/my
+// @desc    Get my store
+// @access  Private
+router.get(
+  "/my",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Store.findOne({ user: req.user.id })
+      .populate("user", ["name", "avatar"])
+      .then((store) => res.json(store))
+      .catch((err) => {
+        console.log(err);
+        res.status(404).json({ nostorefound: "No store found with that id" });
+      });
+  }
+);
 
 // Maybe TODO: add ability to edit handle
 
@@ -81,9 +100,8 @@ router.post(
             errors.handle = "That handle already exists";
             res.status(400).json(errors);
           }
-
           // Save store
-          new Store(storeFields).save().then((store) => res.json(store));
+          else new Store(storeFields).save().then((store) => res.json(store));
         });
       }
     });

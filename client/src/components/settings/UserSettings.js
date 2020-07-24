@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { changeAvatar } from "../../actions/authActions";
 import classnames from "classnames";
 
-import loading from "./loading.gif";
+import loading from "../common/loading.gif";
 
 class UserSettings extends Component {
   state = {
@@ -35,6 +35,7 @@ class UserSettings extends Component {
     const { errors } = this.state;
     return (
       <div className="container">
+        <h1>User Settings</h1>
         <img
           className="rounded-circle"
           src={this.state.avatarSending ? loading : user.avatar.url}

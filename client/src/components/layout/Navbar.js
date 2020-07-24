@@ -14,9 +14,7 @@ class Navbar extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    // console.log(user);             // {}
-    // console.log(user.avatar);      // undefined
-    // console.log(user.avatar.url);  // error
+
     let avatar;
     if (user.avatar) {
       if (user.avatar.url === null) {
@@ -28,16 +26,28 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <a href="/" onClick={this.onLogoutClick} className="nav-link">
-          <img
-            className="rounded-circle"
-            src={avatar}
-            alt={user.name}
-            style={{ width: "25px", marginRight: "5px" }}
-            title="AAAAA"
-          />
-          Logout
-        </a>
+        <li className="nav-item">
+          <Link className="nav-link" to="/cart">
+            Cart
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/mystore">
+            Store
+          </Link>
+        </li>
+        <li className="nav-item">
+          <a href="/" onClick={this.onLogoutClick} className="nav-link">
+            <img
+              className="rounded-circle"
+              src={avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="AAAAA"
+            />
+            Logout
+          </a>
+        </li>
       </ul>
     );
 
@@ -77,6 +87,12 @@ class Navbar extends Component {
                 <Link className="nav-link" to="/products">
                   {" "}
                   Products
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/stores">
+                  {" "}
+                  Stores
                 </Link>
               </li>
             </ul>

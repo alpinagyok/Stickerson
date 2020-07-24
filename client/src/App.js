@@ -16,7 +16,8 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Test from "./components/common/Test";
 import Footer from "./components/layout/Footer";
-import UserSettings from "./components/common/UserSettings";
+import Settings from "./components/settings/Settings";
+import StoreFull from "./components/stores/StoreFull";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -46,7 +47,12 @@ class App extends Component {
         <Router>
           <Navbar />
           <Route exact path="/test" component={Test} />
-          <Route exact path="/settings" component={UserSettings} />
+          <Switch>
+            <PrivateRoute exact path="/settings" component={Settings} />
+          </Switch>
+          <Switch>
+            <PrivateRoute exact path="/mystore" component={StoreFull} />
+          </Switch>
           <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/register" component={Register} />

@@ -7,6 +7,7 @@ import {
   SET_CURRENT_USER,
   CHANGE_AVATAR,
   CLEAR_ERRORS,
+  SET_MY_STORE,
 } from "./types";
 
 // Register User                        // better way that putting dispatch (thunk) function inside dispatch
@@ -76,6 +77,10 @@ export const logoutUser = () => (dispatch) => {
   setAuthToken(false);
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  dispatch({
+    type: SET_MY_STORE,
+    payload: "empty",
+  });
 };
 
 export const changeAvatar = (formData) => (dispatch) => {

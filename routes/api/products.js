@@ -47,11 +47,11 @@ router.get(
   }
 );
 
-// @route   GET api/products/user/:id
-// @desc    Get specific users products
+// @route   GET api/products/store/:id
+// @desc    Get specific stores products
 // @access  Public
-router.get("/user/:id", (req, res) => {
-  Product.find({ user: req.params.id })
+router.get("/store/:id", (req, res) => {
+  Product.find({ store: req.params.id })
     .sort({ date: -1 })
     .then((product) => res.json(product))
     .catch((err) =>
@@ -117,6 +117,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     multerUploads(req, res, (err) => {
+      // TODO in the future: choose the store
       // Check that the user has a store
       Store.findOne({ user: req.user.id }).then((store) => {
         if (store) {
@@ -158,6 +159,7 @@ router.post(
                 // Add to DB
                 const newProduct = Product({
                   user: req.user._id,
+                  store: store._id,
                   name: req.body.name,
                   description: req.body.description,
                   price: req.body.price,
@@ -306,46 +308,6 @@ router.delete(
       })
       .catch((err) =>
         res.status(404).json({ noproductfound: "No product found" })
-      );
-  }
-);
-
-// Only used for statistics, orders will be created separately
-
-// @route   POST api/products/buy/:id
-// @desc    Buy a product
-// @access  Private
-// @res     TODO: rethink. just success??
-router.post(
-  "/buy/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Product.findById(req.params.id)
-      .then((product) => {
-        const { bought } = product;
-        let purchaseIndex = -1;
-
-        // Check if user already bought this product once
-        for (i = 0; i < bought.length; i++) {
-          if (bought[i].user.toString() === req.user.id) purchaseIndex = i;
-        }
-        if (purchaseIndex > -1) {
-          const { quantity } = bought[purchaseIndex];
-
-          // Increment the number of bought quantity
-          bought.splice(purchaseIndex, 1, {
-            user: req.user.id,
-            quantity: quantity + 1,
-          });
-          product.save().then((product) => res.json(product));
-        } else {
-          // Add user id to bought array
-          product.bought.unshift({ user: req.user.id });
-          product.save().then((product) => res.json(product));
-        }
-      })
-      .catch((err) =>
-        res.status(404).json({ productnotfound: "No product found" })
       );
   }
 );

@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 // @desc    Get store by id
 // @access  Public
 router.get("/:id", (req, res) => {
-  Store.findById(req.params.id)
+  Store.findOne({ _id: req.params.id })
     .populate("user", ["name", "avatar"])
     .then((store) => res.json(store))
     .catch((err) =>

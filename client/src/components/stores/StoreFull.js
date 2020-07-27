@@ -42,7 +42,8 @@ class StoreFull extends Component {
         </div>
       );
     else {
-      const { url } = myStore.user.avatar;
+      // In case updating user's name is added in the future, we use auth store here
+      const { user } = this.props.auth;
 
       foundStore = (
         <div className="row">
@@ -52,13 +53,13 @@ class StoreFull extends Component {
                 <div className="col-4 col-md-3 m-auto">
                   <img
                     className="rounded-circle"
-                    src={url === null ? default_avatar : url}
+                    src={user.avatar.url}
                     alt=""
                   />
                 </div>
               </div>
               <div className="text-center">
-                <h1 className="display-4 text-center">{myStore.user.name}</h1>
+                <h1 className="display-4 text-center">{user.name}</h1>
                 <p className="lead text-center">{myStore.name}</p>
                 <p>
                   {isEmpty(myStore.location) ? null : `${myStore.location}`}
@@ -97,15 +98,15 @@ class StoreFull extends Component {
 
 StoreFull.propTypes = {
   getMyStore: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
   // errors: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  // auth: state.authStore,
   // errors: state.errorsStore,
   store: state.storeStore,
+  auth: state.authStore,
 });
 
 export default connect(mapStateToProps, { getMyStore })(StoreFull);

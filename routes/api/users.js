@@ -35,7 +35,8 @@ router.post("/register", (req, res) => {
     } else {
       const avatar = {
         public_id: null,
-        url: null,
+        url:
+          "https://res.cloudinary.com/dwwoxasih/image/upload/v1595839298/default_avatar_clrbq4.png",
       };
       const newUser = new User({
         name: req.body.name,

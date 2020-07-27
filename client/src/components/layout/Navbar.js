@@ -17,11 +17,7 @@ class Navbar extends Component {
 
     let avatar;
     if (user.avatar) {
-      if (user.avatar.url === null) {
-        avatar = default_avatar;
-      } else {
-        avatar = user.avatar.url;
-      }
+      avatar = user.avatar.url;
     }
 
     const authLinks = (

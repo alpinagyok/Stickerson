@@ -35,6 +35,18 @@ router.get("/find/:id", (req, res) => {
     );
 });
 
+// @route   GET api/stores/handle/:handle
+// @desc    Get store by handle
+// @access  Public
+router.get("/handle/:handle", (req, res) => {
+  Store.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then((store) => res.json(store))
+    .catch((err) =>
+      res.status(404).json({ nostorefound: "No store found with that handle" })
+    );
+});
+
 // need this?
 
 // @route   GET api/stores/my
@@ -92,7 +104,11 @@ router.post(
         ).then((store) => res.json(store));
       } else {
         // Create
-        storeFields.backgroundImg = { public_id: null, url: null };
+        storeFields.backgroundImg = {
+          public_id: null,
+          url:
+            "https://res.cloudinary.com/dwwoxasih/image/upload/v1595853987/default_back_wocbr7.jpg",
+        };
 
         // Check if handle exists
         Store.findOne({ handle: storeFields.handle }).then((store) => {

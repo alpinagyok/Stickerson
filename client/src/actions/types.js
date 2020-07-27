@@ -5,3 +5,5 @@ export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 export const SET_MY_STORE = "SET_MY_STORE";
+export const SET_MY_USER = "SET_MY_USER";
+export const SET_STORE = "SET_STORE";

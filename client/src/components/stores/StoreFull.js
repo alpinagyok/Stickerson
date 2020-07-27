@@ -3,83 +3,65 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getMyStore } from "../../actions/storeActions";
-
-import default_avatar from "../common/default_avatar.png";
+import { getMyStore, getStoreByHandle } from "../../actions/storeActions";
 import isEmpty from "../../validation/is_empty";
 
 import Loading from "../common/Loading";
+import StoreHeader from "./StoreHeader";
+import StoreFooter from "./StoreFooter";
 
 class StoreFull extends Component {
   state = {
     loading: false,
   };
 
-  // Load store
+  // store and myStore are practically the same. I want to leave myStore in memory separately so it won't need reloading
   componentWillMount() {
-    if (this.props.store.myStore === "empty") {
-      this.props.getMyStore();
-      this.setState({ loading: true });
+    // If this is from /store/:handle, load store
+    if (this.props.match.params.handle) {
+      // Won't reload store if you still have old one in redux
+      if (this.props.store.store.handle !== this.props.match.params.handle) {
+        this.props.getStoreByHandle(this.props.match.params.handle);
+        this.setState({ loading: true });
+      }
+      // Else work with myStore
+    } else {
+      if (this.props.store.myStore === "empty") {
+        this.props.getMyStore();
+        this.setState({ loading: true });
+      }
     }
   }
 
-  // stop loading when myStore is loaded
+  // stop loading when store is loaded
   componentWillReceiveProps(nextProps) {
-    if (nextProps.store.myStore) {
-      this.setState({ loading: false });
-    }
+    this.setState({ loading: false });
   }
 
+  // if my: myStore; else: store
   render() {
-    let foundStore;
-    const { myStore } = this.props.store;
+    let storeContent;
+    // Chekc if we're working with myStore or store
+    let storeInfo;
+    if (this.props.match.params.handle) storeInfo = this.props.store.store;
+    else storeInfo = this.props.store.myStore;
 
-    if (this.state.loading) foundStore = <Loading size="20px" />;
-    else if (myStore === null)
-      foundStore = (
+    if (this.state.loading) storeContent = <Loading size="20px" />;
+    else if (storeInfo === null)
+      storeContent = (
         <div>
           <h1>No store</h1>
         </div>
       );
     else {
-      // In case updating user's name is added in the future, we use auth store here
-      const { user } = this.props.auth;
-
-      foundStore = (
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card card-body bg-info text-white mb-3">
-              <div className="row">
-                <div className="col-4 col-md-3 m-auto">
-                  <img
-                    className="rounded-circle"
-                    src={user.avatar.url}
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className="text-center">
-                <h1 className="display-4 text-center">{user.name}</h1>
-                <p className="lead text-center">{myStore.name}</p>
-                <p>
-                  {isEmpty(myStore.location) ? null : `${myStore.location}`}
-                </p>
-                <p>
-                  {isEmpty(myStore.website) ? null : (
-                    <a
-                      className="text-white p-2"
-                      // this works weirdly, not entirely sure
-                      href={`http://${myStore.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i className="fas fa-globe fa-2x"></i>
-                    </a>
-                  )}
-                </p>
-                <p>{isEmpty(myStore.bio) ? null : `${myStore.bio}`}</p>
-              </div>
-            </div>
+      storeContent = (
+        <div>
+          <StoreHeader store={storeInfo} />
+          <div className="container">
+            {/* TODO: welcome to: {store.name} */}
+            <h1>{storeInfo.name}</h1>
+            {/* TODO: Products (List) */}
+            <StoreFooter store={storeInfo} />
           </div>
         </div>
       );
@@ -87,10 +69,10 @@ class StoreFull extends Component {
 
     return (
       <div>
-        <Link to="/settings">Settings</Link>
+        {/* <Link to="/settings">Settings</Link>
         <Link to="/mystore">Store</Link>
-        <h1>My Store</h1>
-        {foundStore}
+        <h1>My Store</h1> */}
+        {storeContent}
       </div>
     );
   }
@@ -98,15 +80,16 @@ class StoreFull extends Component {
 
 StoreFull.propTypes = {
   getMyStore: PropTypes.func.isRequired,
+  getStoreByHandle: PropTypes.func.isRequired,
   // errors: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   // errors: state.errorsStore,
   store: state.storeStore,
-  auth: state.authStore,
 });
 
-export default connect(mapStateToProps, { getMyStore })(StoreFull);
+export default connect(mapStateToProps, { getMyStore, getStoreByHandle })(
+  StoreFull
+);

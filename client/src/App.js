@@ -53,6 +53,9 @@ class App extends Component {
           <Switch>
             <PrivateRoute exact path="/mystore" component={StoreFull} />
           </Switch>
+          <Switch>
+            <PrivateRoute exact path="/store/:handle" component={StoreFull} />
+          </Switch>
           <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/register" component={Register} />

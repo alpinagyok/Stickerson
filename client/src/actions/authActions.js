@@ -8,6 +8,7 @@ import {
   CHANGE_AVATAR,
   CLEAR_ERRORS,
   SET_MY_STORE,
+  SET_MY_USER,
 } from "./types";
 
 // Register User                        // better way that putting dispatch (thunk) function inside dispatch
@@ -97,6 +98,11 @@ export const changeAvatar = (formData) => (dispatch) => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+      // Change user in myStore
+      dispatch({
+        type: SET_MY_USER,
+        payload: decoded,
+      });
     })
     .catch((err) =>
       dispatch({

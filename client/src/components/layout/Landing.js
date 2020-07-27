@@ -6,7 +6,7 @@ class Landing extends Component {
     return (
       <div>
         <div className="landing m-lg-5 m-md-3">
-          <img src="./img/showcase.jmp" alt=""></img>
+          {/* <img src="./img/showcase.jpg" alt=""></img> */}
           <div className="landing-centered">
             <h1 className="font-weight-bold text-light">
               Find you Sticker, Son

@@ -70,7 +70,11 @@ class StoreFull extends Component {
             <h1>{storeInfo.name}</h1>
             {/* redo to button or load component */}
             {this.props.match.params.handle ? null : (
-              <Link to="/settings">Edit</Link>
+              <div>
+                <Link to="/settings">Edit</Link>
+                {/* refactor to show component later? */}
+                <Link to="/create-product">New Product</Link>
+              </div>
             )}
             {/* TODO: Products (List) */}
             <StoreFooter store={storeInfo} />

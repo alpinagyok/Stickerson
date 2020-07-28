@@ -18,6 +18,8 @@ import Test from "./components/common/Test";
 import Footer from "./components/layout/Footer";
 import Settings from "./components/settings/Settings";
 import StoreFull from "./components/stores/StoreFull";
+import CreateProduct from "./components/forms/CreateProduct";
+import ProductFull from "./components/products/ProductFull";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -54,7 +56,17 @@ class App extends Component {
             <PrivateRoute exact path="/mystore" component={StoreFull} />
           </Switch>
           <Switch>
+            <PrivateRoute
+              exact
+              path="/create-product"
+              component={CreateProduct}
+            />
+          </Switch>
+          <Switch>
             <PrivateRoute exact path="/stores/:handle" component={StoreFull} />
+          </Switch>
+          <Switch>
+            <PrivateRoute exact path="/products/:id" component={ProductFull} />
           </Switch>
           <Route exact path="/" component={Landing} />
           <div className="container">

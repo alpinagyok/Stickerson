@@ -109,6 +109,13 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.store-image-change {
+  position: absolute;
+  right: 0.5em;
+  top: 2em;
+  transform: translate(0%, -50%);
+}
+
 /* for development */
 /* * {
   border-style: solid;

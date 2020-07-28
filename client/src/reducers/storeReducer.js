@@ -1,4 +1,10 @@
-import { SET_MY_STORE, SET_MY_USER, SET_STORE } from "../actions/types";
+import {
+  SET_MY_STORE,
+  SET_MY_USER,
+  SET_STORE,
+  GET_LOADED_STORE,
+  SET_MY_BACKGROUND,
+} from "../actions/types";
 
 const initialState = {
   myStore: "empty",
@@ -26,6 +32,17 @@ export default (state = initialState, action) => {
           user: action.payload,
         },
       };
+    case SET_MY_BACKGROUND:
+      return {
+        ...state,
+        myStore: {
+          ...state.myStore,
+          backgroundImg: action.payload,
+        },
+      };
+    case GET_LOADED_STORE:
+      // change myStore to trigger WillReceiveProps
+      return { ...state, myStore: state.myStore };
     default:
       return state;
   }

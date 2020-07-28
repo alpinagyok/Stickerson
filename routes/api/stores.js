@@ -101,7 +101,10 @@ router.post(
           { user: req.user.id },
           { $set: storeFields },
           { new: true }
-        ).then((store) => res.json(store));
+        ).then((store) => {
+          store.user = req.user;
+          res.json(store);
+        });
       } else {
         // Create
         storeFields.backgroundImg = {
@@ -117,7 +120,12 @@ router.post(
             res.status(400).json(errors);
           }
           // Save store
-          else new Store(storeFields).save().then((store) => res.json(store));
+          else
+            new Store(storeFields).save().then((store) => {
+              // Add user data to response, so new store can be immediately loaded after creating
+              store.user = req.user;
+              res.json(store);
+            });
         });
       }
     });
@@ -147,7 +155,7 @@ router.post(
               cloudinary.uploader.upload(
                 "data:image/png;base64," + buf,
                 {
-                  width: 1000, // MIGHT CHANGE
+                  width: 1500, // MIGHT CHANGE
                   height: 500,
                   crop: "fill",
                   gravity: "auto",
@@ -170,9 +178,9 @@ router.post(
                     if (oldImg !== null) {
                       cloudinary.uploader.destroy(oldImg, (err, result) => {
                         if (err) return res.send(err); // TODO: change to own errors?
-                        return res.json(newStore);
+                        return res.json(newStore.backgroundImg);
                       });
-                    } else res.json(newStore); // maybe return just the backgroundImg???
+                    } else res.json(newStore.backgroundImg); // or maybe whole store? but then populate with user
                   });
                 }
               );

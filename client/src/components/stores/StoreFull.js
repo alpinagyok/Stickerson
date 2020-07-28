@@ -9,7 +9,10 @@ import isEmpty from "../../validation/is_empty";
 import Loading from "../common/Loading";
 import StoreHeader from "./StoreHeader";
 import StoreFooter from "./StoreFooter";
+import CreateStore from "../forms/CreateStore";
+import MyStoreHeader from "./MyStoreHeader";
 
+// Maybe divide into 2 components again? It will be easier to history.push()
 class StoreFull extends Component {
   state = {
     loading: false,
@@ -47,19 +50,28 @@ class StoreFull extends Component {
     else storeInfo = this.props.store.myStore;
 
     if (this.state.loading) storeContent = <Loading size="20px" />;
-    else if (storeInfo === null)
-      storeContent = (
-        <div>
-          <h1>No store</h1>
-        </div>
-      );
-    else {
-      storeContent = (
-        <div>
-          <StoreHeader store={storeInfo} />
+    else if (storeInfo === null) {
+      if (this.props.match.params.handle)
+        storeContent = (
           <div className="container">
-            {/* TODO: welcome to: {store.name} */}
+            <h1>No store found</h1>
+          </div>
+        );
+      else storeContent = <CreateStore />;
+    } else {
+      storeContent = (
+        <div>
+          {this.props.match.params.handle ? (
+            <StoreHeader store={storeInfo} />
+          ) : (
+            <MyStoreHeader />
+          )}
+          <div className="container">
             <h1>{storeInfo.name}</h1>
+            {/* redo to button or load component */}
+            {this.props.match.params.handle ? null : (
+              <Link to="/settings">Edit</Link>
+            )}
             {/* TODO: Products (List) */}
             <StoreFooter store={storeInfo} />
           </div>
@@ -67,14 +79,7 @@ class StoreFull extends Component {
       );
     }
 
-    return (
-      <div>
-        {/* <Link to="/settings">Settings</Link>
-        <Link to="/mystore">Store</Link>
-        <h1>My Store</h1> */}
-        {storeContent}
-      </div>
-    );
+    return <div>{storeContent}</div>;
   }
 }
 

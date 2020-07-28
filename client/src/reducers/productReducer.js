@@ -1,4 +1,8 @@
-import { SET_PRODUCT, GET_LOADED_PRODUCT } from "../actions/types";
+import {
+  SET_PRODUCT,
+  GET_LOADED_PRODUCT,
+  SET_PRODUCT_IMG,
+} from "../actions/types";
 
 const initialState = {
   product: {},
@@ -11,6 +15,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         product: action.payload,
+      };
+    case SET_PRODUCT_IMG:
+      return {
+        ...state,
+        // maybe it's a bit too much...?
+        product: {
+          ...state.product,
+          images: [...state.product.images, action.payload],
+        },
       };
     case GET_LOADED_PRODUCT:
       return { ...state, product: state.product };

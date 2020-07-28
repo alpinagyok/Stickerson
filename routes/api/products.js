@@ -279,7 +279,13 @@ const getPrints = (task_key, res) => {
     .then((task_result) => {
       if (task_result.data.result.status !== "completed") {
         getPrints(task_key, res);
-      } else return res.json(task_result.data.result.mockups[0]);
+      } else {
+        const randNum = Math.floor(Math.random() * 3) + 1;
+        // Returns random mockup from 3 available
+        return res.json({
+          url: task_result.data.result.mockups[0].extra[randNum].url,
+        });
+      }
     })
     .catch((err) => {
       res

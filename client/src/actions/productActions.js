@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, SET_PRODUCT } from "./types";
+import { GET_ERRORS, SET_PRODUCT, SET_PRODUCT_IMG } from "./types";
 
 export const createProduct = (data, history) => (dispatch) => {
   axios
@@ -21,6 +21,23 @@ export const createProduct = (data, history) => (dispatch) => {
         payload: err.response.data,
       });
     });
+};
+
+// TODO: url hell... refactor
+export const createPrint = (url, prod_id) => (dispatch) => {
+  axios
+    .post("/api/products/print_task", url)
+    .then((res) =>
+      axios
+        .post(`/api/products/print_to_cloud/${prod_id}`, { url: res.data.url })
+        .then((resp) =>
+          dispatch({
+            type: SET_PRODUCT_IMG,
+            payload: resp.data,
+          })
+        )
+    )
+    .catch((err) => console.log("err"));
 };
 
 // TODO: rethink catch

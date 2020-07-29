@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   GET_ERRORS,
   SET_PRODUCT,
+  SET_PRODUCTS,
   SET_PRODUCT_IMG,
   CLEAR_ERRORS,
 } from "./types";
@@ -66,6 +67,23 @@ export const getProduct = (id) => (dispatch) => {
     .catch((err) =>
       dispatch({
         type: SET_PRODUCT,
+        payload: {},
+      })
+    );
+};
+
+export const getProducts = () => (dispatch) => {
+  axios
+    .get("/api/products")
+    .then((res) =>
+      dispatch({
+        type: SET_PRODUCTS,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: SET_PRODUCTS,
         payload: {},
       })
     );

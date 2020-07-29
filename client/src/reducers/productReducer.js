@@ -1,12 +1,13 @@
 import {
   SET_PRODUCT,
+  SET_PRODUCTS,
   GET_LOADED_PRODUCT,
   SET_PRODUCT_IMG,
 } from "../actions/types";
 
 const initialState = {
   product: {},
-  products: {},
+  products: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +16,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         product: action.payload,
+      };
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
       };
     case SET_PRODUCT_IMG:
       return {

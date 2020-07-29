@@ -184,7 +184,10 @@ router.post(
                   images: [newImage],
                 });
 
-                newProduct.save().then((product) => res.json(product));
+                newProduct.save().then((product) => {
+                  product.user = req.user;
+                  res.json(product);
+                });
               }
             );
           }

@@ -4,6 +4,8 @@ import {
   GET_ERRORS,
   SET_PRODUCT,
   SET_PRODUCTS,
+  SET_MY_PRODUCTS,
+  ADD_MY_PRODUCT,
   SET_PRODUCT_IMG,
   CLEAR_ERRORS,
 } from "./types";
@@ -18,6 +20,10 @@ export const createProduct = (data, history) => (dispatch) => {
       //   payload: res.data,
       // });
       // TODO LATER: maybe add extra link if tag "link".
+      dispatch({
+        type: ADD_MY_PRODUCT,
+        payload: res.data,
+      });
       history.push(`/products/${res.data._id}`);
     })
     .catch((err) => {
@@ -84,6 +90,23 @@ export const getProducts = () => (dispatch) => {
     .catch((err) =>
       dispatch({
         type: SET_PRODUCTS,
+        payload: {},
+      })
+    );
+};
+
+export const getMyProducts = () => (dispatch) => {
+  axios
+    .get("/api/products/my")
+    .then((res) =>
+      dispatch({
+        type: SET_MY_PRODUCTS,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: SET_MY_PRODUCTS,
         payload: {},
       })
     );

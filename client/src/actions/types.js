@@ -16,6 +16,8 @@ export const SET_MY_BACKGROUND = "SET_MY_BACKGROUND";
 // Products
 export const SET_PRODUCT = "SET_PRODUCT";
 export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_MY_PRODUCTS = "SET_MY_PRODUCTS";
+export const ADD_MY_PRODUCT = "ADD_MY_PRODUCT";
 export const GET_LOADED_PRODUCT = "GET_LOADED_PRODUCT";
 export const SET_PRODUCT_IMG = "SET_PRODUCT_IMG";
 

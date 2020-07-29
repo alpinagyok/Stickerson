@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { GET_ERRORS, SET_PRODUCT, SET_PRODUCT_IMG } from "./types";
+import {
+  GET_ERRORS,
+  SET_PRODUCT,
+  SET_PRODUCT_IMG,
+  CLEAR_ERRORS,
+} from "./types";
 
 export const createProduct = (data, history) => (dispatch) => {
   axios
@@ -30,14 +35,22 @@ export const createPrint = (url, prod_id) => (dispatch) => {
     .then((res) =>
       axios
         .post(`/api/products/print_to_cloud/${prod_id}`, { url: res.data.url })
-        .then((resp) =>
+        .then((resp) => {
           dispatch({
             type: SET_PRODUCT_IMG,
             payload: resp.data,
-          })
-        )
+          });
+          dispatch({
+            type: CLEAR_ERRORS,
+          });
+        })
     )
-    .catch((err) => console.log("err"));
+    .catch((err) =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 };
 
 // TODO: rethink catch

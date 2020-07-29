@@ -33,6 +33,10 @@ class EditStore extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
+    // store can be null
+    if (nextProps.store.myStore !== this.props.store.myStore)
+      this.setState({ loading: false });
+
     if (nextProps.store.myStore) {
       const { myStore } = nextProps.store;
 

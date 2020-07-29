@@ -16,12 +16,17 @@ const validateProductInput = require("../../validation/product");
 // Models
 const Product = require("../../models/Product");
 const Store = require("../../models/Store");
+const User = require("../../models/User");
 
 // @route   GET api/products
 // @desc    Get all products
 // @access  Public
 router.get("/", (req, res) => {
   Product.find()
+    .populate([
+      { path: "user", model: User, select: ["name"] },
+      { path: "store", model: Store, select: ["name", "handle"] },
+    ])
     .sort({ date: -1 })
     .then((product) => res.json(product))
     .catch((err) =>
@@ -39,6 +44,10 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Product.find({ user: req.user._id })
+      .populate([
+        { path: "user", model: User, select: ["name"] },
+        { path: "store", model: Store, select: ["name", "handle"] },
+      ])
       .sort({ date: -1 })
       .then((product) => res.json(product))
       .catch((err) =>
@@ -52,6 +61,10 @@ router.get(
 // @access  Public
 router.get("/store/:id", (req, res) => {
   Product.find({ store: req.params.id })
+    .populate([
+      { path: "user", model: User, select: ["name"] },
+      { path: "store", model: Store, select: ["name", "handle"] },
+    ])
     .sort({ date: -1 })
     .then((product) => res.json(product))
     .catch((err) =>
@@ -64,10 +77,15 @@ router.get("/store/:id", (req, res) => {
 // @access  Public
 router.get("/:id", (req, res) => {
   Product.findById(req.params.id)
+    .populate([
+      { path: "user", model: User, select: ["name"] },
+      { path: "store", model: Store, select: ["name", "handle"] },
+    ])
     .then((product) => res.json(product))
-    .catch((err) =>
-      res.status(404).json({ noproductfound: "No product found with that id" })
-    );
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json({ noproductfound: "No product found with that id" });
+    });
 });
 
 // TODO: add image edit later (maybe)
@@ -143,8 +161,8 @@ router.post(
             cloudinary.uploader.upload(
               "data:image/png;base64," + buf,
               {
-                width: 500, // MIGHT CHANGE
-                height: 500,
+                width: 1000, // MIGHT CHANGE
+                height: 1000,
                 crop: "fill",
                 gravity: "auto",
               },
@@ -240,8 +258,8 @@ router.post(
       cloudinary.uploader.upload(
         req.body.url,
         {
-          width: 600, // MIGHT CHANGE
-          height: 600,
+          width: 1000, // MIGHT CHANGE
+          height: 1000,
           crop: "fill", // MIGTH CHABGE
           gravity: "auto",
         },

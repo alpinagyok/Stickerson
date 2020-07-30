@@ -4,6 +4,7 @@ import {
   SET_STORE,
   GET_LOADED_STORE,
   SET_MY_BACKGROUND,
+  SET_STORES,
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +24,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         store: action.payload,
+      };
+    case SET_STORES:
+      return {
+        ...state,
+        stores: action.payload,
       };
     case SET_MY_USER:
       return {

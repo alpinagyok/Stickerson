@@ -13,7 +13,7 @@ class ProductList extends Component {
       // default case
       productsView = (
         <div className="container">
-          <div className="row">{productItems}</div>
+          <div className="row no-gutters">{productItems}</div>
         </div>
       );
 

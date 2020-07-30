@@ -5,6 +5,8 @@ import { getProducts, getProductsByStore } from "../../actions/productActions";
 import ProductPreview from "./ProductPreview";
 import ProductList from "./ProductList";
 
+import loading from "../common/loading-prod.gif";
+
 class Products extends Component {
   state = {
     loading: false,
@@ -25,7 +27,7 @@ class Products extends Component {
     let productItems;
 
     if (products === null || this.state.loading) {
-      productItems = <h1>Loading Products</h1>;
+      productItems = <img src={loading} alt="Loading..." />;
     } else {
       if (products.length > 0) {
         productItems = (
@@ -38,9 +40,7 @@ class Products extends Component {
 
     return (
       <div className="products">
-        <div className="container">
-          <div className="row">{productItems}</div>
-        </div>
+        <div>{productItems}</div>
       </div>
     );
   }

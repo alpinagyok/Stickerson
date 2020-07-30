@@ -109,6 +109,15 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.store-user-info-preview {
+  position: absolute;
+  /* doesn't center image correctly but works for now */
+  top: 130%;
+  left: 50%;
+  /* width: 200px; */
+  transform: translate(-50%, -50%);
+}
+
 .store-image-change {
   position: absolute;
   right: 0.5em;

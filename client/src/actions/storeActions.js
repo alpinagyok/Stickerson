@@ -7,12 +7,22 @@ import {
   GET_LOADED_STORE,
   SET_MY_BACKGROUND,
   CLEAR_ERRORS,
+  SET_STORES,
 } from "./types";
 
 export const getMyStore = () => (dispatch) => {
   axios.get("/api/stores/my").then((res) =>
     dispatch({
       type: SET_MY_STORE,
+      payload: res.data,
+    })
+  );
+};
+
+export const getStores = () => (dispatch) => {
+  axios.get("/api/stores").then((res) =>
+    dispatch({
+      type: SET_STORES,
       payload: res.data,
     })
   );

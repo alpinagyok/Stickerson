@@ -67,7 +67,7 @@ class ProductFull extends Component {
           </div>
           <div className="col-md-4">
             {/* TODO: cool loading fields */}
-            <h1>Loading Product</h1>
+            {/* <h1>Loading Product</h1> */}
           </div>
         </div>
       );

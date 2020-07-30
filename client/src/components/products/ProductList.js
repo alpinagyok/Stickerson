@@ -4,6 +4,7 @@ import ProductPreview from "./ProductPreview";
 class ProductList extends Component {
   render() {
     const { products } = this.props;
+
     const productItems = products.map((product) => (
       <ProductPreview key={product._id} product={product} />
     ));
@@ -16,9 +17,39 @@ class ProductList extends Component {
           <div className="row no-gutters">{productItems}</div>
         </div>
       );
+    else if (this.props.type === "horizontal")
+      productsView = (
+        <div className="container horizontal-scroll">
+          <div className="row no-gutters">{productItems}</div>
+        </div>
+      );
 
     return <div>{productsView}</div>;
   }
 }
 
 export default ProductList;
+
+// TODO MAYBE:
+// if (this.props.type === "horizontal") {
+//   for (let i = 0; i < products.length; i += 2) {
+//     let divToAdd;
+//     if (products.length - 1 !== i)
+//       divToAdd = (
+//         <div>
+//           <ProductPreview key={products[i]._id} product={products[i]} />
+//           <ProductPreview
+//             key={products[i + 1]._id}
+//             product={products[i + 1]}
+//           />
+//         </div>
+//       );
+//     else
+//       divToAdd = (
+//         <div>
+//           <ProductPreview key={products[i]._id} product={products[i]} />
+//         </div>
+//       );
+//     productItems.push(divToAdd);
+//   }
+// }

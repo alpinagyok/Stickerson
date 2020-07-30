@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Products from "../products/Products";
+import Stores from "../stores/Stores";
 
 class Landing extends Component {
   render() {
@@ -17,8 +19,12 @@ class Landing extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
+              <hr />
               <h3 className="mb-4 mt-4">Shop Products</h3>
-              {/* TODO: Products */}
+              <Products type="horizontal" />
+              <hr />
+              <h3 className="mb-4 mt-4">Feautured Stores</h3>
+              <Stores type="horizontal" />
               <hr />
               <Link to="/register" className="btn btn-lg btn-info mr-2">
                 Sign Up
@@ -26,39 +32,12 @@ class Landing extends Component {
               <Link to="/login" className="btn btn-lg btn-light">
                 Login
               </Link>
+              <hr />
             </div>
           </div>
         </div>
         {/* <div style={{ height: "800px" }}>ad</div> */}
       </div>
-      // <div>
-      //   <section>
-      //     <div className="container">
-      //       <div className="row align-items-center">
-      //         <div className="col-lg-6 order-lg-2">
-      //           <div className="p-5">
-      //             <img
-      //               className="img-fluid rounded-circle"
-      //               src="img/01.jpg"
-      //               alt=""
-      //             ></img>
-      //           </div>
-      //         </div>
-      //         <div className="col-lg-6 order-lg-1">
-      //           <div className="p-5">
-      //             <h2 className="display-4">For those about to rock...</h2>
-      //             <p>
-      //               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      //               Quod aliquid, mollitia odio veniam sit iste esse assumenda
-      //               amet aperiam exercitationem, ea animi blanditiis recusandae!
-      //               Ratione voluptatum molestiae adipisci, beatae obcaecati.
-      //             </p>
-      //           </div>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </section>
-      // </div>
     );
   }
 }

@@ -125,6 +125,12 @@ body {
   transform: translate(0%, -50%);
 }
 
+.horizontal-scroll > .row {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  /* overflow-x: scroll; */
+}
+
 /* for development */
 /* * {
   border-style: solid;

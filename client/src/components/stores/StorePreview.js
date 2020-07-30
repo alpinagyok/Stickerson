@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class StorePreview extends Component {
   render() {
@@ -12,8 +13,8 @@ class StorePreview extends Component {
         className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12
          p-2"
       >
-        <a
-          href={`/stores/${this.props.store.handle}`}
+        <Link
+          to={`/stores/${this.props.store.handle}`}
           className="text-decoration-none"
         >
           <div className="border border-info rounded">
@@ -34,7 +35,7 @@ class StorePreview extends Component {
             </div>
             <div style={{ height: "150px" }}></div>
           </div>
-        </a>
+        </Link>
       </div>
     );
   }

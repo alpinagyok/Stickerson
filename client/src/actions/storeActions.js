@@ -49,7 +49,6 @@ export const createStore = (data, history) => (dispatch) => {
   axios
     .post("/api/stores", data)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: SET_MY_STORE,
         payload: res.data,
@@ -57,7 +56,6 @@ export const createStore = (data, history) => (dispatch) => {
       history.push("/mystore");
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,

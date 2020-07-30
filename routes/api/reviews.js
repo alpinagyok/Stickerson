@@ -68,7 +68,6 @@ router.post(
           });
       })
       .catch((err) => {
-        console.log(err);
         res
           .status(404)
           .json({ noproductfound: "No product found with this id" });

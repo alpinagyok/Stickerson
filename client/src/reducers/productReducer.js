@@ -5,7 +5,11 @@ import {
   ADD_MY_PRODUCT,
   GET_LOADED_PRODUCT,
   SET_PRODUCT_IMG,
+  DELETE_PRODUCT,
+  EDIT_MY_PRODUCT,
 } from "../actions/types";
+
+import isEmpty from "../validation/is_empty";
 
 const initialState = {
   product: {},
@@ -37,6 +41,19 @@ export default (state = initialState, action) => {
         myProducts: [action.payload, ...temp],
       };
     }
+    case EDIT_MY_PRODUCT: {
+      // TODO
+      return {
+        ...state,
+        myProducts: state.myProducts.map((myProduct) =>
+          myProduct._id === action.payload._id
+            ? // transform the one with a matching id
+              action.payload
+            : // otherwise return original myProduct
+              myProduct
+        ),
+      };
+    }
     case SET_PRODUCT_IMG:
       return {
         ...state,
@@ -48,6 +65,15 @@ export default (state = initialState, action) => {
       };
     case GET_LOADED_PRODUCT:
       return { ...state, product: state.product };
+    case DELETE_PRODUCT:
+      if (!isEmpty(state.myProducts))
+        return {
+          ...state,
+          myProducts: state.myProducts.filter(
+            (myProduct) => myProduct._id !== action.payload
+          ),
+        };
+      else return { ...state };
     default:
       return state;
   }

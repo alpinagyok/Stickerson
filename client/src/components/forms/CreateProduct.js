@@ -35,8 +35,6 @@ class CreateProduct extends Component {
     formData.append("description", this.state.description);
     formData.append("price", this.state.price);
 
-    console.log(formData);
-
     this.props.createProduct(formData, this.props.history);
   };
 

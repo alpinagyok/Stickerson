@@ -83,7 +83,6 @@ router.get("/:id", (req, res) => {
     ])
     .then((product) => res.json(product))
     .catch((err) => {
-      console.log(err);
       res.status(404).json({ noproductfound: "No product found with that id" });
     });
 });
@@ -116,7 +115,13 @@ router.put(
       },
       { new: true }
     )
-      .then((product) => res.json(product))
+      .populate([
+        { path: "store", model: Store, select: ["name", "handle"] },
+        { path: "user", model: User, select: ["name"] },
+      ])
+      .then((product) => {
+        res.json(product);
+      })
       .catch((err) =>
         res
           .status(404)

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
+import { Link } from "react-router-dom";
 
 class ProductPreview extends Component {
   state = {
@@ -45,8 +46,8 @@ class ProductPreview extends Component {
         onPointerEnter={this.handleFlip}
       >
         {/* TODO: remove link style */}
-        <a
-          href={`/products/${this.props.product._id}`}
+        <Link
+          to={`/products/${this.props.product._id}`}
           className="text-decoration-none"
         >
           <div className="border border-info rounded">
@@ -57,7 +58,7 @@ class ProductPreview extends Component {
               <h4>{price}$</h4>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     );
   }

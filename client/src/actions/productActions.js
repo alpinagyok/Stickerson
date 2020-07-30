@@ -8,7 +8,11 @@ import {
   ADD_MY_PRODUCT,
   SET_PRODUCT_IMG,
   CLEAR_ERRORS,
+  DELETE_PRODUCT,
+  EDIT_MY_PRODUCT,
 } from "./types";
+
+import { browserHistory } from "react-router-dom";
 
 export const createProduct = (data, history) => (dispatch) => {
   axios
@@ -25,6 +29,28 @@ export const createProduct = (data, history) => (dispatch) => {
         payload: res.data,
       });
       history.push(`/products/${res.data._id}`);
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const editProduct = (id, data) => (dispatch) => {
+  axios
+    .put(`/api/products/${id}`, data)
+    .then((res) => {
+      dispatch({
+        type: EDIT_MY_PRODUCT,
+        payload: res.data,
+      });
+      dispatch({
+        type: SET_PRODUCT,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -127,4 +153,20 @@ export const getMyProducts = () => (dispatch) => {
         payload: {},
       })
     );
+};
+
+export const deleteProduct = (id, history) => (dispatch) => {
+  axios.delete(`/api/products/${id}`).then((res) => {
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload: id,
+    });
+    history.push("/mystore");
+  });
+  // .catch((err) =>
+  //   dispatch({
+  //     type: GET_ERRORS,
+  //     payload: err.response.data,
+  //   })
+  // );
 };

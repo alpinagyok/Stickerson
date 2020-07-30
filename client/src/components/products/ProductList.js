@@ -9,7 +9,8 @@ class ProductList extends Component {
     ));
 
     let productsView;
-    if (this.props.type === "all")
+    if (this.props.type === "all" || !this.props.type)
+      // default case
       productsView = (
         <div className="container">
           <div className="row">{productItems}</div>

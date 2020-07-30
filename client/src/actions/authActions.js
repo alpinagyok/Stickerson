@@ -9,6 +9,7 @@ import {
   CLEAR_ERRORS,
   SET_MY_STORE,
   SET_MY_USER,
+  SET_MY_PRODUCTS,
 } from "./types";
 
 // Register User                        // better way that putting dispatch (thunk) function inside dispatch
@@ -81,6 +82,10 @@ export const logoutUser = () => (dispatch) => {
   dispatch({
     type: SET_MY_STORE,
     payload: "empty",
+  });
+  dispatch({
+    type: SET_MY_PRODUCTS,
+    payload: null,
   });
 };
 

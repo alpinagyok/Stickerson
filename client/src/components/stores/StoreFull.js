@@ -13,6 +13,7 @@ import CreateStore from "../forms/CreateStore";
 import MyStoreHeader from "./MyStoreHeader";
 import Products from "../products/Products";
 import MyProducts from "../products/MyProducts";
+import store from "../../store";
 
 // Maybe divide into 2 components again? It will be easier to history.push()
 class StoreFull extends Component {
@@ -83,7 +84,11 @@ class StoreFull extends Component {
                 <Link to="/create-product">New Product</Link>
               </div>
             )}
-            {this.props.match.params.handle ? <Products /> : <MyProducts />}
+            {this.props.match.params.handle ? (
+              <Products store={storeInfo._id} />
+            ) : (
+              <MyProducts />
+            )}
             <StoreFooter store={storeInfo} />
           </div>
         </div>

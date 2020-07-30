@@ -95,6 +95,23 @@ export const getProducts = () => (dispatch) => {
     );
 };
 
+export const getProductsByStore = (store) => (dispatch) => {
+  axios
+    .get(`/api/products/store/${store}`)
+    .then((res) =>
+      dispatch({
+        type: SET_PRODUCTS,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch({
+        type: SET_PRODUCTS,
+        payload: {},
+      })
+    );
+};
+
 export const getMyProducts = () => (dispatch) => {
   axios
     .get("/api/products/my")

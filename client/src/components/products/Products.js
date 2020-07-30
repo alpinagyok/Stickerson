@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getProducts } from "../../actions/productActions";
+import { getProducts, getProductsByStore } from "../../actions/productActions";
 import ProductPreview from "./ProductPreview";
 import ProductList from "./ProductList";
 
@@ -12,7 +12,8 @@ class Products extends Component {
 
   componentWillMount() {
     this.setState({ loading: true });
-    this.props.getProducts();
+    if (this.props.store) this.props.getProductsByStore(this.props.store);
+    else this.props.getProducts();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,7 +28,9 @@ class Products extends Component {
       productItems = <h1>Loading Products</h1>;
     } else {
       if (products.length > 0) {
-        productItems = <ProductList products={products} type="all" />;
+        productItems = (
+          <ProductList products={products} type={this.props.type} />
+        );
       } else {
         productItems = <h4>No products found...</h4>;
       }
@@ -45,6 +48,7 @@ class Products extends Component {
 
 Products.propTypes = {
   getProducts: PropTypes.func.isRequired,
+  getProductsByStore: PropTypes.func.isRequired,
   products: PropTypes.object.isRequired,
 };
 
@@ -52,4 +56,6 @@ const mapStateToProps = (state) => ({
   products: state.productStore,
 });
 
-export default connect(mapStateToProps, { getProducts })(Products);
+export default connect(mapStateToProps, { getProducts, getProductsByStore })(
+  Products
+);

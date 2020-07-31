@@ -26,3 +26,8 @@ export const EDIT_MY_PRODUCT = "EDIT_MY_PRODUCT";
 
 // Cart
 export const LOAD_CART = "LOAD_CART";
+
+// Orders
+export const GET_ORDER = "GET_ORDER";
+export const GET_ORDERS = "GET_ORDERS";
+export const ADD_ORDER = "ADD_ORDER";

@@ -15,6 +15,7 @@ module.exports = validateStoreInput = (data) => {
   data.address.street = !isEmpty(data.address.street)
     ? data.address.street
     : "";
+  data.deliveryPrice = !isEmpty(data.deliveryPrice) ? data.deliveryPrice : "";
 
   if (!Validator.isMobilePhone(data.phone)) {
     errors.phone = "Not a valid phone number";
@@ -38,6 +39,20 @@ module.exports = validateStoreInput = (data) => {
 
   if (isEmpty(data.products)) {
     errors.products = "No products to order";
+  }
+
+  const deliveryPrice = Math.floor(Number(data.deliveryPrice));
+  if (
+    deliveryPrice === Infinity ||
+    String(deliveryPrice) !== data.deliveryPrice ||
+    deliveryPrice <= 0 ||
+    isNaN(data.deliveryPrice)
+  ) {
+    errors.deliveryPrice = "Delivery price must be a proper number";
+  }
+
+  if (Validator.isEmpty(data.deliveryPrice.toString())) {
+    errors.deliveryPrice = "Delivery price field is required";
   }
 
   // Maybe TODO: validate address' existence

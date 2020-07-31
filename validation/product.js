@@ -27,7 +27,12 @@ module.exports = validateProductInput = (data) => {
   }
 
   const price = Math.floor(Number(data.price));
-  if (price === Infinity || String(price) !== data.price || price < 0) {
+  if (
+    price === Infinity ||
+    String(price) !== data.price ||
+    price <= 0 ||
+    isNaN(data.price)
+  ) {
     errors.price = "Price must be a proper number";
   }
 

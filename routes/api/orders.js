@@ -40,7 +40,7 @@ router.get("/:id", (req, res) => {
 // @route   POST api/orders
 // @desc    Buy a order
 // @access  Private
-// @req     [product (id), quantity], user, address, phone
+// @req     [product (id), quantity], user, address, phone, deliveryPrice
 // @res     {order}
 router.post(
   "/",
@@ -53,7 +53,7 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const ids = req.body.products.map((prod) => prod._id);
+    const ids = req.body.products.map((prod) => prod.id);
 
     Product.find({ _id: { $in: ids } })
       .then((allProducts) => {
@@ -72,7 +72,7 @@ router.post(
 
           // How many of the same product are in an order
           const quantityInCart = req.body.products.filter(
-            (prod) => prod._id === allProducts[i]._id.toString()
+            (prod) => prod.id === allProducts[i]._id.toString()
           )[0].quantity;
 
           // Check if user already bought this product once
@@ -112,17 +112,15 @@ router.post(
             user: req.user.id,
             address: req.body.address,
             phone: req.body.phone,
-            deliveryPrice: calculateDelivery(
-              productsForOrder,
-              req.body.address
-            ),
+            deliveryPrice: req.body.deliveryPrice,
           });
 
           newOrder.save().then((order) => res.json(order));
         });
       })
       // doesn't really seem to be needed
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         res.status(404).json({ products: "Not found" });
       });
   }

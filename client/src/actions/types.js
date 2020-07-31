@@ -25,4 +25,4 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_MY_PRODUCT = "EDIT_MY_PRODUCT";
 
 // Cart
-export const ADD_TO_CART = "ADD_TO_CART";
+export const LOAD_CART = "LOAD_CART";

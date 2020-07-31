@@ -1,16 +1,11 @@
-import { ADD_TO_CART } from "../actions/types";
+import { LOAD_CART } from "../actions/types";
 
-const initialState = {
-  cart: [],
-};
+const initialState = JSON.parse(localStorage.getItem("cart"));
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, action.payload],
-      };
+    case LOAD_CART:
+      return JSON.parse(localStorage.getItem("cart"));
     default:
       return state;
   }

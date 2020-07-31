@@ -9,6 +9,8 @@ import {
   deleteProduct,
 } from "../../actions/productActions";
 
+import { addToCart } from "../../actions/cartActions";
+
 import ReactCardFlip from "react-card-flip";
 import loading_gif from "../common/loading-prod.gif";
 
@@ -56,6 +58,16 @@ class ProductFull extends Component {
 
   handleEditButton = (id) => {
     this.setState((prevState) => ({ isModalOpen: !prevState.isModalOpen }));
+  };
+
+  handleAddToCartButton = (product) => {
+    const item = {
+      id: product._id,
+      name: product.name,
+      image: product.images[0].url,
+      price: product.price,
+    };
+    this.props.addToCart(item);
   };
 
   render() {
@@ -150,7 +162,12 @@ class ProductFull extends Component {
             </div>
             <h1>{price}$</h1>
             <h5>{product.description}</h5>
-            <button className="btn btn-md btn-danger">Add to Cart</button>
+            <button
+              onClick={this.handleAddToCartButton.bind(this, product)}
+              className="btn btn-md btn-danger"
+            >
+              Add to Cart
+            </button>
           </div>
           {ownerButtons}
         </div>
@@ -165,6 +182,7 @@ ProductFull.propTypes = {
   getProduct: PropTypes.func.isRequired,
   createPrint: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
   products: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
@@ -180,4 +198,5 @@ export default connect(mapStateToProps, {
   getProduct,
   createPrint,
   deleteProduct,
+  addToCart,
 })(ProductFull);

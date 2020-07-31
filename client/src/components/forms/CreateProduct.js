@@ -33,7 +33,8 @@ class CreateProduct extends Component {
     formData.append("image", this.state.image);
     formData.append("name", this.state.name);
     formData.append("description", this.state.description);
-    formData.append("price", this.state.price);
+    // rissssky. hopefully nothing bad happens
+    formData.append("price", Math.round(this.state.price * 100));
 
     this.props.createProduct(formData, this.props.history);
   };
@@ -79,14 +80,13 @@ class CreateProduct extends Component {
             error={errors.description}
             info="A unique description of your product"
           />
-          {/* TODO: change to numbers only */}
           <TextFieldGroup
-            placeholder="* Price"
+            placeholder="* Price (e.g 1.99)"
             name="price"
             value={this.state.price}
             onChange={this.onChange}
             error={errors.price}
-            info="Damn that's expensive"
+            info="Please enter your profit margin. Base pay of 5$ will be added to the total price"
           />
           {this.state.loading ? (
             <img src={loading} alt="loading..."></img>

@@ -168,6 +168,7 @@ class ProductFull extends Component {
             >
               Add to Cart
             </button>
+            <p>Added on {String(product.date).split("T")[0]}</p>
           </div>
           {ownerButtons}
         </div>

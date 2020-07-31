@@ -28,6 +28,7 @@ class StoreFooter extends Component {
                   )}
                 </p>
                 <p>{isEmpty(store.bio) ? null : `${store.bio}`}</p>
+                <p>Opened on {String(store.date).split("T")[0]}</p>
               </div>
             </div>
           </div>

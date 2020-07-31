@@ -53,11 +53,7 @@ class StoreFull extends Component {
     else storeInfo = this.props.store.myStore;
 
     if (this.state.loading)
-      storeContent = (
-        // <div className="col-lg-8">
-        <img src={Loading} alt="loading"></img>
-        // </div>
-      );
+      storeContent = <img src={Loading} alt="loading"></img>;
     else if (storeInfo === null) {
       if (this.props.match.params.handle)
         storeContent = (
@@ -76,12 +72,14 @@ class StoreFull extends Component {
           )}
           <div className="container">
             <h1>{storeInfo.name}</h1>
-            {/* redo to button or load component */}
             {this.props.match.params.handle ? null : (
               <div>
-                <Link to="/settings">Edit</Link>
-                {/* refactor to show component later? */}
-                <Link to="/create-product">New Product</Link>
+                <Link to="/settings" className="btn btn-md btn-info">
+                  Edit
+                </Link>
+                <Link to="/create-product" className="btn btn-md btn-primary">
+                  New Product
+                </Link>
               </div>
             )}
             {this.props.match.params.handle ? (
@@ -102,12 +100,10 @@ class StoreFull extends Component {
 StoreFull.propTypes = {
   getMyStore: PropTypes.func.isRequired,
   getStoreByHandle: PropTypes.func.isRequired,
-  // errors: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  // errors: state.errorsStore,
   store: state.storeStore,
 });
 

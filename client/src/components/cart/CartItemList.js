@@ -5,9 +5,13 @@ class CartItemList extends Component {
   render() {
     const { products } = this.props;
 
-    const productItems = products.map((product) => (
-      <CartItem key={product._id} product={product} />
-    ));
+    // Get rid of map-null error
+    const productItems =
+      products === null
+        ? null
+        : products.map((product) => (
+            <CartItem key={product._id} product={product} />
+          ));
 
     const cartView = <div className="container">{productItems}</div>;
 

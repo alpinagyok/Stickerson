@@ -10,10 +10,10 @@ import loading from "../common/loading-prod.gif";
 
 class Cart extends Component {
   state = {
-    country: "hhhhhhhhhhhhh",
-    city: "hhhhhhhhhhhhh",
-    street: "hhhhhhhhhhhhhhh",
-    phone: "+37253009222",
+    country: "",
+    city: "",
+    street: "",
+    phone: "",
     deliveryPrice: "4", // TODO: calculate
 
     loading: false,

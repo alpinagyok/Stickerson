@@ -11,7 +11,11 @@ class MyProducts extends Component {
   };
 
   componentWillMount() {
-    if (this.props.products.myProducts === null) {
+    // If the store is not yet loaded and we create new product, the store won't be null, so validate like this
+    if (
+      this.props.products.myProducts === null ||
+      !this.props.products.myProductsLoaded
+    ) {
       this.props.getMyProducts();
       this.setState({ loading: true });
     }

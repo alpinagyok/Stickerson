@@ -15,6 +15,7 @@ const initialState = {
   product: {},
   products: null,
   myProducts: null,
+  myProductsLoaded: false,
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         myProducts: action.payload,
+        myProductsLoaded: true,
       };
     case ADD_MY_PRODUCT: {
       const temp = state.myProducts === null ? [] : state.myProducts;

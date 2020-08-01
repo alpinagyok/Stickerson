@@ -1,5 +1,7 @@
 ## StickerSon
 
+stickerson.herokuapp.com
+
 This is responsive website project made with NodeJS (Express) + React + MongoDB. The user can browse the website and see different sticker mockups (products) created by other users. Users can create a store (to create products), order (no payment now, just simulation) products and make reviews.
 
 ## Available NPM Scripts

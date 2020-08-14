@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { GET_ORDERS, GET_ORDER, ADD_ORDER, GET_ERRORS } from "./types";
+import {
+  GET_ORDERS,
+  GET_ORDER,
+  ADD_ORDER,
+  GET_ERRORS,
+  LOAD_CART,
+} from "./types";
 
 export const createOrder = (data, history) => (dispatch) => {
   axios
@@ -10,6 +16,13 @@ export const createOrder = (data, history) => (dispatch) => {
         type: ADD_ORDER,
         payload: res.data,
       });
+
+      // Empty cart
+      localStorage.removeItem("cart");
+      dispatch({
+        type: LOAD_CART,
+      });
+
       history.push("/orders");
     })
     .catch((err) => {

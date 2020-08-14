@@ -133,12 +133,20 @@ class Cart extends Component {
       </div>
     );
 
+    const orderInfo = this.props.auth.isAuthenticated ? orderForm : login;
+
     return (
       <div>
         <CartItemList products={this.props.cart.items} />
         <div className="container">
-          {this.props.cart.items.length < 1 ? noItems : prices}
-          {this.props.auth.isAuthenticated ? orderForm : login}
+          {this.props.cart.items.length < 1 ? (
+            noItems
+          ) : (
+            <div>
+              {prices}
+              {orderInfo}
+            </div>
+          )}
         </div>
       </div>
     );

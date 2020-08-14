@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
     case LOAD_CART:
       const cartItems = JSON.parse(localStorage.getItem("cart"));
       return {
-        items: cartItems,
+        items: cartItems === null ? [] : cartItems,
         count: calcCount(cartItems),
         total: calcTotal(cartItems),
       };

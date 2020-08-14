@@ -7,12 +7,15 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { editProduct } from "../../actions/productActions";
 
+import isEmpty from "../../validation/is_empty";
+
 class EditProduct extends Component {
   state = {
     name: "",
     description: "",
     price: "",
     errors: {},
+    sent: false,
   };
 
   componentWillMount() {
@@ -26,7 +29,7 @@ class EditProduct extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({ errors: nextProps.errors, sent: true });
     }
   }
 
@@ -43,8 +46,11 @@ class EditProduct extends Component {
       price: this.state.price,
     };
 
-    this.props.editProduct(this.props.product._id, prodData);
-    this.props.closeModal();
+    this.props.editProduct(
+      this.props.product._id,
+      prodData,
+      this.props.closeModal
+    );
   };
 
   render() {

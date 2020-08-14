@@ -44,16 +44,19 @@ export default (state = initialState, action) => {
       };
     }
     case EDIT_MY_PRODUCT: {
-      // TODO
       return {
         ...state,
-        myProducts: state.myProducts.map((myProduct) =>
-          myProduct._id === action.payload._id
-            ? // transform the one with a matching id
-              action.payload
-            : // otherwise return original myProduct
-              myProduct
-        ),
+        myProducts:
+          // If myProducts are not yet loaded don't do anything
+          state.myProducts === null
+            ? null
+            : state.myProducts.map((myProduct) =>
+                myProduct._id === action.payload._id
+                  ? // transform the one with a matching id
+                    action.payload
+                  : // otherwise return original myProduct
+                    myProduct
+              ),
       };
     }
     case SET_PRODUCT_IMG:

@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../validation/is_empty";
 
+import { Link } from "react-router-dom";
+
 import {
   createStore,
   getMyStore,
@@ -33,9 +35,7 @@ class EditStore extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    // store can be null
-    if (nextProps.store.myStore !== this.props.store.myStore)
-      this.setState({ loading: false });
+    this.setState({ loading: false });
 
     if (nextProps.store.myStore) {
       const { myStore } = nextProps.store;
@@ -52,7 +52,6 @@ class EditStore extends Component {
         website: myStore.website,
         location: myStore.location,
         bio: myStore.bio,
-        loading: false,
       });
     }
   }
@@ -78,51 +77,64 @@ class EditStore extends Component {
   render() {
     const { errors } = this.state;
 
+    let editForm = (
+      <form onSubmit={this.onSubmit}>
+        <TextFieldGroup
+          placeholder="* Name of the store"
+          name="name"
+          value={this.state.name}
+          onChange={this.onChange}
+          error={errors.name}
+          info="Choose a name that best represents your store"
+        />
+        {/* TODO: change to bigger input */}
+        <TextFieldGroup
+          placeholder="Bio"
+          name="bio"
+          value={this.state.bio}
+          onChange={this.onChange}
+          error={errors.bio}
+          info="Please write the story of how you started creating designs"
+        />
+        <TextFieldGroup
+          placeholder="Website"
+          name="website"
+          value={this.state.website}
+          onChange={this.onChange}
+          error={errors.website}
+          info="Could be your own website or a social media link"
+        />
+        <TextFieldGroup
+          placeholder="Location"
+          name="location"
+          value={this.state.location}
+          onChange={this.onChange}
+          error={errors.location}
+          info="City or country"
+        />
+        <input
+          type="submit"
+          value="Submit"
+          className="btn btn-info btn-block mt-4"
+        />
+      </form>
+    );
+
+    if (this.props.store.myStore === null)
+      editForm = (
+        <div>
+          <h3>You don't have a store yet</h3>
+          <Link to="/mystore" className="btn btn-lg btn-light">
+            Create Store
+          </Link>
+        </div>
+      );
+
     return (
       <div className="container">
         {/* TODO: replace with something better... */}
-        {this.state.loading ? <h1>LOADING...</h1> : null}
         <h1>Edit Store</h1>
-        <form onSubmit={this.onSubmit}>
-          <TextFieldGroup
-            placeholder="* Name of the store"
-            name="name"
-            value={this.state.name}
-            onChange={this.onChange}
-            error={errors.name}
-            info="Choose a name that best represents your store"
-          />
-          {/* TODO: change to bigger input */}
-          <TextFieldGroup
-            placeholder="Bio"
-            name="bio"
-            value={this.state.bio}
-            onChange={this.onChange}
-            error={errors.bio}
-            info="Please write the story of how you started creating designs"
-          />
-          <TextFieldGroup
-            placeholder="Website"
-            name="website"
-            value={this.state.website}
-            onChange={this.onChange}
-            error={errors.website}
-            info="Could be your own website or a social media link"
-          />
-          <TextFieldGroup
-            placeholder="Location"
-            name="location"
-            value={this.state.location}
-            onChange={this.onChange}
-            error={errors.location}
-            info="City or country"
-          />
-          <input
-            type="submit"
-            value="Submit"
-            className="btn btn-info btn-block mt-4"
-          />
-        </form>
+        {this.state.loading ? <h1>LOADING...</h1> : editForm}
       </div>
     );
   }

@@ -39,7 +39,7 @@ export const createProduct = (data, history) => (dispatch) => {
     });
 };
 
-export const editProduct = (id, data) => (dispatch) => {
+export const editProduct = (id, data, closeModal) => (dispatch) => {
   axios
     .put(`/api/products/${id}`, data)
     .then((res) => {
@@ -51,6 +51,10 @@ export const editProduct = (id, data) => (dispatch) => {
         type: SET_PRODUCT,
         payload: res.data,
       });
+      dispatch({
+        type: CLEAR_ERRORS,
+      });
+      closeModal();
     })
     .catch((err) => {
       console.log(err);

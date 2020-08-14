@@ -40,7 +40,7 @@ router.get("/:id", (req, res) => {
 // @route   POST api/orders
 // @desc    Buy a order
 // @access  Private
-// @req     [product (id), quantity], user, address, phone, deliveryPrice
+// @req     [product (id), quantity], user, address, phone, deliveryPrice, itemsPrice
 // @res     {order}
 router.post(
   "/",
@@ -113,6 +113,7 @@ router.post(
             address: req.body.address,
             phone: req.body.phone,
             deliveryPrice: req.body.deliveryPrice,
+            itemsPrice: req.body.itemsPrice,
           });
 
           newOrder.save().then((order) => res.json(order));

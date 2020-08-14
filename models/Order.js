@@ -64,6 +64,10 @@ const OrderSchema = new Schema({
     type: Number, // cents
     required: true,
   },
+  itemsPrice: {
+    type: Number, // cents
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

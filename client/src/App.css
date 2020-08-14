@@ -131,6 +131,16 @@ body {
   /* overflow-x: scroll; */
 }
 
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  background-color: #3f05c6;
+  color: white;
+}
+
 /* for development */
 /* * {
   border-style: solid;

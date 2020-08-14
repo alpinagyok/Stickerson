@@ -62,6 +62,8 @@ class Navbar extends Component {
       </ul>
     );
 
+    const { cart } = this.props;
+
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <div className="container">
@@ -93,7 +95,10 @@ class Navbar extends Component {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
-                  Cart
+                  <i className="fa fa-shopping-cart" value={5} />
+                  {cart.count !== 0 ? (
+                    <span className="badge badge-warning">{cart.count}</span>
+                  ) : null}
                 </Link>
               </li>
             </ul>
@@ -108,10 +113,12 @@ class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.authStore,
+  cart: state.cartStore,
 });
 
 export default connect(mapStateToProps, { logoutUser })(Navbar);

@@ -16,6 +16,7 @@ import loading_gif from "../common/loading-prod.gif";
 
 import { Link } from "react-router-dom";
 import EditProduct from "../forms/EditProduct";
+import ReviewList from "../reviews/ReviewList";
 
 class ProductFull extends Component {
   state = {
@@ -171,6 +172,7 @@ class ProductFull extends Component {
             <p>Added on {String(product.date).split("T")[0]}</p>
           </div>
           {ownerButtons}
+          <ReviewList product={product} />
         </div>
       );
     }

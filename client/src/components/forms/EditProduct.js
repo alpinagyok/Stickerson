@@ -15,7 +15,6 @@ class EditProduct extends Component {
     description: "",
     price: "",
     errors: {},
-    sent: false,
   };
 
   componentWillMount() {
@@ -29,7 +28,7 @@ class EditProduct extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors, sent: true });
+      this.setState({ errors: nextProps.errors });
     }
   }
 

@@ -31,14 +31,25 @@ router.post(
 
     // Check if the user bought the product
     Product.findById(req.params.prod_id)
+      .populate([
+        { path: "user", model: User, select: ["name"] },
+        { path: "store", model: Store, select: ["name", "handle"] },
+        { path: "reviews.user", model: User, select: ["name", "avatar"] },
+      ])
       .then((product) => {
         if (
           product.bought.filter(
             (buyer) => buyer.user.toString() === req.user.id // once there was no user, check buy method
           ).length > 0
         ) {
+          const user = {
+            _id: req.user._id,
+            avatar: req.user.avatar,
+            name: req.user.name,
+          };
+
           const newReview = {
-            user: req.user._id,
+            user,
             heading: req.body.heading,
             text: req.body.text,
             stars: req.body.stars,
@@ -51,7 +62,7 @@ router.post(
           const { reviews } = product;
 
           for (i = 0; i < reviews.length; i++) {
-            if (reviews[i].user.toString() === req.user.id) {
+            if (reviews[i].user._id.toString() === req.user.id) {
               isFirstRev = false;
               reviewerIndex = i;
             }
@@ -83,13 +94,18 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Product.findById(req.params.prod_id)
+      .populate([
+        { path: "user", model: User, select: ["name"] },
+        { path: "store", model: Store, select: ["name", "handle"] },
+        { path: "reviews.user", model: User, select: ["name", "avatar"] },
+      ])
       .then((product) => {
         const { reviews } = product;
 
         // Get remove index
         let reviewerIndex = -1;
         for (i = 0; i < reviews.length; i++) {
-          if (reviews[i].user.toString() === req.user.id) reviewerIndex = i;
+          if (reviews[i].user._id.toString() === req.user.id) reviewerIndex = i;
         }
         if (reviewerIndex > -1) {
           // Splice out of array

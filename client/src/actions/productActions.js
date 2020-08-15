@@ -12,8 +12,6 @@ import {
   EDIT_MY_PRODUCT,
 } from "./types";
 
-import { browserHistory } from "react-router-dom";
-
 export const createProduct = (data, history) => (dispatch) => {
   axios
     .post("/api/products", data)

@@ -17,6 +17,7 @@ import loading_gif from "../common/loading-prod.gif";
 import { Link } from "react-router-dom";
 import EditProduct from "../forms/EditProduct";
 import ReviewList from "../reviews/ReviewList";
+import CreateReview from "../reviews/CreateReview";
 
 class ProductFull extends Component {
   state = {
@@ -24,6 +25,7 @@ class ProductFull extends Component {
     printTaskLoading: false,
     isFlipped: false,
     isModalOpen: false,
+    isReviewModalOpen: false,
     errors: {},
   };
 
@@ -59,6 +61,12 @@ class ProductFull extends Component {
 
   handleEditButton = (id) => {
     this.setState((prevState) => ({ isModalOpen: !prevState.isModalOpen }));
+  };
+
+  handleReviewButton = (id) => {
+    this.setState((prevState) => ({
+      isReviewModalOpen: !prevState.isReviewModalOpen,
+    }));
   };
 
   handleAddToCartButton = (product) => {
@@ -135,6 +143,22 @@ class ProductFull extends Component {
       const price =
         Math.round((product.price / 100 + Number.EPSILON) * 100) / 100;
 
+      const reviewModal = this.props.auth.isAuthenticated ? (
+        <div>
+          <button
+            onClick={this.handleReviewButton.bind(this, product._id)}
+            className="btn btn-md btn-primary"
+          >
+            Review
+          </button>
+          <CreateReview
+            isOpen={this.state.isReviewModalOpen}
+            closeModal={this.handleReviewButton}
+            product={product}
+          />
+        </div>
+      ) : null;
+
       productContent = (
         <div className="row">
           <div className="col-md-8" onClick={this.handleFlip}>
@@ -173,6 +197,7 @@ class ProductFull extends Component {
           </div>
           {ownerButtons}
           <ReviewList product={product} />
+          {reviewModal}
         </div>
       );
     }

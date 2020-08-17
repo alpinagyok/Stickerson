@@ -61,9 +61,9 @@ class Cart extends Component {
 
     const prices = (
       <div className="text-center">
-        <h3>Items: {itemTotal}$</h3>
-        <h3>Shipping: {delivery}$</h3>
-        <h3>Total: {itemTotal + delivery}$</h3>
+        <h3>Items: {itemTotal.toFixed(2)}$</h3>
+        <h3>Shipping: {delivery.toFixed(2)}$</h3>
+        <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
       </div>
     );
     const noItems = (

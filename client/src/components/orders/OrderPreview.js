@@ -14,9 +14,9 @@ class OrderPreview extends Component {
       <div className="container border border-info rounded">
         <Link to={`/orders/${order._id}`}>
           <div className="text-center">
-            <h3>Items: {itemTotal}$</h3>
-            <h3>Shipping: {delivery}$</h3>
-            <h3>Total: {itemTotal + delivery}$</h3>
+            <h3>Items: {itemTotal.toFixed(2)}$</h3>
+            <h3>Shipping: {delivery.toFixed(2)}$</h3>
+            <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
             <h3>Ordered on {String(order.date).split("T")[0]}</h3>
           </div>
           <div className="text-center">

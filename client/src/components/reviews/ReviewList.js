@@ -26,17 +26,17 @@ class ReviewList extends Component {
           <div className="row">{reviewItems}</div>
         </div>
 
-        <button
+        {/* <button
           onClick={this.handleReviewButton.bind(this, product._id)}
           className="btn btn-md btn-primary"
         >
           Review
-        </button>
-        <CreateReview
+        </button> */}
+        {/* <CreateReview
           isOpen={this.state.isModalOpen}
           closeModal={this.handleReviewButton}
           product={product}
-        />
+        /> */}
       </div>
     );
   }

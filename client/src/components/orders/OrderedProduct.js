@@ -13,7 +13,7 @@ class OrderedProduct extends Component {
     return (
       <div className="row no-gutter border">
         <Link
-          to={`/products/${this.props.product.id}`}
+          to={`/products/${this.props.product.product}`}
           className="text-decoration-none col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6"
         >
           <img

@@ -30,14 +30,18 @@ export default (state = initialState, action) => {
         ...state,
         stores: action.payload,
       };
-    case SET_MY_USER:
-      return {
-        ...state,
-        myStore: {
-          ...state.myStore,
-          user: action.payload,
-        },
-      };
+    case SET_MY_USER: {
+      if (state.myStore !== "empty" && state.myStore !== null) {
+        return {
+          ...state,
+          myStore: {
+            ...state.myStore,
+            user: action.payload,
+          },
+        };
+      }
+      return state;
+    }
     case SET_MY_BACKGROUND:
       return {
         ...state,

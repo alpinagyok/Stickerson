@@ -23,8 +23,9 @@ class Order extends Component {
 
     const { products } = order;
 
+    // product.product is the actual id of the product
     const productItems = products.map((product) => (
-      <OrderedProduct key={product._id} product={product} />
+      <OrderedProduct key={product.product} product={product} />
     ));
     const itemTotal = Number(order.itemsPrice) / 100;
     const delivery = Number(order.deliveryPrice) / 100;
@@ -39,9 +40,9 @@ class Order extends Component {
         <h1>Order</h1>
         {productItems}
         <div className="text-center">
-          <h3>Items: {itemTotal}$</h3>
-          <h3>Shipping: {delivery}$</h3>
-          <h3>Total: {itemTotal + delivery}$</h3>
+          <h3>Items: {itemTotal.toFixed(2)}$</h3>
+          <h3>Shipping: {delivery.toFixed(2)}$</h3>
+          <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
           <h3>Ordered on {String(order.date).split("T")[0]}</h3>
         </div>
         <div className="text-center">

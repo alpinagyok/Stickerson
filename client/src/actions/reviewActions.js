@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, SET_PRODUCT } from "./types";
+import { GET_ERRORS, SET_PRODUCT, CLEAR_ERRORS } from "./types";
 
 export const createReview = (data, prod_id, closeModal) => (dispatch) => {
   axios
@@ -9,6 +9,9 @@ export const createReview = (data, prod_id, closeModal) => (dispatch) => {
       dispatch({
         type: SET_PRODUCT,
         payload: res.data,
+      });
+      dispatch({
+        type: CLEAR_ERRORS,
       });
       closeModal();
     })
@@ -21,7 +24,7 @@ export const createReview = (data, prod_id, closeModal) => (dispatch) => {
     });
 };
 
-export const deleteReview = (prod_id) => (dispatch) => {
+export const deleteReview = (prod_id, closeModal) => (dispatch) => {
   axios
     .delete(`/api/reviews/${prod_id}`)
     .then((res) => {
@@ -29,6 +32,10 @@ export const deleteReview = (prod_id) => (dispatch) => {
         type: SET_PRODUCT,
         payload: res.data,
       });
+      dispatch({
+        type: CLEAR_ERRORS,
+      });
+      closeModal();
     })
     .catch((err) => {
       console.log(err);

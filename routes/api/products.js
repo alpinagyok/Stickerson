@@ -119,6 +119,7 @@ router.put(
       .populate([
         { path: "store", model: Store, select: ["name", "handle"] },
         { path: "user", model: User, select: ["name"] },
+        { path: "reviews.user", model: User, select: ["name", "avatar"] },
       ])
       .then((product) => {
         res.json(product);

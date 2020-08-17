@@ -26,10 +26,11 @@ class CartItem extends Component {
 
   render() {
     const { product } = this.props;
-    const price =
+    const price = (
       Math.round(
         ((product.price * product.quantity) / 100 + Number.EPSILON) * 100
-      ) / 100;
+      ) / 100
+    ).toFixed(2);
 
     // TODO: refactor column params to List, so they can be passed as props
     return (

@@ -59,7 +59,7 @@ class CreateReview extends Component {
   };
 
   handleDelete = (id) => {
-    this.props.deleteReview(id);
+    this.props.deleteReview(id, this.props.closeModal);
     this.setState({ heading: "", text: "", stars: "" });
   };
 

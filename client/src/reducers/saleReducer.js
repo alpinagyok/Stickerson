@@ -1,20 +1,21 @@
-import { SET_ORDERS, ADD_ORDER } from "../actions/types";
+import { SET_ALL_SALES, SET_SALES_BY_PRODUCT } from "../actions/types";
 
 import isEmpty from "../validation/is_empty";
 
 const initialState = {
-  orders: null,
-  loaded: false,
+  allSales: null,
+  salesByProducts: [],
+  // loaded: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_ORDERS:
+    case SET_ALL_SALES:
       return {
-        orders: action.payload,
-        loaded: true,
+        allSales: action.payload,
+        // loaded: true,
       };
-    case ADD_ORDER: {
+    case SET_SALES_BY_PRODUCT: {
       const temp = state.orders === null ? [] : state.orders;
       return {
         ...state,

@@ -1,12 +1,6 @@
 import axios from "axios";
 
-import {
-  GET_ORDERS,
-  GET_ORDER,
-  ADD_ORDER,
-  GET_ERRORS,
-  LOAD_CART,
-} from "./types";
+import { SET_ORDERS, ADD_ORDER, GET_ERRORS, LOAD_CART } from "./types";
 
 export const createOrder = (data, history) => (dispatch) => {
   axios
@@ -39,13 +33,13 @@ export const getOrders = () => (dispatch) => {
     .get("/api/orders")
     .then((res) =>
       dispatch({
-        type: GET_ORDERS,
+        type: SET_ORDERS,
         payload: res.data,
       })
     )
     .catch((err) =>
       dispatch({
-        type: GET_ORDERS,
+        type: SET_ORDERS,
         payload: {},
       })
     );

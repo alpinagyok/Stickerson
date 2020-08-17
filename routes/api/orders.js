@@ -8,7 +8,7 @@ const validateOrderInput = require("../../validation/order");
 // Models
 const Product = require("../../models/Product");
 const Order = require("../../models/Order");
-const product = require("../../validation/product");
+const Sale = require("../../models/Sale");
 
 // // @route   GET api/orders
 // // @desc    Get orders by current user
@@ -79,18 +79,23 @@ router.post(
           for (j = 0; j < bought.length; j++) {
             if (bought[j].user.toString() === req.user.id) purchaseIndex = j;
           }
-          if (purchaseIndex > -1) {
-            const { quantity } = bought[purchaseIndex];
-
-            // Increment the number of bought quantity
-            bought.splice(purchaseIndex, 1, {
-              user: req.user.id,
-              quantity: quantity + quantityInCart,
-            });
-          } else {
+          if (purchaseIndex == -1) {
             // Add user id to bought array
-            bought.unshift({ user: req.user.id, quantity: quantityInCart });
+            bought.unshift({
+              user: req.user.id,
+            });
           }
+
+          // Create a sale
+          const newSale = Sale({
+            user: req.user.id,
+            product: allProducts[i]._id,
+            price: allProducts[i].price,
+            quantity: quantityInCart,
+          });
+
+          promises.push(newSale.save());
+
           // Save
           promises.push(allProducts[i].save());
 

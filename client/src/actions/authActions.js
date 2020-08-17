@@ -10,6 +10,9 @@ import {
   SET_MY_STORE,
   SET_MY_USER,
   SET_MY_PRODUCTS,
+  SET_ORDERS,
+  SET_ALL_SALES,
+  SET_SALES_BY_PRODUCT,
 } from "./types";
 
 // Register User                        // better way that putting dispatch (thunk) function inside dispatch
@@ -79,6 +82,8 @@ export const logoutUser = () => (dispatch) => {
   setAuthToken(false);
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+
+  // Clear everything
   dispatch({
     type: SET_MY_STORE,
     payload: "empty",
@@ -86,6 +91,18 @@ export const logoutUser = () => (dispatch) => {
   dispatch({
     type: SET_MY_PRODUCTS,
     payload: null,
+  });
+  dispatch({
+    type: SET_ORDERS,
+    payload: null,
+  });
+  dispatch({
+    type: SET_ALL_SALES,
+    payload: null,
+  });
+  dispatch({
+    type: SET_SALES_BY_PRODUCT,
+    payload: [],
   });
 };
 

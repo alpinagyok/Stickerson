@@ -18,6 +18,7 @@ const ProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "users",
       },
+      // TODO: delete
       quantity: {
         type: Number,
         default: 1,

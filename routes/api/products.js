@@ -187,8 +187,7 @@ router.post(
                   store: store._id,
                   name: req.body.name,
                   description: req.body.description,
-                  // 5$ is base
-                  price: String(Number(req.body.price) + 500),
+                  price: Number(req.body.price),
                   images: [newImage],
                 });
 

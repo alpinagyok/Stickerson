@@ -30,10 +30,10 @@ module.exports = validateProductInput = (data) => {
   if (
     price === Infinity ||
     String(price) !== data.price ||
-    price <= 0 ||
+    price <= 500 ||
     isNaN(data.price)
   ) {
-    errors.price = "Price must be a proper number";
+    errors.price = "Price must be a proper number. Select value higher than 5$";
   }
 
   // detects only strings

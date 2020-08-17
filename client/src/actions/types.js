@@ -34,3 +34,4 @@ export const ADD_ORDER = "ADD_ORDER";
 // Sales
 export const SET_ALL_SALES = "SET_ALL_SALES";
 export const SET_SALES_BY_PRODUCT = "SET_SALES_BY_PRODUCT";
+export const SET_ALL_SALES_MAP = "SET_ALL_SALES_MAP";

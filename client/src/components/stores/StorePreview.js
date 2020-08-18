@@ -27,8 +27,8 @@ class StorePreview extends Component {
                   alt=""
                   style={{ width: "70px" }}
                 />
-                <h4>{store.name}</h4>
-                <h6>by {user.name}</h6>
+                <h4 className="text-truncate">{store.name}</h4>
+                <h6 className="text-truncate">by {user.name}</h6>
                 <div></div>
                 <button className="btn btn-primary btn-md">View Store</button>
               </div>

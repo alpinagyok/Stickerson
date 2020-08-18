@@ -67,8 +67,8 @@ class ProductPreview extends Component {
           <div className="border border-info rounded">
             {images}
             <div className="container">
-              <h5>{product.name}</h5>
-              <h6>by {product.user.name}</h6>
+              <h5 className="text-truncate">{product.name}</h5>
+              <h6 className="text-truncate">by {product.user.name}</h6>
               <h4>{price}$</h4>
               {saleInfo}
             </div>

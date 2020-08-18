@@ -22,7 +22,7 @@ class EditProduct extends Component {
     this.setState({
       name: this.props.product.name,
       description: this.props.product.description,
-      price: String(this.props.product.price),
+      price: String((this.props.product.price / 100).toFixed(2)),
     });
   }
 
@@ -42,7 +42,7 @@ class EditProduct extends Component {
     const prodData = {
       name: this.state.name,
       description: this.state.description,
-      price: this.state.price,
+      price: String(Math.round(this.state.price * 100)),
     };
 
     this.props.editProduct(
@@ -76,7 +76,7 @@ class EditProduct extends Component {
               info="A unique description of your product"
             />
             <TextFieldGroup
-              placeholder="* Price"
+              placeholder="* Price (e.g. 6.99)"
               name="price"
               value={this.state.price}
               onChange={this.onChange}

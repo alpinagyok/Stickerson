@@ -8,7 +8,7 @@ module.exports = validateProductInput = (data) => {
   data.description = !isEmpty(data.description) ? data.description : "";
   data.price = !isEmpty(data.price) ? data.price : "";
 
-  if (!Validator.isLength(data.name, { min: 2, max: 15 })) {
+  if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
     errors.name = "Name must be between 2 and 30 characters";
   }
 
@@ -17,8 +17,8 @@ module.exports = validateProductInput = (data) => {
     errors.name = "Name field is required";
   }
 
-  if (!Validator.isLength(data.description, { min: 6, max: 30 })) {
-    errors.description = "Description must be at least 6 characters (30 max)";
+  if (!Validator.isLength(data.description, { min: 6, max: 100 })) {
+    errors.description = "Description must be at least 6 characters (100 max)";
   }
 
   // detects only strings
@@ -27,13 +27,16 @@ module.exports = validateProductInput = (data) => {
   }
 
   const price = Math.floor(Number(data.price));
+
   if (
     price === Infinity ||
     String(price) !== data.price ||
     price <= 500 ||
+    price > 3000 ||
     isNaN(data.price)
   ) {
-    errors.price = "Price must be a proper number. Select value higher than 5$";
+    errors.price =
+      "Price must be a proper number. Select value higher than 5$ and less than 30$";
   }
 
   // detects only strings

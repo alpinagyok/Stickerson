@@ -81,7 +81,7 @@ class CreateProduct extends Component {
             info="A unique description of your product"
           />
           <TextFieldGroup
-            placeholder="* Price (e.g 1.99)"
+            placeholder="* Price (e.g 6.99)"
             name="price"
             value={this.state.price}
             onChange={this.onChange}

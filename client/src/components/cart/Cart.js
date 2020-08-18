@@ -138,6 +138,9 @@ class Cart extends Component {
     return (
       <div>
         <CartItemList products={this.props.cart.items} />
+        {this.props.errors.productsnotfound && (
+          <h5>{this.props.errors.productsnotfound}</h5>
+        )}
         <div className="container">
           {this.props.cart.items.length < 1 ? (
             noItems
@@ -156,6 +159,7 @@ class Cart extends Component {
 Cart.propTypes = {
   cart: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   createOrder: PropTypes.func.isRequired,
 };
 

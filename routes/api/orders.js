@@ -64,7 +64,10 @@ router.post(
         if (allProducts.length !== ids.length)
           return res
             .status(404)
-            .json({ productsnotfound: "Some of the products are not found" });
+            .json({
+              productsnotfound:
+                "Some of the products are not found. Please delete them from your cart",
+            });
 
         for (i = 0; i < allProducts.length; i++) {
           const { bought } = allProducts[i];

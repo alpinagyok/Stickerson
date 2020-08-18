@@ -8,8 +8,8 @@ module.exports = validateReviewInput = (data) => {
   data.text = !isEmpty(data.text) ? data.text : "";
   data.stars = !isEmpty(data.stars) ? data.stars : "";
 
-  if (!Validator.isLength(data.heading, { min: 6, max: 20 })) {
-    errors.heading = "Heading must be between 6 and 20 characters";
+  if (!Validator.isLength(data.heading, { min: 3, max: 20 })) {
+    errors.heading = "Heading must be between 3 and 20 characters";
   }
 
   if (Validator.isEmpty(data.heading)) {

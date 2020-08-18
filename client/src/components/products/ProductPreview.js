@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { changeChart } from "../../actions/saleActions";
 
 class ProductPreview extends Component {
   state = {
@@ -11,6 +14,10 @@ class ProductPreview extends Component {
   handleFlip = (e) => {
     e.preventDefault();
     this.setState((prevState) => ({ isFlipped: !prevState.isFlipped }));
+  };
+
+  handleSalesDisplay = (id) => {
+    this.props.changeChart(id);
   };
 
   render() {
@@ -38,6 +45,13 @@ class ProductPreview extends Component {
     const price =
       Math.round((product.price / 100 + Number.EPSILON) * 100) / 100;
 
+    const saleInfo = this.props.saleInfo ? (
+      <div>
+        <h5>Profit: {this.props.saleInfo.profit} $</h5>
+        <h5>Quantity: {this.props.saleInfo.quantity} $</h5>
+      </div>
+    ) : null;
+
     // TODO: refactor column params to List, so they can be passed as props
     return (
       <div
@@ -56,12 +70,24 @@ class ProductPreview extends Component {
               <h5>{product.name}</h5>
               <h6>by {product.user.name}</h6>
               <h4>{price}$</h4>
+              {saleInfo}
             </div>
           </div>
         </Link>
+        {this.props.saleInfo ? (
+          <button onClick={this.handleSalesDisplay.bind(this, product._id)}>
+            Display
+          </button>
+        ) : null}
       </div>
     );
   }
 }
 
-export default withRouter(ProductPreview);
+ProductPreview.propTypes = {
+  changeChart: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  changeChart,
+})(withRouter(ProductPreview));

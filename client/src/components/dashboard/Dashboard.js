@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getAllSales } from "../../actions/saleActions";
+import {
+  getAllSales,
+  mapSalesToProducts,
+  changeChart,
+} from "../../actions/saleActions";
 import { getMyProducts } from "../../actions/productActions";
 import Chart from "./Chart";
 import Table from "./Table";
@@ -16,46 +20,43 @@ class Dashboard extends Component {
 
   componentWillMount() {
     if (this.props.sales.allSales === null) this.props.getAllSales();
-
-    // // If the store is not yet loaded and we create new product, the store won't be null, so validate like this
-    // if (
-    //   this.props.products.myProducts === null ||
-    //   !this.props.products.myProductsLoaded
-    // ) {
-    //   this.props.getMyProducts();
-    //   this.setState({ loadingProducts: true });
-    // }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.products.myProductsLoaded)
-  //     this.setState({
-  //       loadingProducts: false,
-  //     });
-  // }
+  componentWillReceiveProps(nextProps) {
+    // Make sure that both sales and products are loaded for this
+    if (
+      nextProps.products.myProducts &&
+      nextProps.sales.allSales &&
+      this.props.sales.salesByProducts === null
+    ) {
+      // TODO: runs twice for some reason
+      this.props.mapSalesToProducts(this.props.sales.allSales);
+    }
+  }
+
+  showAllSales = () => {
+    this.props.changeChart("all");
+  };
 
   render() {
-    const data = [
-      {
-        name: "Page A",
-        uv: 4000,
-        bv: 3000,
-      },
-      {
-        name: "Page B",
-        uv: 3000,
-      },
-      {
-        name: "Page C",
-        uv: 2000,
-      },
-    ];
+    const {
+      chartId,
+      allSalesMap,
+      allSales,
+      salesByProducts,
+      salesByProductsMap,
+    } = this.props.sales;
+
+    const tableInfo = chartId === "all" ? allSales : salesByProducts[chartId];
+    const chartInfo =
+      chartId === "all" ? allSalesMap : salesByProductsMap[chartId];
 
     return (
       <div>
-        <Chart data={data} />
-        <Table data={this.props.sales.allSales} />
-        <MyProducts />
+        <Chart data={chartInfo} />
+        <button onClick={this.showAllSales}>All</button>
+        <Table data={tableInfo} />
+        <MyProducts saleInfo={this.props.sales.productsTotalSales} />
       </div>
     );
   }
@@ -63,16 +64,20 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   sales: PropTypes.object.isRequired,
-  // products: PropTypes.object.isRequired,
+  products: PropTypes.object.isRequired,
   getAllSales: PropTypes.func.isRequired,
-  // getMyProducts: PropTypes.func.isRequired,
+  mapSalesToProducts: PropTypes.func.isRequired,
+  changeChart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   sales: state.saleStore,
-  // products: state.productStore,
+  products: state.productStore,
 });
 
-export default connect(mapStateToProps, { getAllSales, getMyProducts })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getAllSales,
+  mapSalesToProducts,
+  getMyProducts,
+  changeChart,
+})(Dashboard);

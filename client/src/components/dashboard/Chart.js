@@ -12,11 +12,21 @@ import {
 
 class Chart extends Component {
   render() {
+    const data = this.props.data
+      ? Object.keys(this.props.data).map((date) => {
+          return {
+            name: date,
+            uv: this.props.data[date][0].toFixed(2),
+            pv: this.props.data[date][1],
+          };
+        })
+      : null;
+
     return (
       <LineChart
         width={500}
         height={300}
-        data={this.props.data}
+        data={data}
         margin={{
           top: 5,
           right: 30,

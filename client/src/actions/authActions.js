@@ -102,7 +102,7 @@ export const logoutUser = () => (dispatch) => {
   });
   dispatch({
     type: SET_SALES_BY_PRODUCT,
-    payload: [],
+    payload: null,
   });
 };
 

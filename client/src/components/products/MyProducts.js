@@ -34,7 +34,11 @@ class MyProducts extends Component {
     } else {
       if (myProducts.length > 0) {
         productItems = (
-          <ProductList products={myProducts} type={this.props.type} />
+          <ProductList
+            products={myProducts}
+            type={this.props.type}
+            saleInfo={this.props.saleInfo}
+          />
         );
       } else {
         productItems = <h4>No products found...</h4>;

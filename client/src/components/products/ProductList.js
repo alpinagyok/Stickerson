@@ -5,9 +5,25 @@ class ProductList extends Component {
   render() {
     const { products } = this.props;
 
-    const productItems = products.map((product) => (
-      <ProductPreview key={product._id} product={product} />
-    ));
+    const productItems = this.props.saleInfo
+      ? products.map((product) =>
+          Object.keys(this.props.saleInfo).includes(product._id) ? (
+            <ProductPreview
+              key={product._id}
+              product={product}
+              saleInfo={this.props.saleInfo[product._id]}
+            />
+          ) : (
+            <ProductPreview
+              key={product._id}
+              product={product}
+              saleInfo={{ profit: 0, quantity: 0 }}
+            />
+          )
+        )
+      : products.map((product) => (
+          <ProductPreview key={product._id} product={product} />
+        ));
 
     let productsView;
     if (this.props.type === "all" || !this.props.type)

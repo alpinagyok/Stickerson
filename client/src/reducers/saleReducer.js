@@ -1,20 +1,31 @@
 import {
   SET_ALL_SALES,
   SET_SALES_BY_PRODUCT,
+  SET_SALES_BY_PRODUCT_MAP,
   SET_ALL_SALES_MAP,
+  SET_PRODUCTS_TOTAL_SALES,
+  CHANGE_CHART,
 } from "../actions/types";
 
 import isEmpty from "../validation/is_empty";
 
 const initialState = {
+  chartId: "all",
   allSales: null,
   allSalesMap: null,
-  salesByProducts: [],
+  salesByProducts: null,
+  salesByProductsMap: null,
+  productsTotalSales: null,
   // loaded: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CHANGE_CHART:
+      return {
+        ...state,
+        chartId: action.payload,
+      };
     case SET_ALL_SALES:
       return {
         ...state,
@@ -22,19 +33,29 @@ export default (state = initialState, action) => {
         // loaded: true,
       };
     case SET_ALL_SALES_MAP: {
-      console.log("payload", action.payload);
       return {
         ...state,
         allSalesMap: action.payload,
       };
     }
-    // case SET_SALES_BY_PRODUCT: {
-    //   const temp = state.orders === null ? [] : state.orders;
-    //   return {
-    //     ...state,
-    //     orders: [action.payload, ...temp],
-    //   };
-    // }
+    case SET_SALES_BY_PRODUCT: {
+      return {
+        ...state,
+        salesByProducts: action.payload,
+      };
+    }
+    case SET_SALES_BY_PRODUCT_MAP: {
+      return {
+        ...state,
+        salesByProductsMap: action.payload,
+      };
+    }
+    case SET_PRODUCTS_TOTAL_SALES: {
+      return {
+        ...state,
+        productsTotalSales: action.payload,
+      };
+    }
     default:
       return state;
   }

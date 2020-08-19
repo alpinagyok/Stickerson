@@ -15,8 +15,8 @@ module.exports = validateStoreInput = (data) => {
     errors.handle = "Profile handle is required";
   }
 
-  if (!Validator.isLength(data.name, { min: 4, max: 30 })) {
-    errors.name = "Name needs to be between 4 and 30 characters";
+  if (!Validator.isLength(data.name, { min: 4, max: 20 })) {
+    errors.name = "Name needs to be between 4 and 20 characters";
   }
 
   if (Validator.isEmpty(data.name)) {

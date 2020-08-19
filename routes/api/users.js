@@ -9,6 +9,7 @@ const { multerUploads, cloudinary } = require("../../config/imageUpload");
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validateEditUserInput = require("../../validation/editUser");
 
 // Load User model
 const User = require("../../models/User");
@@ -241,6 +242,46 @@ router.post(
         }
       }
     });
+  }
+);
+
+// @route   PUT api/users
+// @desc    Change user's avatar.
+// @access  Private
+router.put(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEditUserInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const name = req.body.name;
+
+    User.findOneAndUpdate({ _id: req.user.id }, { name }, { new: true }).then(
+      (user) => {
+        // Create JWT Payload
+        const payload = { id: user.id, name: user.name, avatar: user.avatar };
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          process.env.SECRET || require("../../config/keys").secret,
+          {
+            expiresIn: 3600, // TODO: refresh
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token,
+            });
+          }
+        );
+      }
+    );
   }
 );
 

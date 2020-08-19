@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { changeChart } from "../../actions/saleActions";
+import { addToCart } from "../../actions/cartActions";
 
 class ProductPreview extends Component {
   state = {
@@ -20,6 +21,10 @@ class ProductPreview extends Component {
     this.props.changeChart(id);
   };
 
+  handleCart = (id) => {
+    this.props.addToCart(id);
+  };
+
   render() {
     const { product } = this.props;
     const images = (
@@ -29,6 +34,7 @@ class ProductPreview extends Component {
       >
         <div>
           <img
+            className="rounded"
             src={
               product.images.length > 1
                 ? product.images[1].url
@@ -38,47 +44,86 @@ class ProductPreview extends Component {
           />
         </div>
         <div>
-          <img src={product.images[0].url} alt={product.name} />
+          <img
+            className="rounded"
+            src={product.images[0].url}
+            alt={product.name}
+          />
         </div>
       </ReactCardFlip>
     );
     const price =
       Math.round((product.price / 100 + Number.EPSILON) * 100) / 100;
 
-    const saleInfo = this.props.saleInfo ? (
+    const prod = this.props.saleInfo ? (
       <div>
-        <h5>Profit: {this.props.saleInfo.profit} $</h5>
-        <h5>Quantity: {this.props.saleInfo.quantity} $</h5>
+        <Link
+          to={`/products/${this.props.product._id}`}
+          className="text-decoration-none link-no-style"
+        >
+          <div>
+            {images}
+            <div className="pt-2">
+              <div>
+                <h5 className="text-truncate">{product.name}</h5>
+              </div>
+            </div>
+          </div>
+        </Link>
+        <div
+          onClick={this.handleSalesDisplay.bind(this, product._id)}
+          className="pt-3"
+        >
+          <div className="row">
+            <h5 className="col-6 text-center">
+              <i className="fas fa-hand-holding-usd" />{" "}
+              {this.props.saleInfo.profit} $
+            </h5>
+            <h5 className="col-6 text-center">
+              <i className="fas fa-gift" /> {this.props.saleInfo.quantity}
+            </h5>
+          </div>
+          <h4 className="btn btn-outline-primary float-center col-12">
+            Show Sales
+          </h4>
+        </div>
       </div>
-    ) : null;
+    ) : (
+      <div>
+        <Link
+          to={`/products/${this.props.product._id}`}
+          className="text-decoration-none link-no-style"
+        >
+          <div>
+            {images}
+            <div className="pt-2">
+              <div>
+                <h5 className="mb-0 text-truncate">{product.name}</h5>
+                <h6 className="text-truncate">By {product.user.name}</h6>
+              </div>
+            </div>
+          </div>
+        </Link>
+        <div>
+          <h4 className="d-inline">{price.toFixed(2)}$</h4>
+          <button
+            onClick={this.handleCart.bind(this, product)}
+            className="float-right btn btn-outline-primary btn-sm"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    );
 
     // TODO: refactor column params to List, so they can be passed as props
     return (
       <div
-        className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 p-2"
+        className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 pr-2 pt-2 pb-2"
         onMouseLeave={this.handleFlip}
         onPointerEnter={this.handleFlip}
       >
-        {/* TODO: remove link style */}
-        <Link
-          to={`/products/${this.props.product._id}`}
-          className="text-decoration-none"
-        >
-          <div className="border border-info rounded">
-            {images}
-            <div className="container">
-              <h5 className="text-truncate">{product.name}</h5>
-              <h6 className="text-truncate">by {product.user.name}</h6>
-              <h4>{price}$</h4>
-              {saleInfo}
-            </div>
-          </div>
-        </Link>
-        {this.props.saleInfo ? (
-          <button onClick={this.handleSalesDisplay.bind(this, product._id)}>
-            Display
-          </button>
-        ) : null}
+        {prod}
       </div>
     );
   }
@@ -86,8 +131,10 @@ class ProductPreview extends Component {
 
 ProductPreview.propTypes = {
   changeChart: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   changeChart,
+  addToCart,
 })(withRouter(ProductPreview));

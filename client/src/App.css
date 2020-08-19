@@ -141,6 +141,15 @@ body {
   color: white;
 }
 
+.link-no-style:focus,
+.link-no-style:hover,
+.link-no-style:visited,
+.link-no-style:link,
+.link-no-style:active {
+  text-decoration: none;
+  color: black;
+}
+
 /* for development */
 /* * {
   border-style: solid;

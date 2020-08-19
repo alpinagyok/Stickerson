@@ -29,7 +29,7 @@ class ProductList extends Component {
     if (this.props.type === "all" || !this.props.type)
       // default case
       productsView = (
-        <div className="container">
+        <div className="container p-0 pl-2">
           <div className="row no-gutters">{productItems}</div>
         </div>
       );

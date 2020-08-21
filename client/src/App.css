@@ -166,8 +166,12 @@ body {
   background-color: #fff;
 }
 
-.border-5 {
+.border-3 {
   border-width: 3px !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
 }
 
 /* for development */

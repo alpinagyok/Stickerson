@@ -22,7 +22,7 @@ class StorePreview extends Component {
               <img src={store.backgroundImg.url} alt="Background"></img>
               <div className="store-user-info-preview">
                 <img
-                  className="rounded-circle"
+                  className="rounded-circle border border-2"
                   src={user.avatar.url}
                   alt=""
                   style={{ width: "70px" }}

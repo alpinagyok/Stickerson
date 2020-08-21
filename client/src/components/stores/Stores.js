@@ -37,6 +37,7 @@ class Stores extends Component {
 
     return (
       <div className="stores">
+        <h3 className="container pl-2 mt-4">Explore Stores</h3>
         <div>{storeItems}</div>
       </div>
     );

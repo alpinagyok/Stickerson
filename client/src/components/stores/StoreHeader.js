@@ -16,7 +16,7 @@ class StoreHeader extends Component {
           ></img>
           <div className="store-user-info">
             <img
-              className="rounded-circle"
+              className="rounded-circle border border-3"
               src={user.avatar.url}
               alt=""
               style={{ width: "100px" }}

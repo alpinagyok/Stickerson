@@ -15,10 +15,9 @@ class Landing extends Component {
             </h1>
           </div>
         </div>
-        <h3 className="container pl-2 mt-4">Shop Products</h3>
+        <h3 className="container pl-2 mt-4">Explore Products</h3>
         <Products type="horizontal" />
         <hr />
-        <h3 className="container pl-2 mt-4">Feautured Stores</h3>
         <Stores type="horizontal" />
         <hr />
         <Link to="/register" className="btn btn-lg btn-info mr-2">

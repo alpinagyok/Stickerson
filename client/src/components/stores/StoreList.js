@@ -18,7 +18,7 @@ class StoreList extends Component {
       );
     else if (this.props.type === "horizontal")
       storesView = (
-        <div className="container horizontal-scroll">
+        <div className="container p-0 px-1 horizontal-scroll">
           <div className="row no-gutters">{storeItems}</div>
         </div>
       );

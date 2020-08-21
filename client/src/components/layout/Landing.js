@@ -15,28 +15,19 @@ class Landing extends Component {
             </h1>
           </div>
         </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <hr />
-              <h3 className="mb-4 mt-4">Shop Products</h3>
-              <Products type="horizontal" />
-              <hr />
-              <h3 className="mb-4 mt-4">Feautured Stores</h3>
-              <Stores type="horizontal" />
-              <hr />
-              <Link to="/register" className="btn btn-lg btn-info mr-2">
-                Sign Up
-              </Link>
-              <Link to="/login" className="btn btn-lg btn-light">
-                Login
-              </Link>
-              <hr />
-            </div>
-          </div>
-        </div>
-        {/* <div style={{ height: "800px" }}>ad</div> */}
+        <h3 className="container pl-2 mt-4">Shop Products</h3>
+        <Products type="horizontal" />
+        <hr />
+        <h3 className="container pl-2 mt-4">Feautured Stores</h3>
+        <Stores type="horizontal" />
+        <hr />
+        <Link to="/register" className="btn btn-lg btn-info mr-2">
+          Sign Up
+        </Link>
+        <Link to="/login" className="btn btn-lg btn-light">
+          Login
+        </Link>
+        <hr />
       </div>
     );
   }

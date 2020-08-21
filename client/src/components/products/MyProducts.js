@@ -5,6 +5,8 @@ import { getMyProducts } from "../../actions/productActions";
 import ProductPreview from "./ProductPreview";
 import ProductList from "./ProductList";
 
+import loading from "../common/loading-prod.gif";
+
 class MyProducts extends Component {
   state = {
     loading: false,
@@ -30,7 +32,7 @@ class MyProducts extends Component {
     let productItems;
 
     if (myProducts === null || this.state.loading) {
-      productItems = <h1>Loading Products</h1>;
+      productItems = <img src={loading} alt="loading..."></img>;
     } else {
       if (myProducts.length > 0) {
         productItems = (
@@ -45,13 +47,7 @@ class MyProducts extends Component {
       }
     }
 
-    return (
-      <div className="products">
-        <div className="container">
-          <div className="row">{productItems}</div>
-        </div>
-      </div>
-    );
+    return <div className="products">{productItems}</div>;
   }
 }
 

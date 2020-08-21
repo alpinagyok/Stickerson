@@ -27,6 +27,7 @@ import Cart from "./components/cart/Cart";
 import Orders from "./components/orders/Orders";
 import Order from "./components/orders/Order";
 import Dashboard from "./components/dashboard/Dashboard";
+import ProductsPage from "./components/products/ProductsPage";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -56,7 +57,7 @@ class App extends Component {
         <Router>
           <Navbar />
           <Route exact path="/test" component={Test} />
-          <Route exact path="/products" component={Products} />
+          <Route exact path="/products" component={ProductsPage} />
           <Route exact path="/stores" component={Stores} />
           <Route exact path="/cart" component={Cart} />
           <Switch>

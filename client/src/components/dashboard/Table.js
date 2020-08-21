@@ -20,7 +20,7 @@ class Table extends Component {
       processedData.push(
         <tr>
           <th scope="row">{Number(i) + 1}</th>
-          <td>
+          <td className="d-none d-lg-table-cell">
             <Link to={`/products/${sale.product}`}>{sale.product}</Link>
           </td>
           <td>{sale.quantity}</td>
@@ -32,12 +32,14 @@ class Table extends Component {
     }
 
     return (
-      <div>
-        <table class="table">
+      <div className="table-responsive">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Product ID</th>
+              <th scope="col" className="d-none d-lg-table-cell">
+                Product ID
+              </th>
               <th scope="col">Quantity</th>
               <th scope="col">Total Price</th>
               <th scope="col">Profit</th>

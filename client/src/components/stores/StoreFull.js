@@ -70,23 +70,34 @@ class StoreFull extends Component {
           ) : (
             <MyStoreHeader />
           )}
-          <div className="container">
-            <h1>{storeInfo.name}</h1>
+          <div className="container pl-2 mt-2">
+            <h2 className="text-truncate">{storeInfo.name}</h2>
             {this.props.match.params.handle ? null : (
-              <div>
-                <Link to="/settings" className="btn btn-md btn-info">
-                  Edit
-                </Link>
-                <Link to="/create-product" className="btn btn-md btn-primary">
-                  New Product
-                </Link>
+              <div className="row">
+                <div className="col-12">
+                  <div className="float-right">
+                    <Link to="/settings" className="btn btn-sm btn-info mr-2">
+                      Edit
+                    </Link>
+                    <Link
+                      to="/create-product"
+                      className="btn btn-sm btn-primary"
+                    >
+                      New Product
+                    </Link>
+                  </div>
+                </div>
               </div>
             )}
-            {this.props.match.params.handle ? (
-              <Products store={storeInfo._id} />
-            ) : (
-              <MyProducts />
-            )}
+          </div>
+
+          {this.props.match.params.handle ? (
+            <Products store={storeInfo._id} />
+          ) : (
+            <MyProducts />
+          )}
+
+          <div className="container">
             <StoreFooter store={storeInfo} />
           </div>
         </div>

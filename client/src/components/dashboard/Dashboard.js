@@ -52,11 +52,42 @@ class Dashboard extends Component {
       chartId === "all" ? allSalesMap : salesByProductsMap[chartId];
 
     return (
-      <div>
-        <Chart data={chartInfo} />
-        <button onClick={this.showAllSales}>All</button>
-        <Table data={tableInfo} />
-        <MyProducts saleInfo={this.props.sales.productsTotalSales} />
+      <div className="container p-0">
+        <h3 className="pl-2 mt-2 mb-2">Dashboard</h3>
+        <div className="row no-gutters">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <div className="row no-gutters">
+              <div className="col-12 chart-container">
+                <Chart data={chartInfo} />
+              </div>
+              <div className="col-12">
+                <div className="container">
+                  <h4 className="text-truncate">
+                    Total Sales: {allSales ? allSales.length : 0}
+                  </h4>
+                  <button
+                    className="btn btn-outline-primary col-12"
+                    onClick={this.showAllSales}
+                  >
+                    Show All Sales
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+            <h4 className="container pl-2 mt-4 text-truncate">Your Products</h4>
+            <div className="container">
+              <div className="row">
+                <MyProducts saleInfo={this.props.sales.productsTotalSales} />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <hr /> */}
+        <div className="container mt-4">
+          <Table data={tableInfo} />
+        </div>
       </div>
     );
   }

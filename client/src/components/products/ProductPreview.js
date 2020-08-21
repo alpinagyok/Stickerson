@@ -75,11 +75,11 @@ class ProductPreview extends Component {
           className="pt-3"
         >
           <div className="row">
-            <h5 className="col-6 text-center">
+            <h5 className="col-6 text-center text-truncate">
               <i className="fas fa-hand-holding-usd" />{" "}
-              {this.props.saleInfo.profit} $
+              {this.props.saleInfo.profit}$
             </h5>
-            <h5 className="col-6 text-center">
+            <h5 className="col-6 text-center text-truncate">
               <i className="fas fa-gift" /> {this.props.saleInfo.quantity}
             </h5>
           </div>
@@ -116,10 +116,15 @@ class ProductPreview extends Component {
       </div>
     );
 
+    const cols = this.props.cols
+      ? this.props.cols
+      : "col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6";
+
     // TODO: refactor column params to List, so they can be passed as props
+    // className = "col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 px-1 py-2";
     return (
       <div
-        className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 pr-2 pt-2 pb-2"
+        className={cols + " px-1 py-2"}
         onMouseLeave={this.handleFlip}
         onPointerEnter={this.handleFlip}
       >

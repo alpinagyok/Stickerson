@@ -9,12 +9,14 @@ class ProductList extends Component {
       ? products.map((product) =>
           Object.keys(this.props.saleInfo).includes(product._id) ? (
             <ProductPreview
+              cols="col-6"
               key={product._id}
               product={product}
               saleInfo={this.props.saleInfo[product._id]}
             />
           ) : (
             <ProductPreview
+              cols="col-6"
               key={product._id}
               product={product}
               saleInfo={{ profit: 0, quantity: 0 }}
@@ -26,16 +28,25 @@ class ProductList extends Component {
         ));
 
     let productsView;
-    if (this.props.type === "all" || !this.props.type)
+    if (this.props.saleInfo)
       // default case
       productsView = (
-        <div className="container p-0 pl-2">
+        <div className="container p-0 px-1 vertical-scroll">
+          <div style={{ height: "400px" }} className="row no-gutters">
+            {productItems}
+          </div>
+        </div>
+      );
+    else if (this.props.type === "all" || !this.props.type)
+      // default case
+      productsView = (
+        <div className="container p-0 px-1">
           <div className="row no-gutters">{productItems}</div>
         </div>
       );
     else if (this.props.type === "horizontal")
       productsView = (
-        <div className="container horizontal-scroll">
+        <div className="container p-0 px-1 horizontal-scroll">
           <div className="row no-gutters">{productItems}</div>
         </div>
       );

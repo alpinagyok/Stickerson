@@ -22,7 +22,15 @@ class ProductPreview extends Component {
   };
 
   handleCart = (id) => {
-    this.props.addToCart(id);
+    const { _id, name, images, price } = this.props.product;
+
+    const item = {
+      id: _id,
+      name,
+      image: images[0].url,
+      price,
+    };
+    this.props.addToCart(item);
   };
 
   render() {

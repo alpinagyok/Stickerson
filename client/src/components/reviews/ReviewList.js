@@ -21,22 +21,9 @@ class ReviewList extends Component {
     ));
 
     return (
-      <div>
-        <div className="container">
-          <div className="row">{reviewItems}</div>
-        </div>
-
-        {/* <button
-          onClick={this.handleReviewButton.bind(this, product._id)}
-          className="btn btn-md btn-primary"
-        >
-          Review
-        </button> */}
-        {/* <CreateReview
-          isOpen={this.state.isModalOpen}
-          closeModal={this.handleReviewButton}
-          product={product}
-        /> */}
+      <div className="container my-4">
+        <h4 className="text-truncate">{reviewItems.length} Reviews</h4>
+        <div className="row">{reviewItems}</div>
       </div>
     );
   }

@@ -55,8 +55,12 @@ class ProductFull extends Component {
   };
 
   handleDelete = (id) => {
-    // e.preventDefault();
-    this.props.deleteProduct(id, this.props.history);
+    const result = window.confirm(
+      "Are you sure you want do delete this product?"
+    );
+    if (result) {
+      this.props.deleteProduct(id, this.props.history);
+    }
   };
 
   handleEditButton = (id) => {
@@ -112,10 +116,9 @@ class ProductFull extends Component {
       const ownerButtons =
         product.user._id === this.props.auth.user.id ? (
           <div className="col-12 text-right">
-            <hr />
             <button
               onClick={this.handleEditButton.bind(this, product._id)}
-              className="btn btn-md btn-primary"
+              className="btn btn-md btn-primary mr-2"
             >
               Edit
             </button>
@@ -144,13 +147,17 @@ class ProductFull extends Component {
         Math.round((product.price / 100 + Number.EPSILON) * 100) / 100;
 
       const reviewModal = this.props.auth.isAuthenticated ? (
-        <div>
-          <button
-            onClick={this.handleReviewButton.bind(this, product._id)}
-            className="btn btn-md btn-primary"
-          >
-            Review
-          </button>
+        <div className="col-12 mb-4">
+          <div className="row">
+            <div className="col-12">
+              <button
+                onClick={this.handleReviewButton.bind(this, product._id)}
+                className="col-12 btn btn-md btn-outline-primary"
+              >
+                Review
+              </button>
+            </div>
+          </div>
           <CreateReview
             isOpen={this.state.isReviewModalOpen}
             closeModal={this.handleReviewButton}
@@ -161,7 +168,7 @@ class ProductFull extends Component {
 
       productContent = (
         <div className="row">
-          <div className="col-md-8" onClick={this.handleFlip}>
+          <div className="col-md-8 px-0 mb-3" onClick={this.handleFlip}>
             <ReactCardFlip
               isFlipped={this.state.isFlipped}
               flipDirection="horizontal"
@@ -176,8 +183,29 @@ class ProductFull extends Component {
             ) : null}
           </div>
           <div className="col-md-4">
-            <h1>{product.name} Sticker</h1>
-            <h3>Made by {product.user.name}</h3>
+            <h1 className="text-break mb-0 small-line">
+              {product.name} Sticker
+            </h1>
+            <h3>
+              <small>Made by </small>
+              {product.user.name}
+            </h3>
+
+            <h1 className="font-weight-bold my-2">{price}$</h1>
+            <h5 className="text-break mb-3 font-weight-light">
+              {product.description}
+            </h5>
+
+            <button
+              onClick={this.handleAddToCartButton.bind(this, product)}
+              className="btn btn-md btn-danger"
+            >
+              <i className="fas fa-cart-plus" /> Add to Cart
+            </button>
+            <hr />
+            <p className="mb-1">
+              Added on {String(product.date).split("T")[0]}
+            </p>
             <div>
               Visit{" "}
               <Link to={`/stores/${product.store.handle}`}>
@@ -185,24 +213,19 @@ class ProductFull extends Component {
               </Link>{" "}
               for more
             </div>
-            <h1>{price}$</h1>
-            <h5>{product.description}</h5>
-            <button
-              onClick={this.handleAddToCartButton.bind(this, product)}
-              className="btn btn-md btn-danger"
-            >
-              Add to Cart
-            </button>
-            <p>Added on {String(product.date).split("T")[0]}</p>
+            {ownerButtons ? <hr /> : null}
+            {ownerButtons}
           </div>
-          {ownerButtons}
+
           <ReviewList product={product} />
           {reviewModal}
         </div>
       );
+
+      // productContent = reviewModal;
     }
 
-    return <div className="container mt-2 mt-lg-4">{productContent}</div>;
+    return <div className="container mt-lg-4 mt-md-3">{productContent}</div>;
   }
 }
 

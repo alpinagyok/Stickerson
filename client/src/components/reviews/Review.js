@@ -17,23 +17,26 @@ class Review extends Component {
     }
 
     return (
-      <div className="col-12 border border-info rounded p-2">
+      <div className="col-12">
+        <hr />
         <div>
           <img
-            className="rounded-circle"
+            className="rounded-circle border"
             src={user.avatar.url}
             alt={user.name}
             style={{ width: "25px", marginRight: "5px", float: "left" }}
             title="AAAAA"
           />
-          <p>{user.name}</p>
+          <p className="mb-1">{user.name}</p>
         </div>
         <div>
           {stars}
-          <span> {review.heading}</span>
+          <span className="lead"> {review.heading}</span>
         </div>
-        <div>
-          <span>Reviewed on {String(review.date).split("T")[0]}</span>
+        <div className="mb-1">
+          <span>
+            <small>Reviewed on {String(review.date).split("T")[0]}</small>
+          </span>
         </div>
         <span>{review.text}</span>
       </div>

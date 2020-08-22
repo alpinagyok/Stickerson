@@ -71,7 +71,6 @@ class StoreFull extends Component {
             <MyStoreHeader />
           )}
           <div className="container pl-2 mt-2">
-            <h2 className="text-truncate">{storeInfo.name}</h2>
             {this.props.match.params.handle ? null : (
               <div className="row">
                 <div className="col-12">
@@ -89,6 +88,7 @@ class StoreFull extends Component {
                 </div>
               </div>
             )}
+            <h2 className="text-truncate">{storeInfo.name}</h2>
           </div>
 
           {this.props.match.params.handle ? (
@@ -97,9 +97,9 @@ class StoreFull extends Component {
             <MyProducts />
           )}
 
-          <div className="container">
-            <StoreFooter store={storeInfo} />
-          </div>
+          {/* <div className="container"> */}
+          <StoreFooter store={storeInfo} />
+          {/* </div> */}
         </div>
       );
     }

@@ -33,23 +33,35 @@ class Order extends Component {
     const { address } = order;
 
     return (
-      <div className="container">
-        <Link to="/orders">
+      <div className="container mt-3">
+        <Link className="link-no-style" to="/orders">
           <i className="fas fa-2x fa-arrow-left" />
         </Link>
-        <h1>Order</h1>
-        {productItems}
-        <div className="text-center">
-          <h3>Items: {itemTotal.toFixed(2)}$</h3>
-          <h3>Shipping: {delivery.toFixed(2)}$</h3>
-          <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
-          <h3>Ordered on {String(order.date).split("T")[0]}</h3>
+        <div className="row justify-content-center mb-3">
+          <h3 className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+            Order <small>#{order._id}</small>
+          </h3>
         </div>
+        {productItems}
+        <hr />
         <div className="text-center">
-          <h2>Address</h2>
-          <h3>Country: {address.country}</h3>
-          <h3>City: {address.city}</h3>
-          <h3>Street: {address.street}</h3>
+          <h4 className="font-weight-light">Items: {itemTotal.toFixed(2)}$</h4>
+          <h4 className="font-weight-light">
+            Shipping: {delivery.toFixed(2)}$
+          </h4>
+          <h4>Total: {(itemTotal + delivery).toFixed(2)}$</h4>
+        </div>
+        <hr />
+        <div className="text-center">
+          <h4 className="font-weight-light">Country: {address.country}</h4>
+          <h4 className="font-weight-light">City: {address.city}</h4>
+          <h4 className="font-weight-light">Street: {address.street}</h4>
+        </div>
+        <hr />
+        <div className="text-center pb-3">
+          <h4 className="font-weight-light">
+            Ordered on {String(order.date).split("T")[0]}
+          </h4>
         </div>
       </div>
     );

@@ -61,9 +61,9 @@ class Cart extends Component {
 
     const prices = (
       <div className="text-center">
-        <h3>Items: {itemTotal.toFixed(2)}$</h3>
-        <h3>Shipping: {delivery.toFixed(2)}$</h3>
-        <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
+        <h4 className="font-weight-light">Items: {itemTotal.toFixed(2)}$</h4>
+        <h4 className="font-weight-light">Shipping: {delivery.toFixed(2)}$</h4>
+        <h4>Total: {(itemTotal + delivery).toFixed(2)}$</h4>
       </div>
     );
     const noItems = (
@@ -121,11 +121,11 @@ class Cart extends Component {
     const login = (
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <Link to="/register" className="btn btn-lg btn-info mr-2">
+          <div className="col-md-12 text-center">
+            <Link to="/register" className="btn btn-md btn-info mr-2">
               Sign Up
             </Link>
-            <Link to="/login" className="btn btn-lg btn-light">
+            <Link to="/login" className="btn btn-md btn-light">
               Login
             </Link>
           </div>
@@ -137,6 +137,7 @@ class Cart extends Component {
 
     return (
       <div>
+        <h2 className="container pl-2 mt-3 mb-4">Shopping Cart</h2>
         <CartItemList products={this.props.cart.items} />
         {this.props.errors.productsnotfound && (
           <h5>{this.props.errors.productsnotfound}</h5>
@@ -146,7 +147,9 @@ class Cart extends Component {
             noItems
           ) : (
             <div>
+              <hr />
               {prices}
+              <hr className="mb-4" />
               {orderInfo}
             </div>
           )}

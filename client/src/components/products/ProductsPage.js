@@ -7,6 +7,7 @@ class ProductsPage extends Component {
       <div>
         <h2 className="container pl-2 mt-2">Explore Products</h2>
         <Products />
+        <div className="pt-2"></div>
       </div>
     );
   }

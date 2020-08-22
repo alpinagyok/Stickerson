@@ -19,14 +19,16 @@ class Landing extends Component {
         <Products type="horizontal" />
         <hr />
         <Stores type="horizontal" />
-        <hr />
+        {/* <hr />
         <Link to="/register" className="btn btn-lg btn-info mr-2">
           Sign Up
         </Link>
         <Link to="/login" className="btn btn-lg btn-light">
           Login
         </Link>
-        <hr />
+        <hr /> */}
+        {/* <h3 className="mt-4"></h3> */}
+        <div className="pt-2"></div>
       </div>
     );
   }

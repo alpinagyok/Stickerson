@@ -61,37 +61,53 @@ class UserSettings extends Component {
     const { user } = this.props.auth;
     const { errors } = this.state;
     return (
-      <div className="container">
-        <h1>User Settings</h1>
-        <img
-          className="rounded-circle"
-          src={this.state.avatarSending ? loading : user.avatar.url}
-          alt={user.name}
-          style={{ width: "200px", marginRight: "5px" }}
-          title="AAAAA"
-        />
-        <label className="btn btn-primary btn-lg">
-          Change Avatar
-          <input type="file" name="image" onChange={this.onChangeFile} hidden />
-        </label>
-        <form onSubmit={this.onSubmit}>
-          <TextFieldGroup
-            placeholder="Name"
-            name="name"
-            type="name"
-            value={this.state.name}
-            onChange={this.onChange}
-            error={errors.name}
-          />
-          <input type="submit" className="btn btn-info btn-block mt-4" />
-        </form>
-        <button
-          onClick={this.onDeleteHandler}
-          className="btn btn-md btn-danger"
-        >
-          Delete
-        </button>
-        {errors.image ? <span>{errors.image}</span> : null}
+      <div className="mt-2">
+        <h2>User Settings</h2>
+        <div className="row">
+          <div className="col-xl-4 col-lg-4 col-md-4 col-12 mt-2">
+            <img
+              className="rounded-circle border border-3"
+              src={this.state.avatarSending ? loading : user.avatar.url}
+              alt={user.name}
+              style={{ width: "150px", marginRight: "5px" }}
+              title="Profile Picture"
+            />
+            <label className="btn btn-primary btn-md ml-2 mt-2">
+              Change Avatar
+              <input
+                type="file"
+                name="image"
+                onChange={this.onChangeFile}
+                hidden
+              />
+            </label>
+          </div>
+          <div className="col-xl-8 col-lg-8 col-md-8 col-12 mt-4 mb-2">
+            <form onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Name"
+                name="name"
+                type="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                error={errors.name}
+                info="Your name"
+              />
+              <input
+                type="submit"
+                value="Save Changes"
+                className="btn btn-outline-primary btn-block mt-2"
+              />
+            </form>
+            <button
+              onClick={this.onDeleteHandler}
+              className="btn btn-md btn-outline-danger mt-4 float-right"
+            >
+              Delete User
+            </button>
+            {errors.image ? <span>{errors.image}</span> : null}
+          </div>
+        </div>
       </div>
     );
   }

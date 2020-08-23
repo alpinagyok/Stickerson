@@ -114,7 +114,7 @@ class EditStore extends Component {
         />
         <input
           type="submit"
-          value="Submit"
+          value="Save Changes"
           className="btn btn-info btn-block mt-4"
         />
       </form>
@@ -131,9 +131,9 @@ class EditStore extends Component {
       );
 
     return (
-      <div className="container">
+      <div>
         {/* TODO: replace with something better... */}
-        <h1>Edit Store</h1>
+        <h2>Edit Store</h2>
         {this.state.loading ? <h1>LOADING...</h1> : editForm}
       </div>
     );

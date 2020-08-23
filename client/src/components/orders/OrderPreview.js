@@ -11,19 +11,42 @@ class OrderPreview extends Component {
     const { address } = order;
 
     return (
-      <div className="container border border-info rounded">
-        <Link to={`/orders/${order._id}`}>
-          <div className="text-center">
-            <h3>Items: {itemTotal.toFixed(2)}$</h3>
-            <h3>Shipping: {delivery.toFixed(2)}$</h3>
-            <h3>Total: {(itemTotal + delivery).toFixed(2)}$</h3>
-            <h3>Ordered on {String(order.date).split("T")[0]}</h3>
-          </div>
-          <div className="text-center">
-            <h2>Address</h2>
-            <h3>Country: {address.country}</h3>
-            <h3>City: {address.city}</h3>
-            <h3>Street: {address.street}</h3>
+      <div className="pl-2">
+        <hr />
+        <Link
+          className="text-decoration-none link-no-style"
+          to={`/orders/${order._id}`}
+        >
+          <div className="row">
+            <div className="col-6">
+              <div className="row">
+                <div className="col-2 p-0">
+                  <h5 className="fas fa-gifts float-right mt-2"></h5>
+                </div>
+
+                <div className="col-10">
+                  <h6 className="mb-0">Delivered</h6>
+                  <h6 className="text-truncate">
+                    <small>#{order._id}</small>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="row">
+                <div className="col-9">
+                  <h6 className="mb-0">{String(order.date).split("T")[0]}</h6>
+                  <h6>
+                    <small>{itemTotal}$</small>
+                  </h6>
+                </div>
+
+                <div className="col-3">
+                  <h5 className="fas fa-arrow-right mt-3"></h5>
+                </div>
+              </div>
+            </div>
           </div>
         </Link>
       </div>

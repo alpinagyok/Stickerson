@@ -7,7 +7,7 @@ class StoreFooter extends Component {
     const { user } = store;
 
     return (
-      <div className="bg-light">
+      <div className="bg-light mt-3">
         <div className="container">
           <div className="row">
             <div className="col-md-12">

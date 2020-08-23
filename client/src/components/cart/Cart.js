@@ -119,7 +119,7 @@ class Cart extends Component {
     );
 
     const login = (
-      <div className="container">
+      <div className="container pb-4">
         <div className="row">
           <div className="col-md-12 text-center">
             <Link to="/register" className="btn btn-md btn-info mr-2">

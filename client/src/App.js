@@ -61,9 +61,6 @@ class App extends Component {
           <Route exact path="/stores" component={Stores} />
           <Route exact path="/cart" component={Cart} />
           <Switch>
-            <PrivateRoute exact path="/orders" component={Orders} />
-          </Switch>
-          <Switch>
             <PrivateRoute exact path="/orders/:id" component={Order} />
           </Switch>
           <Switch>

@@ -37,12 +37,40 @@ class Orders extends Component {
         orderItems = orders.map((order) => (
           <OrderPreview key={order._id} order={order} />
         ));
+        if (orders.length > 2) {
+          const firstItems = orderItems.slice(0, 2);
+          const lastItems = orderItems.slice(2);
+
+          orderItems = (
+            <div>
+              {firstItems}
+              <div class="collapse" id="collapseExample">
+                {lastItems}
+              </div>
+              <hr />
+              <div className="row justify-content-center">
+                <div className="col-8">
+                  <a
+                    class="btn btn-outline-primary btn-block"
+                    data-toggle="collapse"
+                    href="#collapseExample"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    Show More
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
+        }
       } else {
         orderItems = <h4>No orders found...</h4>;
       }
     }
 
-    return <div>{orderItems}</div>;
+    return <div className="mt-1">{orderItems}</div>;
   }
 }
 

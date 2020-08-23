@@ -53,7 +53,7 @@ class Dashboard extends Component {
 
     return (
       <div className="container p-0">
-        <h3 className="pl-2 mt-2 mb-2">Dashboard</h3>
+        <h2 className="pl-2 mt-2 mb-2">Dashboard</h2>
         <div className="row no-gutters">
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
             <div className="row no-gutters">

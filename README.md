@@ -1,8 +1,37 @@
 ## StickerSon
 
+#### Status - In development
+
 [Live Vesrion](https://stickerson.herokuapp.com)
 
 This is responsive website project made with NodeJS (Express) + React + MongoDB. The user can browse the website and see different sticker mockups (products) created by other users. Users can create a store (to create products), order (no payment now, just simulation) products and make reviews.
+
+## Keys file for local deployment:
+
+```javascript
+module.exports = {
+  mongoURL: "",
+  secret: "",
+  cloudinary_name: "",
+  cloudinary_key: "",
+  cloudinary_secret: "",
+  printful_key: "",
+};
+```
+
+## Config Vars needed for Heroku:
+
+#### `CLOUDINARY_API_KEY`
+
+#### `CLOUDINARY_API_SECRET`
+
+#### `CLOUDINARY_CLOUD_NAME`
+
+#### `MONGODB_URL`
+
+#### `PRINTFUL_API_KEY`
+
+#### `SECRET`
 
 ## Available NPM Scripts
 

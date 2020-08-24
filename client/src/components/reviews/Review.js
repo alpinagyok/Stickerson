@@ -31,14 +31,14 @@ class Review extends Component {
         </div>
         <div>
           {stars}
-          <span className="lead"> {review.heading}</span>
+          <span className="lead text-break"> {review.heading}</span>
         </div>
         <div className="mb-1">
           <span>
             <small>Reviewed on {String(review.date).split("T")[0]}</small>
           </span>
         </div>
-        <span>{review.text}</span>
+        <span className="text-break">{review.text}</span>
       </div>
     );
   }

@@ -44,7 +44,8 @@ class CreateStore extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="container">
+      <div className="container mt-3 pb-4">
+        <h2 className="my-4 display-4 text-center">Create Store</h2>
         <form onSubmit={this.onSubmit}>
           <TextFieldGroup
             placeholder="* Name of the store"
@@ -90,7 +91,7 @@ class CreateStore extends Component {
           <input
             type="submit"
             value="Submit"
-            className="btn btn-info btn-block mt-4"
+            className="btn btn-outline-primary btn-block mt-4"
           />
         </form>
       </div>

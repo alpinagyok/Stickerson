@@ -54,10 +54,11 @@ class Register extends Component {
 
     return (
       <div className="register">
-        <div className="container">
+        <div className="container mt-3 pb-4">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1>Hello. Register</h1>
+              <h1 className="display-4 text-center">Register</h1>
+              <p className="lead text-center mb-4">New here? Sign up!</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="Name"
@@ -73,7 +74,6 @@ class Register extends Component {
                   value={this.state.email}
                   onChange={this.onChange}
                   error={errors.email}
-                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -91,7 +91,11 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.password2}
                 />
-                <input type="submit" />
+                <input
+                  type="submit"
+                  value="Register"
+                  className="btn btn-outline-primary btn-block mt-4"
+                />
               </form>
             </div>
           </div>

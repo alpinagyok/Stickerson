@@ -32,7 +32,7 @@ module.exports = validateReviewInput = (data) => {
     stars < 1 ||
     stars > 5
   ) {
-    errors.stars = "Stars must be a proper number";
+    errors.stars = "Rating is required";
   }
 
   if (Validator.isEmpty(data.stars.toString())) {

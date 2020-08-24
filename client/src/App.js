@@ -14,7 +14,6 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
-import Test from "./components/common/Test";
 import Footer from "./components/layout/Footer";
 import Settings from "./components/settings/Settings";
 import StoreFull from "./components/stores/StoreFull";
@@ -56,7 +55,6 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <Route exact path="/test" component={Test} />
           <Route exact path="/products" component={ProductsPage} />
           <Route exact path="/stores" component={Stores} />
           <Route exact path="/cart" component={Cart} />
@@ -64,7 +62,7 @@ class App extends Component {
             <PrivateRoute exact path="/orders/:id" component={Order} />
           </Switch>
           <Switch>
-            <PrivateRoute exact path="/settings" component={Settings} />
+            <PrivateRoute exact path="/profile" component={Settings} />
           </Switch>
           <Switch>
             <PrivateRoute exact path="/mystore" component={StoreFull} />

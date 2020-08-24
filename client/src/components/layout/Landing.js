@@ -15,7 +15,7 @@ class Landing extends Component {
             </h1>
           </div>
         </div>
-        <h3 className="container pl-2 mt-4">Explore Products</h3>
+        <h2 className="container pl-2 mt-4">Explore Products</h2>
         <Products type="horizontal" />
         <hr />
         <Stores type="horizontal" />

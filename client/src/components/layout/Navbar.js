@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -20,25 +21,31 @@ class Navbar extends Component {
       avatar = user.avatar.url;
     }
 
+    const { cart } = this.props;
+    const cart_nav = (
+      <li className="nav-item">
+        <Link className="nav-link" to="/cart">
+          <i className="fa fa-shopping-cart" value={5} />
+          {cart.count !== 0 ? (
+            <span className="badge badge-warning">{cart.count}</span>
+          ) : null}
+        </Link>
+      </li>
+    );
+
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/mystore">
-            Store
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/settings">
-            Settings
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">
-            Dashboard
-          </Link>
-        </li>
-        <li className="nav-item">
-          <a href="/" onClick={this.onLogoutClick} className="nav-link">
+        {cart_nav}
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <img
               className="rounded-circle"
               src={avatar}
@@ -46,14 +53,49 @@ class Navbar extends Component {
               style={{ width: "25px", marginRight: "5px" }}
               title="AAAAA"
             />
-            Logout
+            Profile
           </a>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li className="nav-item">
+              <Link className="dropdown-item" to="/mystore">
+                My Store
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="dropdown-item" to="/dashboard">
+                Dashboard
+              </Link>
+            </li>
+            <div className="dropdown-divider"></div>
+            <Link className="dropdown-item" to="/profile">
+              Orders
+            </Link>
+            <HashLink
+              smooth
+              className="dropdown-item"
+              to="/profile#user_settings"
+            >
+              Profile Settings
+            </HashLink>
+            <HashLink
+              smooth
+              className="dropdown-item"
+              to="/profile#store_settings"
+            >
+              Store Settings
+            </HashLink>
+            <div class="dropdown-divider"></div>
+            <Link to="/" onClick={this.onLogoutClick} className="dropdown-item">
+              Logout
+            </Link>
+          </div>
         </li>
       </ul>
     );
 
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
+        {cart_nav}
         <li className="nav-item">
           <Link className="nav-link" to="/register">
             Sign Up
@@ -66,8 +108,6 @@ class Navbar extends Component {
         </li>
       </ul>
     );
-
-    const { cart } = this.props;
 
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -96,14 +136,6 @@ class Navbar extends Component {
                 <Link className="nav-link" to="/stores">
                   {" "}
                   Stores
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  <i className="fa fa-shopping-cart" value={5} />
-                  {cart.count !== 0 ? (
-                    <span className="badge badge-warning">{cart.count}</span>
-                  ) : null}
                 </Link>
               </li>
             </ul>

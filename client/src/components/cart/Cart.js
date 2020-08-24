@@ -74,6 +74,9 @@ class Cart extends Component {
 
     const orderForm = (
       <form onSubmit={this.onSubmit}>
+        <h3 className="text-center font-weight-light mb-4">
+          Please provide shipping details
+        </h3>
         <TextFieldGroup
           placeholder="* Country"
           name="country"
@@ -111,24 +114,22 @@ class Cart extends Component {
         ) : (
           <input
             type="submit"
-            value="Submit"
-            className="btn btn-info btn-block mt-4"
+            value="Order"
+            className="btn btn-lg btn-outline-primary btn-block mt-4"
           />
         )}
       </form>
     );
 
     const login = (
-      <div className="container pb-4">
-        <div className="row">
-          <div className="col-md-12 text-center">
-            <Link to="/register" className="btn btn-md btn-info mr-2">
-              Sign Up
-            </Link>
-            <Link to="/login" className="btn btn-md btn-light">
-              Login
-            </Link>
-          </div>
+      <div className="row">
+        <div className="col-md-12 text-center">
+          <Link to="/register" className="btn btn-md btn-primary mr-2">
+            Sign Up
+          </Link>
+          <Link to="/login" className="btn btn-md btn-outline-primary">
+            Login
+          </Link>
         </div>
       </div>
     );
@@ -150,7 +151,7 @@ class Cart extends Component {
               <hr />
               {prices}
               <hr className="mb-4" />
-              {orderInfo}
+              <div className="pb-4">{orderInfo}</div>
             </div>
           )}
         </div>

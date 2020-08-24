@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -70,25 +71,31 @@ class StoreFull extends Component {
           ) : (
             <MyStoreHeader />
           )}
-          <div className="container pl-2 mt-2">
-            {this.props.match.params.handle ? null : (
-              <div className="row">
-                <div className="col-12">
+          <div className="container pl-2 my-2">
+            <div className="row">
+              <div className="col">
+                <h2 className="text-truncate">{storeInfo.name}</h2>
+              </div>
+              {this.props.match.params.handle ? null : (
+                <div className="col">
                   <div className="float-right">
-                    <Link to="/settings" className="btn btn-sm btn-info mr-2">
+                    <HashLink
+                      smooth
+                      className="btn btn-md btn-outline-info mr-2"
+                      to="/profile#store_settings"
+                    >
                       Edit
-                    </Link>
+                    </HashLink>
                     <Link
                       to="/create-product"
-                      className="btn btn-sm btn-primary"
+                      className="btn btn-md btn-outline-primary"
                     >
                       New Product
                     </Link>
                   </div>
                 </div>
-              </div>
-            )}
-            <h2 className="text-truncate">{storeInfo.name}</h2>
+              )}
+            </div>
           </div>
 
           {this.props.match.params.handle ? (

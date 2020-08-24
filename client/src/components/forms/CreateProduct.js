@@ -3,10 +3,12 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { createProduct } from "../../actions/productActions";
 
-import loading from "../common/background_sending.gif";
+import loading from "../common/loading-bar.gif";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 
 class CreateProduct extends Component {
   state = {
@@ -51,18 +53,27 @@ class CreateProduct extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="container">
+      <div className="container mt-3">
+        <Link className="link-no-style" to="/mystore">
+          <i className="fas fa-lg fa-arrow-left" />
+          <h4 className="d-inline"> Back to the store</h4>
+        </Link>
+        <h2 className="my-4 display-4 text-center">Create Product</h2>
         <form onSubmit={this.onSubmit}>
-          <label className="btn btn-primary btn-lg">
-            Choose Image
-            <input
-              type="file"
-              name="image"
-              onChange={this.onChangeFile}
-              hidden
-            />
-          </label>
-          {errors.image ? <span>{errors.image}</span> : null}
+          <div className="mb-3">
+            <label className="btn btn-primary btn-lg btn-block mb-1">
+              Choose Image
+              <input
+                type="file"
+                name="image"
+                onChange={this.onChangeFile}
+                hidden
+              />
+            </label>
+            {errors.image && (
+              <small className="form-text text-danger">{errors.image}</small>
+            )}
+          </div>
           <TextFieldGroup
             placeholder="* Name of the product"
             name="name"
@@ -72,7 +83,7 @@ class CreateProduct extends Component {
             info="Choose a name that best represents your product"
           />
           {/* TODO: change field to be bigger */}
-          <TextFieldGroup
+          <TextAreaFieldGroup
             placeholder="* Product description"
             name="description"
             value={this.state.description}
@@ -89,15 +100,22 @@ class CreateProduct extends Component {
             info="Please enter your profit margin. Base pay of 5$ will be added to the total price"
           />
           {this.state.loading ? (
-            <img src={loading} alt="loading..."></img>
+            <div className="btn btn-outline-primary btn-block mt-4">
+              <img
+                style={{ width: "66px" }}
+                src={loading}
+                alt="loading..."
+              ></img>
+            </div>
           ) : (
             <input
               type="submit"
               value="Submit"
-              className="btn btn-info btn-block mt-4"
+              className="btn btn-outline-primary btn-block mt-4"
             />
           )}
         </form>
+        {errors.nostore && <h3>{errors.nostore}</h3>}
       </div>
     );
   }

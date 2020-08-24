@@ -62,7 +62,10 @@ class UserSettings extends Component {
     const { errors } = this.state;
     return (
       <div className="mt-2">
-        <h2>User Settings</h2>
+        <h2>
+          <a id="user_settings"></a>
+          User Settings
+        </h2>
         <div className="row">
           <div className="col-xl-4 col-lg-4 col-md-4 col-12 mt-2">
             <img

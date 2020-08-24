@@ -12,6 +12,7 @@ import {
   getMyStore,
   getMyLoadedStore,
 } from "../../actions/storeActions";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 
 class EditStore extends Component {
   state = {
@@ -88,7 +89,7 @@ class EditStore extends Component {
           info="Choose a name that best represents your store"
         />
         {/* TODO: change to bigger input */}
-        <TextFieldGroup
+        <TextAreaFieldGroup
           placeholder="Bio"
           name="bio"
           value={this.state.bio}
@@ -115,7 +116,7 @@ class EditStore extends Component {
         <input
           type="submit"
           value="Save Changes"
-          className="btn btn-info btn-block mt-4"
+          className="btn btn-outline-primary btn-block mt-4"
         />
       </form>
     );
@@ -123,17 +124,22 @@ class EditStore extends Component {
     if (this.props.store.myStore === null)
       editForm = (
         <div>
-          <h3>You don't have a store yet</h3>
-          <Link to="/mystore" className="btn btn-lg btn-light">
+          <h5>You don't have a store yet</h5>
+          <Link
+            to="/mystore"
+            className="btn btn-lg btn-block btn-outline-primary"
+          >
             Create Store
           </Link>
         </div>
       );
 
     return (
-      <div>
+      <div className="pb-4">
         {/* TODO: replace with something better... */}
-        <h2>Edit Store</h2>
+        <h2 className="mb-4">
+          <a id="store_settings"></a>Edit Store
+        </h2>
         {this.state.loading ? <h1>LOADING...</h1> : editForm}
       </div>
     );

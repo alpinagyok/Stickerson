@@ -3,7 +3,7 @@ import isEmpty from "../../validation/is_empty";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import loading from "../common/background_sending.gif";
+import loading from "../common/chair.gif";
 
 import { changeBackground } from "../../actions/storeActions";
 
@@ -54,8 +54,6 @@ class MyStoreHeader extends Component {
                 hidden
               />
             </label>
-            {/* TODO: make prettier */}
-            {errors.image ? <h1>{errors.image}</h1> : null}
           </div>
           <div className="store-user-info">
             <img
@@ -69,6 +67,11 @@ class MyStoreHeader extends Component {
         </div>
         {/* TODO: refactor */}
         <div style={{ height: "100px" }}></div>
+        {errors.image && (
+          <span className="form-text text-danger text-center mb-4">
+            {errors.image}
+          </span>
+        )}
       </div>
     );
   }

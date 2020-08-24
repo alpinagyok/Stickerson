@@ -48,11 +48,11 @@ class Login extends Component {
 
     return (
       <div className="login">
-        <div className="container">
+        <div className="container mt-3 pb-4">
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
+              <p className="lead text-center mb-4">
                 Sign in to your StickerSon account
               </p>
               <form onSubmit={this.onSubmit}>
@@ -72,7 +72,11 @@ class Login extends Component {
                   onChange={this.onChange}
                   error={errors.password}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input
+                  type="submit"
+                  value="Login"
+                  className="btn btn-outline-primary btn-block mt-4"
+                />
               </form>
             </div>
           </div>

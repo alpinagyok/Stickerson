@@ -6,9 +6,6 @@ class OrderPreview extends Component {
     const { order } = this.props;
 
     const itemTotal = Number(order.itemsPrice) / 100;
-    const delivery = Number(order.deliveryPrice) / 100;
-
-    const { address } = order;
 
     return (
       <div className="pl-2">
@@ -21,14 +18,12 @@ class OrderPreview extends Component {
             <div className="col-6">
               <div className="row">
                 <div className="col-2 p-0">
-                  <h5 className="fas fa-gifts float-right mt-2"></h5>
+                  <i className="fas fa-gifts float-right mt-2"></i>
                 </div>
 
                 <div className="col-10">
                   <h6 className="mb-0">Delivered</h6>
-                  <h6 className="text-truncate">
-                    <small>#{order._id}</small>
-                  </h6>
+                  <small className="text-truncate">#{order._id}</small>
                 </div>
               </div>
             </div>
@@ -37,13 +32,11 @@ class OrderPreview extends Component {
               <div className="row">
                 <div className="col-9">
                   <h6 className="mb-0">{String(order.date).split("T")[0]}</h6>
-                  <h6>
-                    <small>{itemTotal}$</small>
-                  </h6>
+                  <small className="text-truncate">{itemTotal}$</small>
                 </div>
 
                 <div className="col-3">
-                  <h5 className="fas fa-arrow-right mt-3"></h5>
+                  <i className="fas fa-arrow-right mt-3"></i>
                 </div>
               </div>
             </div>

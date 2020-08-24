@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { getMyStore, getStoreByHandle } from "../../actions/storeActions";
-import isEmpty from "../../validation/is_empty";
 
 import Loading from "../common/loading-prod.gif";
 import StoreHeader from "./StoreHeader";
@@ -14,7 +13,6 @@ import CreateStore from "../forms/CreateStore";
 import MyStoreHeader from "./MyStoreHeader";
 import Products from "../products/Products";
 import MyProducts from "../products/MyProducts";
-import store from "../../store";
 
 // Maybe divide into 2 components again? It will be easier to history.push()
 class StoreFull extends Component {

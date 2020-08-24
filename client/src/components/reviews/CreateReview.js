@@ -108,7 +108,7 @@ class CreateReview extends Component {
               className="btn btn-outline-danger float-right mb-4"
               onClick={this.props.closeModal.bind(this)}
             >
-              <h2 className="fas fa-times"></h2>
+              <i className="fas fa-times"></i>
             </button>
             <form onSubmit={this.onSubmit}>
               <TextFieldGroup

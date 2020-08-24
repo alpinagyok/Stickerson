@@ -34,7 +34,7 @@ class Order extends Component {
 
     return (
       <div className="container mt-3">
-        <Link className="link-no-style" to="/settings">
+        <Link className="link-no-style" to="/profile">
           <i className="fas fa-2x fa-arrow-left" />
         </Link>
         <div className="row justify-content-center mb-3">

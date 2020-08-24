@@ -7,8 +7,6 @@ import {
   CHANGE_CHART,
 } from "../actions/types";
 
-import isEmpty from "../validation/is_empty";
-
 const initialState = {
   chartId: "all",
   allSales: null,

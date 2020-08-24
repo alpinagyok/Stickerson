@@ -4,7 +4,6 @@ import { HashLink } from "react-router-hash-link";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import default_avatar from "../common/default_avatar.png";
 
 class Navbar extends Component {
   onLogoutClick = (e) => {
@@ -39,7 +38,7 @@ class Navbar extends Component {
         <li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"
-            href="#"
+            href="/"
             id="navbarDropdown"
             role="button"
             data-toggle="dropdown"

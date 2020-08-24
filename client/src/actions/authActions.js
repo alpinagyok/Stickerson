@@ -5,7 +5,6 @@ import jwt_decode from "jwt-decode";
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
-  CHANGE_AVATAR,
   CLEAR_ERRORS,
   SET_MY_STORE,
   SET_MY_USER,

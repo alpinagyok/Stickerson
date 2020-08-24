@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { editProduct } from "../../actions/productActions";
 
-import isEmpty from "../../validation/is_empty";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 
 class EditProduct extends Component {
@@ -67,7 +66,7 @@ class EditProduct extends Component {
               className="btn btn-outline-danger float-right mb-4"
               onClick={this.props.closeModal.bind(this)}
             >
-              <h2 className="fas fa-times"></h2>
+              <i className="fas fa-times"></i>
             </button>
             <form onSubmit={this.onSubmit}>
               <TextFieldGroup

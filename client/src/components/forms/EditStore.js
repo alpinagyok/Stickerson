@@ -5,6 +5,8 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../validation/is_empty";
 
+import loading from "../common/loading-bar-full.gif";
+
 import { Link } from "react-router-dom";
 
 import {
@@ -136,11 +138,16 @@ class EditStore extends Component {
 
     return (
       <div className="pb-4">
-        {/* TODO: replace with something better... */}
-        <h2 className="mb-4">
-          <a id="store_settings"></a>Edit Store
+        <h2 className="mb-4" id="store_settings">
+          Edit Store
         </h2>
-        {this.state.loading ? <h1>LOADING...</h1> : editForm}
+        {this.state.loading ? (
+          <div>
+            <img src={loading} alt="Loading..." />
+          </div>
+        ) : (
+          editForm
+        )}
       </div>
     );
   }

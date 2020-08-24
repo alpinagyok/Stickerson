@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -7,7 +6,6 @@ import {
   changeUserInfo,
   deleteUser,
 } from "../../actions/authActions";
-import classnames from "classnames";
 
 import loading from "../common/loading.gif";
 import TextFieldGroup from "../common/TextFieldGroup";
@@ -62,10 +60,7 @@ class UserSettings extends Component {
     const { errors } = this.state;
     return (
       <div className="mt-2">
-        <h2>
-          <a id="user_settings"></a>
-          User Settings
-        </h2>
+        <h2 id="user_settings">User Settings</h2>
         <div className="row">
           <div className="col-xl-4 col-lg-4 col-md-4 col-12 mt-2">
             <img

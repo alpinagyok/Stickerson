@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import CreateReview from "./CreateReview";
 import Review from "./Review";
 
 class ReviewList extends Component {

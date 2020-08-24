@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser, clearErrors } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
-import { CLEAR_ERRORS } from "../../actions/types";
 
 class Register extends Component {
   state = {

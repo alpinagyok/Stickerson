@@ -4,7 +4,6 @@ import isEmpty from "../../validation/is_empty";
 class StoreFooter extends Component {
   render() {
     const { store } = this.props;
-    const { user } = store;
 
     return (
       <div className="bg-light mt-3">

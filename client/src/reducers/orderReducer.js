@@ -1,7 +1,5 @@
 import { SET_ORDERS, ADD_ORDER } from "../actions/types";
 
-import isEmpty from "../validation/is_empty";
-
 const initialState = {
   orders: null,
   loaded: false,

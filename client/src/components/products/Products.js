@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getProducts, getProductsByStore } from "../../actions/productActions";
-import ProductPreview from "./ProductPreview";
 import ProductList from "./ProductList";
 
 import loading from "../common/loading-prod.gif";

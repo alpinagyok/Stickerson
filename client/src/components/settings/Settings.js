@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import EditStore from "../forms/EditStore";
 import Orders from "../orders/Orders";

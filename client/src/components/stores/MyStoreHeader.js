@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import isEmpty from "../../validation/is_empty";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 

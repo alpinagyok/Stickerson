@@ -6,10 +6,11 @@ import { connect } from "react-redux";
 import { createOrder } from "../../actions/orderActions";
 
 import TextFieldGroup from "../common/TextFieldGroup";
-import loading from "../common/loading-prod.gif";
 
 import { Link } from "react-router-dom";
 import NotFound from "../not-found/NotFound";
+
+import Loading from "../common/Loading";
 
 class Cart extends Component {
   state = {
@@ -107,7 +108,7 @@ class Cart extends Component {
           info="Please enter phone number"
         />
         {this.state.loading ? (
-          <img src={loading} alt="loading..."></img>
+          <Loading />
         ) : (
           <input
             type="submit"

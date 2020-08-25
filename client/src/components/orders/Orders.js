@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getOrders } from "../../actions/orderActions";
 import OrderPreview from "./OrderPreview";
 
-import loading from "../common/loading-prod.gif";
+import Loading from "../common/Loading";
 import NotFound from "../not-found/NotFound";
 
 class Orders extends Component {
@@ -32,7 +32,7 @@ class Orders extends Component {
     let orderItems;
 
     if (orders === null || this.state.loading) {
-      orderItems = <img src={loading} alt="Loading..." />;
+      orderItems = <Loading />;
     } else {
       if (orders.length > 0) {
         orderItems = orders.map((order) => (

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { getStores } from "../../actions/storeActions";
 import StoreList from "./StoreList";
 
-import loading from "../common/loading-prod.gif";
 import NotFound from "../not-found/NotFound";
+import Loading from "../common/Loading";
 
 class Stores extends Component {
   state = {
@@ -26,7 +26,7 @@ class Stores extends Component {
     let storeItems;
 
     if (stores === null || this.state.loading) {
-      storeItems = <img src={loading} alt="Loading..." />;
+      storeItems = <Loading />;
     } else {
       if (stores.length > 0) {
         storeItems = <StoreList stores={stores} type={this.props.type} />;

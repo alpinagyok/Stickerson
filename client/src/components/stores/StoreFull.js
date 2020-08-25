@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import { getMyStore, getStoreByHandle } from "../../actions/storeActions";
 
-import Loading from "../common/loading-prod.gif";
+import Loading from "../common/Loading";
 import StoreHeader from "./StoreHeader";
 import StoreFooter from "./StoreFooter";
 import CreateStore from "../forms/CreateStore";
@@ -51,8 +51,7 @@ class StoreFull extends Component {
     if (this.props.match.params.handle) storeInfo = this.props.store.store;
     else storeInfo = this.props.store.myStore;
 
-    if (this.state.loading)
-      storeContent = <img src={Loading} alt="loading"></img>;
+    if (this.state.loading) storeContent = <Loading />;
     else if (storeInfo === null) {
       if (this.props.match.params.handle) this.props.history.push("/not-found");
       else storeContent = <CreateStore />;

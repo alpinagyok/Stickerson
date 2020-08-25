@@ -12,8 +12,7 @@ import {
 import { addToCart } from "../../actions/cartActions";
 
 import ReactCardFlip from "react-card-flip";
-import loading_gif from "../common/loading-prod.gif";
-
+import Loading from "../common/Loading";
 import { Link } from "react-router-dom";
 import EditProduct from "../forms/EditProduct";
 import ReviewList from "../reviews/ReviewList";
@@ -96,11 +95,11 @@ class ProductFull extends Component {
               flipDirection="horizontal"
             >
               <div>
-                <img src={loading_gif} alt="Loading Gif" />
+                <Loading />
               </div>
 
               <div>
-                <img src={loading_gif} alt="Loading Gif" />
+                <Loading />
               </div>
             </ReactCardFlip>
           </div>
@@ -139,8 +138,7 @@ class ProductFull extends Component {
       let secondImg;
       if (product.images.length === 2)
         secondImg = <img src={product.images[1].url} alt={product.name} />;
-      else if (this.state.printTaskLoading)
-        secondImg = <img src={loading_gif} alt="Loading Gif" />;
+      else if (this.state.printTaskLoading) secondImg = <Loading />;
       else secondImg = <img src={product.images[0].url} alt={product.name} />;
 
       const price =

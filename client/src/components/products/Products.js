@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { getProducts, getProductsByStore } from "../../actions/productActions";
 import ProductList from "./ProductList";
 
-import loading from "../common/loading-prod.gif";
+import Loading from "../common/Loading";
 import NotFound from "../not-found/NotFound";
 
 class Products extends Component {
@@ -27,7 +27,7 @@ class Products extends Component {
     let productItems;
 
     if (products === null || this.state.loading) {
-      productItems = <img src={loading} alt="Loading..." />;
+      productItems = <Loading />;
     } else {
       if (products.length > 0) {
         productItems = (

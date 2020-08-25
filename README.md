@@ -1,6 +1,6 @@
 ## StickerSon
 
-#### Status - In development
+#### Status - COMPLETED (Might be developed further in the future)
 
 [Live Vesrion](https://stickerson.herokuapp.com)
 

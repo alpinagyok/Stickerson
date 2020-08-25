@@ -110,7 +110,7 @@ class ProductFull extends Component {
           </div>
         </div>
       );
-    else if (isEmpty(product)) productContent = <h1>No product found</h1>;
+    else if (isEmpty(product)) this.props.history.push("/not-found");
     // Loaded Product
     else {
       const ownerButtons =

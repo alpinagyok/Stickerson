@@ -5,6 +5,7 @@ import { getMyProducts } from "../../actions/productActions";
 import ProductList from "./ProductList";
 
 import loading from "../common/loading-prod.gif";
+import NotFound from "../not-found/NotFound";
 
 class MyProducts extends Component {
   state = {
@@ -42,7 +43,7 @@ class MyProducts extends Component {
           />
         );
       } else {
-        productItems = <h4>No products found...</h4>;
+        productItems = <NotFound />;
       }
     }
 

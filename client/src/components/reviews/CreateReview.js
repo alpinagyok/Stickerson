@@ -142,7 +142,7 @@ class CreateReview extends Component {
                 <small className="form-text text-danger">{errors.stars}</small>
               )}
               <div className="container row p-0 m-0 mt-4">
-                <div className="col-8 p-0 pr-2">
+                <div className="col p-0 pr-2">
                   <input
                     type="submit"
                     value="Submit"
@@ -151,7 +151,7 @@ class CreateReview extends Component {
                 </div>
                 <button
                   onClick={this.handleDelete.bind(this, this.props.product._id)}
-                  className="btn btn-md btn-outline-danger col-4"
+                  className="btn btn-md btn-outline-danger col-auto"
                 >
                   Delete Review
                 </button>

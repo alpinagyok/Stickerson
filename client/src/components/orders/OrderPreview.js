@@ -5,7 +5,7 @@ class OrderPreview extends Component {
   render() {
     const { order } = this.props;
 
-    const itemTotal = Number(order.itemsPrice) / 100;
+    const itemTotal = (Number(order.itemsPrice) / 100).toFixed(2);
 
     return (
       <div className="pl-2">
@@ -23,7 +23,9 @@ class OrderPreview extends Component {
 
                 <div className="col-10">
                   <h6 className="mb-0">Delivered</h6>
-                  <small className="text-truncate">#{order._id}</small>
+                  <h6 className="text-truncate">
+                    <small>#{order._id}</small>
+                  </h6>
                 </div>
               </div>
             </div>
@@ -32,7 +34,9 @@ class OrderPreview extends Component {
               <div className="row">
                 <div className="col-9">
                   <h6 className="mb-0">{String(order.date).split("T")[0]}</h6>
-                  <small className="text-truncate">{itemTotal}$</small>
+                  <h6 className="text-truncate">
+                    <small>{itemTotal}$</small>
+                  </h6>
                 </div>
 
                 <div className="col-3">

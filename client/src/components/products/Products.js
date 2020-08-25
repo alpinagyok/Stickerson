@@ -5,6 +5,7 @@ import { getProducts, getProductsByStore } from "../../actions/productActions";
 import ProductList from "./ProductList";
 
 import loading from "../common/loading-prod.gif";
+import NotFound from "../not-found/NotFound";
 
 class Products extends Component {
   state = {
@@ -33,9 +34,7 @@ class Products extends Component {
           <ProductList products={products} type={this.props.type} />
         );
       } else {
-        productItems = (
-          <h4 className="container pl-2 mt-2">No products found...</h4>
-        );
+        productItems = <NotFound />;
       }
     }
 

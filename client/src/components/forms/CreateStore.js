@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { createStore } from "../../actions/storeActions";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 
 class CreateStore extends Component {
   state = {
@@ -64,7 +65,7 @@ class CreateStore extends Component {
             info="A unique handle for your store URL. Cannot be changed!!"
           />
           {/* TODO: change to bigger input */}
-          <TextFieldGroup
+          <TextAreaFieldGroup
             placeholder="Bio"
             name="bio"
             value={this.state.bio}

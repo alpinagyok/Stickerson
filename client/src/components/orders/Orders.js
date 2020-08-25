@@ -6,6 +6,7 @@ import { getOrders } from "../../actions/orderActions";
 import OrderPreview from "./OrderPreview";
 
 import loading from "../common/loading-prod.gif";
+import NotFound from "../not-found/NotFound";
 
 class Orders extends Component {
   state = {
@@ -66,7 +67,7 @@ class Orders extends Component {
           );
         }
       } else {
-        orderItems = <h4>No orders found...</h4>;
+        orderItems = <NotFound />;
       }
     }
 

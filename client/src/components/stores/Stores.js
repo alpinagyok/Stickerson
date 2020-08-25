@@ -5,6 +5,7 @@ import { getStores } from "../../actions/storeActions";
 import StoreList from "./StoreList";
 
 import loading from "../common/loading-prod.gif";
+import NotFound from "../not-found/NotFound";
 
 class Stores extends Component {
   state = {
@@ -30,7 +31,7 @@ class Stores extends Component {
       if (stores.length > 0) {
         storeItems = <StoreList stores={stores} type={this.props.type} />;
       } else {
-        storeItems = <h4>No Stores found...</h4>;
+        storeItems = <NotFound />;
       }
     }
 

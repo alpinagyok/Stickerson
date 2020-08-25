@@ -54,12 +54,7 @@ class StoreFull extends Component {
     if (this.state.loading)
       storeContent = <img src={Loading} alt="loading"></img>;
     else if (storeInfo === null) {
-      if (this.props.match.params.handle)
-        storeContent = (
-          <div className="container">
-            <h1>No store found</h1>
-          </div>
-        );
+      if (this.props.match.params.handle) this.props.history.push("/not-found");
       else storeContent = <CreateStore />;
     } else {
       storeContent = (
@@ -75,7 +70,7 @@ class StoreFull extends Component {
                 <h2 className="text-truncate">{storeInfo.name}</h2>
               </div>
               {this.props.match.params.handle ? null : (
-                <div className="col">
+                <div className="col-auto">
                   <div className="float-right">
                     <HashLink
                       smooth

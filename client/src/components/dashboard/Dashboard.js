@@ -86,7 +86,9 @@ class Dashboard extends Component {
         </div>
         {/* <hr /> */}
         <div className="container mt-4">
-          <Table data={tableInfo} />
+          {!allSales || allSales.length === 0 ? null : (
+            <Table data={tableInfo} />
+          )}
         </div>
       </div>
     );

@@ -53,7 +53,7 @@ class CreateProduct extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="container mt-3">
+      <div className="container mt-3 pb-4">
         <Link className="link-no-style" to="/mystore">
           <i className="fas fa-lg fa-arrow-left" />
           <h4 className="d-inline"> Back to the store</h4>

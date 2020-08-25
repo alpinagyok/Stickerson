@@ -17,7 +17,7 @@ export const createOrder = (data, history) => (dispatch) => {
         type: LOAD_CART,
       });
 
-      history.push("/orders");
+      history.push("/profile");
     })
     .catch((err) => {
       console.log(err);

@@ -9,6 +9,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import loading from "../common/loading-prod.gif";
 
 import { Link } from "react-router-dom";
+import NotFound from "../not-found/NotFound";
 
 class Cart extends Component {
   state = {
@@ -66,11 +67,7 @@ class Cart extends Component {
         <h4>Total: {(itemTotal + delivery).toFixed(2)}$</h4>
       </div>
     );
-    const noItems = (
-      <div className="text-center">
-        <h3>No items found</h3>
-      </div>
-    );
+    const noItems = <NotFound />;
 
     const orderForm = (
       <form onSubmit={this.onSubmit}>

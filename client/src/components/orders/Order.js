@@ -17,7 +17,7 @@ class Order extends Component {
 
     // Redux didn't load orders yet. Don't want to find individual ones by id
     if (!order) {
-      this.props.history.push("/orders");
+      this.props.history.push("/profile");
       return <Orders />;
     }
 

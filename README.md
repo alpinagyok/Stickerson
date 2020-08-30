@@ -4,7 +4,11 @@
 
 [Live Vesrion](https://stickerson.herokuapp.com)
 
-This is responsive website project made with NodeJS (Express) + React + MongoDB. The user can browse the website and see different sticker mockups (products) created by other users. Users can create a store (to create products), order (no payment now, just simulation) products, write reviews and see sales analytics.
+This is a responsive website project made with NodeJS (Express) + React + MongoDB. The user can browse the website and see different sticker mockups (products) created by other users. Users can create a store (to create products), order (no payment now, just simulation) products, write reviews and see sales analytics.
+
+## Demo Screenshot
+
+![Demo Screenshot](https://res.cloudinary.com/dwwoxasih/image/upload/v1598793682/stick3_bykaw7.png)
 
 ## Keys file for local deployment:
 
